@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Categories from "./routes/categories";
 import CategoryForm from "./routes/categoryForm";
+import LoginPage from "./routes/LoginPage";
+import HomePage from "./routes/HomePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,6 +15,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
+        {/* <Route index="true" element={<HomePage/>}/>
+          <Route path="/login" element={<LoginPage />}/> */}
           <Route index={true} element={<Categories />} />
           <Route path="categories" element={<Categories />} />
           <Route path="categories/new" element={<CategoryForm />} />
