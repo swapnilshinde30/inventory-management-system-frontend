@@ -111,7 +111,9 @@ export default function NavBar() {
                   ITEMS
                 </Link>
               </li>
-
+              <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
+                <Link to="/shops"
+                  className="focus:border-b-2 border-teal-500 pb-3 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
               <li
                 id="four"
                 className="mb-4 lg:mb-0 lg:pr-2"
@@ -123,7 +125,7 @@ export default function NavBar() {
                   data-te-nav-link-ref
                 >
                   USERS
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
