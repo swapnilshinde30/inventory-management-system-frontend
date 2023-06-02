@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Items from "./items";
 
 const ItemClasses = () => {
   const itemClasses = [
@@ -70,7 +71,7 @@ const ItemClasses = () => {
             </div>
             <div className="flex-1">
               <Link
-                to="/categories/new"
+                to="/itemclasses/new"
                 className="nav-link"
                 aria-current="page"
               >
@@ -132,3 +133,5 @@ const ItemClasses = () => {
 };
 
 export default ItemClasses;
+
+

@@ -10,7 +10,7 @@ const Categories = () => {
     { _id: 5, name: "grains", imagePath: "grains.jpg" },
     { _id: 6, name: "beverage", imagePath: "beverage.jpg" },
     { _id: 7, name: "sweets", imagePath: "sweets.jpg" },
-    { _id: 8, name: "medical", imagePath: "medicine.jpg" },
+    { _id: 8, name: "medicine", imagePath: "medicine.jpg" },
   ];
   return (
     <>

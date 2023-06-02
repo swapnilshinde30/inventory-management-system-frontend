@@ -9,6 +9,8 @@ import CategoryForm from "./routes/categoryForm";
 import LoginPage from "./routes/LoginPage";
 import HomePage from "./routes/HomePage";
 import ItemClasses from "./routes/itemClasses";
+import ItemclassForm from "./routes/itemclassForm";
+import Items from "./routes/items";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +24,8 @@ root.render(
           <Route path="categories" element={<Categories />} />
           <Route path="categories/new" element={<CategoryForm />} />
           <Route path="itemclasses" element={<ItemClasses />} />
+          <Route path="itemclasses/new" element={<ItemclassForm />} />
+          <Route path="items" element={<Items />} />
         </Route>
       </Routes>
     </BrowserRouter>
