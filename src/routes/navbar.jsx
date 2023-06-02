@@ -112,16 +112,19 @@ export default function NavBar() {
                 </Link>
               </li>
               <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-                <Link to="/shops"
+                <Link
+                  to="/shops"
                   className="focus:border-b-2 border-teal-500 pb-3 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                ></Link>
+              </li>
               <li
                 id="four"
                 className="mb-4 lg:mb-0 lg:pr-2"
                 data-te-nav-item-ref
               >
-                <a
+                <Link to="/users"
                   className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  href="#"
+                
                   data-te-nav-link-ref
                 >
                   USERS
@@ -163,23 +166,25 @@ export default function NavBar() {
   );
 }
 
-// <svg
-//               className="absolute w-5 h-5 mt-8 stroke-slate-300"
-//               xmlns="http://www.w3.org/2000/svg"
-//               fill="none"
-//               viewBox="0 0 24 24"
-//               stroke-width="1.5"
-//               stroke="currentColor"
-//               class="w-6 h-6"
-//             >
-//               <path
-//                 stroke-linecap="round"
-//                 stroke-linejoin="round"
-//                 d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-//               />
-//             </svg>
-//             <input
-//               className=" ml-12 w-80 rounded-full border border-solid border-slate-400 bg-transparent hover:border-teal-600 focus:outline-none placeholder:text-gray-500 pl-8"
-//               type="search"
-//               placeholder="Search"
-//             />
+{
+  /* <svg
+              className="absolute w-5 h-5 mt-8 stroke-slate-300"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+            <input
+              className=" ml-12 w-80 rounded-full border border-solid border-slate-400 bg-transparent hover:border-teal-600 focus:outline-none placeholder:text-gray-500 pl-8"
+              type="search"
+              placeholder="Search"
+            /> */
+}
