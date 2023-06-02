@@ -5,7 +5,7 @@ export default function NavBar() {
       {/* <p>Navbar</p> */}
       {/* <!-- Main navigation container --> */}
       <nav
-        className="flex-1 h-16 w-full items-center justify-between py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4"
+        className="flex-1 h-14 w-full items-center justify-between py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4"
         data-te-navbar-ref
       >
         <div className="flex w-full flex-wrap items-center justify-between px-3">
@@ -60,15 +60,19 @@ export default function NavBar() {
 
             {/* <!-- Left navigation links --> */}
             <ul
-              className="list-style-none mr-auto flex flex-col pl-0 lg:flex-row"
+              className="list-style-none mr-auto flex flex-col pl-0 lg:flex-row "
               data-te-navbar-nav-ref
             >
-              <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
+              <li
+                id="one"
+                className="mb-4 lg:mb-0 lg:pr-2"
+                data-te-nav-item-ref
+              >
                 {/* <!-- Dashboard link --> */}
                 <Link
                   to="/categories"
                   aria-current="page"
-                  className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px] focus:border-b-2 border-teal-500 pb-3  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
+                  className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px]  focus:border-b-2 border-teal-500 pb-2  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
                   href="#"
                   data-te-nav-link-ref
                 >
@@ -76,29 +80,47 @@ export default function NavBar() {
                 </Link>
               </li>
               {/* <!-- Team link --> */}
-              <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-                <a
-                  className="text-neutral-500 focus:border-b-2 border-teal-500 pb-3 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+              <li
+                id="two"
+                className="mb-4 lg:mb-0 lg:pr-2"
+                data-te-nav-item-ref
+              >
+                <Link
+                  to="/itemclasses"
+                  aria-current="page"
+                  className="text-neutral-500  focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                   href="#"
                   data-te-nav-link-ref
                 >
                   ITEM CLASSES
-                </a>
+                </Link>
               </li>
               {/* <!-- Projects link --> */}
-              <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-                <a
-                  className="text-neutral-500 focus:border-b-2 border-teal-500 pb-3 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+              <li
+                id="three"
+                className="mb-4 lg:mb-0 lg:pr-2"
+                data-te-nav-item-ref
+              >
+                <Link
+                  to="/items"
+                  aria-current="page"
+                  className=" text-neutral-500 focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                   href="#"
                   data-te-nav-link-ref
                 >
                   ITEMS
-                </a>
+                </Link>
               </li>
-
               <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                 <Link to="/shops"
                   className="focus:border-b-2 border-teal-500 pb-3 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+              <li
+                id="four"
+                className="mb-4 lg:mb-0 lg:pr-2"
+                data-te-nav-item-ref
+              >
+                <a
+                  className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                   href="#"
                   data-te-nav-link-ref
                 >

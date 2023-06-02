@@ -1,16 +1,38 @@
-// import { SearchIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import Items from "./items";
 
-const Categories = () => {
-  const items = [
-    { _id: 1, name: "fruits", imagePath: "fruits.jpg" },
-    { _id: 2, name: "vegetables", imagePath: "vege.jpg" },
-    { _id: 3, name: "bakery", imagePath: "cake.jpg" },
-    { _id: 4, name: "eggs & meat", imagePath: "egg.jpg" },
-    { _id: 5, name: "grains", imagePath: "grains.jpg" },
-    { _id: 6, name: "beverage", imagePath: "beverage.jpg" },
-    { _id: 7, name: "sweets", imagePath: "sweets.jpg" },
-    { _id: 8, name: "medicine", imagePath: "medicine.jpg" },
+const ItemClasses = () => {
+  const itemClasses = [
+    {
+      _id: 1,
+      name: "mocktail",
+      category: "beverage",
+      imagePath: "mocktail.jpg",
+    },
+    {
+      _id: 2,
+      name: "colddrink",
+      category: "bevarage",
+      imagePath: "colddrink.jpg",
+    },
+    { _id: 3, name: "khari", category: "bakery", imagePath: "khari.jpeg" },
+    { _id: 4, name: "cake", category: "bakery", imagePath: "cake.jpg" },
+    { _id: 5, name: "burfi", category: "sweets", imagePath: "burfi.jpg" },
+    { _id: 6, name: "namkeen", category: "sweets", imagePath: "namkeen.jpg" },
+    { _id: 7, name: "rice", category: "grains", imagePath: "rice.jpg" },
+    { _id: 8, name: "wheat", category: "grains", imagePath: "wheat.jpg" },
+    {
+      _id: 9,
+      name: "leafy greens",
+      category: "vegetables",
+      imagePath: "leafy greens.jpg",
+    },
+    {
+      _id: 10,
+      name: "cough syrup",
+      category: "medicine",
+      imagePath: "coughsyrup.jpg",
+    },
   ];
   return (
     <>
@@ -32,7 +54,7 @@ const Categories = () => {
                 />
 
                 <svg
-                  className=" absolute text-slate-300 h-2 w-2  md:h-4 md:w-4 fillCurrent ml-14 "
+                  className=" absolute text-slate-300 h-2 w-2  md:h-4 md:w-4 fill-current ml-14 "
                   xmlns="http://www.w3.org/2000/svg"
                   version="1.1"
                   id="Capa_1"
@@ -49,7 +71,7 @@ const Categories = () => {
             </div>
             <div className="flex-1">
               <Link
-                to="/categoryModal"
+                to="/itemclasses/new"
                 className="nav-link"
                 aria-current="page"
               >
@@ -57,7 +79,7 @@ const Categories = () => {
                   type="button"
                   className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
                 >
-                  Add Category
+                  Add Itemclass
                 </button>
               </Link>
             </div>
@@ -71,18 +93,22 @@ const Categories = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            {items.map((category) => (
+            {itemClasses.map((itemclass) => (
               <div
-                key={category._id}
+                key={itemclass._id}
                 className=" card ml-12 mt-10 text-slate-600 w-32 h-32 rounded-xl overflow-hidden border border-slate-300"
               >
                 {" "}
                 <img
-                  src={process.env.PUBLIC_URL + "/images/" + category.imagePath}
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/images/itemclass/" +
+                    itemclass.imagePath
+                  }
                   alt="fruits"
                   className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
-                <div className="ml-2 mb-1 text-gray-400 ">{category.name}</div>
+                <div className="ml-2 mb-1 text-gray-400 ">{itemclass.name}</div>
                 <div className="flex w-auto">
                   <div
                     className=" badge text-gray-400 bg-slate-300 w-52 text-center p-1 hover:bg-slate-500 hover:text-white"
@@ -100,17 +126,12 @@ const Categories = () => {
               </div>
             ))}
           </div>
-          {/* <!-- Button trigger modal --> */}
         </div>
       </div>
-
-      {/* <div classNameName="grid grid-row-2 gride-col-2">
-        <div classNameName="w-32 h-16  border-b border-r border-slate-200">1</div>
-        <div classNameName="w-32 border-r h-screen border-slate-200">2</div>
-      </div>
-      <div classNameName="grid grid-row-2"></div> */}
     </>
   );
 };
 
-export default Categories;
+export default ItemClasses;
+
+
