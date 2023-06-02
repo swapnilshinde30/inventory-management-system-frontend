@@ -8,21 +8,33 @@ import Categories from "./routes/categories";
 import CategoryForm from "./routes/categoryForm";
 import LoginPage from "./routes/LoginPage";
 import HomePage from "./routes/HomePage";
+import Users from "./routes/Users";
+import Shops from "./routes/Shops";
+import CategoryModal from "./routes/categoryModal";
+import { ThemeProvider } from "@material-tailwind/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+
     <BrowserRouter>
+    <ThemeProvider>
       <Routes>
         <Route path="/" element={<App />}>
         {/* <Route index="true" element={<HomePage/>}/>
           <Route path="/login" element={<LoginPage />}/> */}
           <Route index={true} element={<Categories />} />
           <Route path="categories" element={<Categories />} />
-          <Route path="categories/new" element={<CategoryForm />} />
+          {/* <Route path="categories/new" element={<CategoryForm />} /> */}
+          <Route path="users" element={<Users />}/>
+          <Route path="shops" element={<Shops />}/>
+          <Route path="categoryModal" element={<CategoryModal />}/>
+
         </Route>
       </Routes>
+      </ThemeProvider>
     </BrowserRouter>
+   
   </React.StrictMode>
 );
 

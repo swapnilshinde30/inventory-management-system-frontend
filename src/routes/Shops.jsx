@@ -1,16 +1,19 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { BsShop } from "react-icons/bs";
+import { FiEdit } from "react-icons/fi";
+import { AiOutlineDelete } from "react-icons/ai";
 
-const Categories = () => {
-  const items = [
-    { _id: 1, name: "fruits", imagePath: "fruits.jpg" },
-    { _id: 2, name: "vegetables", imagePath: "vege.jpg" },
-    { _id: 3, name: "bakery", imagePath: "cake.jpg" },
-    { _id: 4, name: "eggs & meat", imagePath: "egg.jpg" },
-    { _id: 5, name: "grains", imagePath: "grains.jpg" },
-    { _id: 6, name: "beverage", imagePath: "beverage.jpg" },
-    { _id: 7, name: "sweets", imagePath: "sweets.jpg" },
-    { _id: 8, name: "medical", imagePath: "medicine.jpg" },
+const Shops = () => {
+  const shops = [
+    { _id: 1, shop:"Sadanand Kirana Store", category:"Grocery" },
+    { _id: 1, shop:"Surya Sweets", category:"Sweets" },
+    { _id: 1, shop:"Dhiraj Cafe", category:"Beverage" },
+    { _id: 1, shop:"Himanshu Medical", category:"Medical" },
+    { _id: 1, shop:"Vaishnavi Fruits", category:"Fruits" },
+    { _id: 1, shop:"Swapnil Bakery", category:"Bakery" },
+    { _id: 1, shop:"Sachin Vegitables", category:"Vegitables"},
+ 
   ];
   return (
     <>
@@ -32,7 +35,7 @@ const Categories = () => {
                 />
 
                 <svg
-                  className=" absolute text-slate-300 h-2 w-2  md:h-4 md:w-4 fillCurrent ml-14 "
+                  className=" absolute text-slate-300 h-2 w-2  md:h-4 md:w-4 fill-current ml-14 "
                   xmlns="http://www.w3.org/2000/svg"
                   version="1.1"
                   id="Capa_1"
@@ -49,7 +52,7 @@ const Categories = () => {
             </div>
             <div className="flex-1">
               <Link
-                to="/categoryModal"
+                to="/categories/new"
                 className="nav-link"
                 aria-current="page"
               >
@@ -57,7 +60,7 @@ const Categories = () => {
                   type="button"
                   className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
                 >
-                  Add Category
+                  Add Shop
                 </button>
               </Link>
             </div>
@@ -70,47 +73,38 @@ const Categories = () => {
           {/* 3 */}
         </div>
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-6 ">
-            {items.map((category) => (
-              <div
-                key={category._id}
-                className=" card ml-12 mt-10 text-slate-600 w-32 h-32 rounded-xl overflow-hidden border border-slate-300"
-              >
-                {" "}
-                <img
-                  src={process.env.PUBLIC_URL + "/images/" + category.imagePath}
-                  alt="fruits"
-                  className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
-                />
-                <div className="ml-2 mb-1 text-gray-400 ">{category.name}</div>
-                <div className="flex w-auto">
-                  <div
-                    className=" badge text-gray-400 bg-slate-300 w-52 text-center p-1 hover:bg-slate-500 hover:text-white"
-                    style={{ marginTop: "-4px" }}
-                  >
-                    <button className="hover:font-bold ">Delete</button>
-                  </div>
-                  <div
-                    className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
-                    style={{ marginTop: "-4px" }}
-                  >
-                    <button className="hover:font-bold">Edit</button>
-                  </div>
+          <div className="">
+            {shops.map((shop) => (
+              <div class="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-11">
+                <div class="ml-2 mt-2 w-10 ...">
+                  <BsShop className="h-5 w-5 text-neutral-500"/>
+                </div>
+                <div class="mt-2 w-80 text-neutral-800">
+                  <span className="text-neutral-500">Shop: </span>{shop.shop}
+                </div>
+                <div class="mt-2 w-64 text-neutral-800"><span className="text-neutral-500">Category: </span>{shop.category}</div>
+                
+                <Link
+                  to="/categories/new"
+                  className="nav-link mr-5"
+                  aria-current="page"
+                >
+                  <button type="button"  className="mt-1 w-10 ml-64 bg-white rounded-full h-10">
+                    <FiEdit className="ml-3 h-4 w-4 text-teal-500"/>
+                  </button>
+                </Link>
+                <div class="mr-5">
+                  <button type="button" className="mt-1 w-10 mr-2  bg-white rounded-full h-10">
+                    <AiOutlineDelete className="ml-3 h-5 w-5 text-teal-500"/>
+                  </button>
                 </div>
               </div>
             ))}
           </div>
-          {/* <!-- Button trigger modal --> */}
         </div>
       </div>
-
-      {/* <div classNameName="grid grid-row-2 gride-col-2">
-        <div classNameName="w-32 h-16  border-b border-r border-slate-200">1</div>
-        <div classNameName="w-32 border-r h-screen border-slate-200">2</div>
-      </div>
-      <div classNameName="grid grid-row-2"></div> */}
     </>
   );
 };
 
-export default Categories;
+export default Shops;

@@ -19,7 +19,7 @@ const CategoryForm = () => {
           style={{ height: "400px" }}
         >
           <div className="min-h-[398px] flex items-center justify-center bg-gray-50">
-            <div className="rounded bg-white max-w-md rounded overflow-hidden shadow-xl p-5">
+            <div className="rounded bg-white max-w-md overflow-hidden shadow-xl p-5">
               <form class="space-y-4" action="#" method="POST">
                 <input type="hidden" name="remember" value="True" />
                 <div class="rounded-md shadow-sm -space-y-px">
