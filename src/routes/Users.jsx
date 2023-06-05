@@ -82,7 +82,7 @@ const Users = () => {
                     type="button"
                     className="mt-1 w-10 ml-64  bg-white rounded-full h-10"
                   >
-                    <FiEdit className="ml-3 h-4 w-4 text-teal-500" />
+                    <FiEdit className="ml-3 h-4 w-4 text-teal-500 hover:scale-110 transition-all duration-500" />
                   </button>
                 </Link>
                 <div class="mr-5">
@@ -90,7 +90,7 @@ const Users = () => {
                     type="button"
                     className="mt-1 w-10 mr-2 bg-white rounded-full h-10"
                   >
-                    <AiOutlineDelete className="ml-3 h-5 w-5 text-teal-500" />
+                    <AiOutlineDelete className="ml-3 h-5 w-5 text-teal-500 hover:scale-110 transition-all duration-500" />
                   </button>
                 </div>
               </div>
