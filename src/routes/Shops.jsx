@@ -4,17 +4,21 @@ import { BsShop } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 
+import React from "react";
+import { SlClose } from "react-icons/sl";
+
 const Shops = () => {
+  const [showModal, setShowModal] = React.useState(false);
   const shops = [
-    { _id: 1, shop:"Sadanand Kirana Store", category:"Grocery" },
-    { _id: 1, shop:"Surya Sweets", category:"Sweets" },
-    { _id: 1, shop:"Dhiraj Cafe", category:"Beverage" },
-    { _id: 1, shop:"Himanshu Medical", category:"Medical" },
-    { _id: 1, shop:"Vaishnavi Fruits", category:"Fruits" },
-    { _id: 1, shop:"Swapnil Bakery", category:"Bakery" },
-    { _id: 1, shop:"Sachin Vegitables", category:"Vegitables"},
- 
+    { _id: 1, shop: "Sadanand Kirana Store", category: "Grocery" },
+    { _id: 1, shop: "Surya Sweets", category: "Sweets" },
+    { _id: 1, shop: "Dhiraj Cafe", category: "Beverage" },
+    { _id: 1, shop: "Himanshu Medical", category: "Medical" },
+    { _id: 1, shop: "Vaishnavi Fruits", category: "Fruits" },
+    { _id: 1, shop: "Swapnil Bakery", category: "Bakery" },
+    { _id: 1, shop: "Sachin Vegitables", category: "Vegitables" },
   ];
+ 
   return (
     <>
       <div className="flex sm:flex-column md:flex-row">
@@ -51,18 +55,85 @@ const Shops = () => {
               </div>
             </div>
             <div className="flex-1">
-              <Link
-                to="/categories/new"
-                className="nav-link"
-                aria-current="page"
+              <button
+                type="button"
+                className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
-                <button
-                  type="button"
-                  className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                >
-                  Add Shop
-                </button>
-              </Link>
+                Add Shop
+              </button>
+
+              {/* Add Shops Modal */}
+              {showModal ? (
+                <>
+                  <div
+                    class="relative z-10"
+                    aria-labelledby="modal-title"
+                    role="dialog"
+                    aria-modal="true"
+                  >
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                    <div class="fixed inset-0 z-10 overflow-y-auto">
+                      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                          <div className="flex border border-b-black">
+                            <div className="font-semibold mt-6 ml-6">
+                              <p>ADD CATEGORY</p>
+                            </div>
+                            <div className="ml-72 mt-6 mb-4">
+                              <SlClose
+                                className="w-7 h-7 text-neutral-500 cursor-pointer"
+                                onClick={() => setShowModal(false)}
+                              />
+                            </div>
+                          </div>
+                          <div className="mx-7 space-y-2 my-5">
+                            <input
+                              type="text"
+                              placeholder="Shop Name"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+                            <select
+                              id="itemClasses"
+                              class="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            >
+                              {" "}
+                              <option selected>Category</option>
+                              {shops.map((categories) => (
+                                <option
+                                  key={categories._id}
+                                  value={categories._id}
+                                >
+                                  {categories.category}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="flex p-8">
+                            <button
+                              type="button"
+                              className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="button"
+                              className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -77,25 +148,35 @@ const Shops = () => {
             {shops.map((shop) => (
               <div class="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-11">
                 <div class="ml-2 mt-2 w-10 ...">
-                  <BsShop className="h-5 w-5 text-neutral-500"/>
+                  <BsShop className="h-5 w-5 text-neutral-500" />
                 </div>
                 <div class="mt-2 w-80 text-neutral-800">
-                  <span className="text-neutral-500">Shop: </span>{shop.shop}
+                  <span className="text-neutral-500">Shop: </span>
+                  {shop.shop}
                 </div>
-                <div class="mt-2 w-64 text-neutral-800"><span className="text-neutral-500">Category: </span>{shop.category}</div>
-                
+                <div class="mt-2 w-64 text-neutral-800">
+                  <span className="text-neutral-500">Category: </span>
+                  {shop.category}
+                </div>
+
                 <Link
                   to="/categories/new"
                   className="nav-link mr-5"
                   aria-current="page"
                 >
-                  <button type="button"  className="mt-1 w-10 ml-64 bg-white rounded-full h-10">
-                    <FiEdit className="ml-3 h-4 w-4 text-teal-500"/>
+                  <button
+                    type="button"
+                    className="mt-1 w-10 ml-64 bg-white rounded-full h-10"
+                  >
+                    <FiEdit className="ml-3 h-4 w-4 text-teal-500" />
                   </button>
                 </Link>
                 <div class="mr-5">
-                  <button type="button" className="mt-1 w-10 mr-2  bg-white rounded-full h-10">
-                    <AiOutlineDelete className="ml-3 h-5 w-5 text-teal-500"/>
+                  <button
+                    type="button"
+                    className="mt-1 w-10 mr-2  bg-white rounded-full h-10"
+                  >
+                    <AiOutlineDelete className="ml-3 h-5 w-5 text-teal-500" />
                   </button>
                 </div>
               </div>
