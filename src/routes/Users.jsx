@@ -6,14 +6,13 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 const Users = () => {
   const users = [
-    { _id: 1, firstName: "Sachin", lastName: "Chavan", Role:"Shopkeeper",mobile:"9922992210",date:new Date,Address:"Pashan" },
-    { _id: 2, firstName: "Swapnil", lastName: "Shinde",Role:"Customer", mobile:"9922992211",date:new Date,Address:"Bavdhan" },
-    // { _id: 1, firstName: "Sachin", lastName: "Chavan", Role: "ShopKeeper" },
-    // { _id: 2, firstName: "Swapnil", lastName: "Shinde", Role: "ShopKeeper" },
-    // { _id: 1, firstName: "Sadanand", lastName: "Fulari", Role: "Customer" },
-    // { _id: 1, firstName: "Dhiraj", lastName: "Shinde", Role: "Customer" },
-    // { _id: 1, firstName: "Surya", lastName: "Lad", Role: "Customer" },
-    // { _id: 1, firstName: "Himanshu", lastName: "Patil", Role: "Customer" },
+   
+    { _id: 1, firstName: "Sachin", lastName: "Chavan", Role: "ShopKeeper" },
+    { _id: 2, firstName: "Swapnil", lastName: "Shinde", Role: "ShopKeeper" },
+    { _id: 1, firstName: "Sadanand", lastName: "Fulari", Role: "Customer" },
+    { _id: 1, firstName: "Dhiraj", lastName: "Shinde", Role: "Customer" },
+    { _id: 1, firstName: "Surya", lastName: "Lad", Role: "Customer" },
+    { _id: 1, firstName: "Himanshu", lastName: "Patil", Role: "Customer" },
   ];
   return (
     <>
