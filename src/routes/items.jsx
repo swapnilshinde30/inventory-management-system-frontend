@@ -1,7 +1,10 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
+import React from "react";
+import { SlClose } from "react-icons/sl";
 const Items = () => {
+  const [showModal, setShowModal] = React.useState(false);
   const items = [
     {
       _id: 1,
@@ -74,6 +77,16 @@ const Items = () => {
     },
   ];
 
+  const shops = [
+    { _id: 1, shop: "Sadanand Kirana Store", category: "Grocery" },
+    { _id: 1, shop: "Surya Sweets", category: "Sweets" },
+    { _id: 1, shop: "Dhiraj Cafe", category: "Beverage" },
+    { _id: 1, shop: "Himanshu Medical", category: "Medical" },
+    { _id: 1, shop: "Vaishnavi Fruits", category: "Fruits" },
+    { _id: 1, shop: "Swapnil Bakery", category: "Bakery" },
+    { _id: 1, shop: "Sachin Vegitables", category: "Vegitables" },
+  ];
+
   let count = 0;
 
   let arrayitem = [];
@@ -105,7 +118,7 @@ const Items = () => {
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
                 <input
-                  className="w-30 h-5 ml-12  md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
+                  className="w-30 h-5 ml-12 md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
                   type="search"
                   name="search"
                   placeholder="Search"
@@ -128,18 +141,100 @@ const Items = () => {
               </div>
             </div>
             <div className="flex-1">
-              <Link
-                to="/categories/new"
-                className="nav-link"
-                aria-current="page"
+              <button
+                type="button"
+                className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
-                <button
-                  type="button"
-                  className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                >
-                  Add Item
-                </button>
-              </Link>
+                Add Item
+              </button>
+
+              {showModal ? (
+                <>
+                  <div
+                    class="relative z-10"
+                    aria-labelledby="modal-title"
+                    role="dialog"
+                    aria-modal="true"
+                  >
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                    <div class="fixed inset-0 z-10 overflow-y-auto">
+                      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                          <div className="flex border border-b-black">
+                            <div className="font-semibold mt-6 ml-6">
+                              <p>ADD ITEM CLASSE</p>
+                            </div>
+                            <div className="ml-72 mt-6 mb-4">
+                              <SlClose
+                                className="w-7 h-7 text-neutral-500 cursor-pointer"
+                                onClick={() => setShowModal(false)}
+                              />
+                            </div>
+                          </div>
+                          <div className="flex mx-7 space-x-2 my-5">
+                            <input
+                              type="text"
+                              placeholder="ITEM"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+                            <select
+                              id="itemClasses"
+                              class="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            >
+                              <option selected>Item Class</option>
+                              {itemClasses.map((itemClass) => (
+                                <option
+                                  key={itemClass._id}
+                                  value={itemClass._id}
+                                >
+                                  {itemClass.category}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div class="w-full md:w-96 md:max-w-full mx-auto">
+                            <div>
+                              <form
+                                method="POST"
+                                // action="https://herotofu.com/start"
+                                // enctype="multipart/form-data"
+                              >
+                                <label class="">
+                                  <input
+                                    required
+                                    name="photo"
+                                    type="file"
+                                    class=" w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                  />
+                                </label>
+                              </form>
+                            </div>
+                          </div>
+                          <div className="flex p-8">
+                            <button
+                              type="button"
+                              className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="button"
+                              className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -228,3 +323,87 @@ const Items = () => {
 };
 
 export default Items;
+
+//Shop Items Modal
+// {showModal ? (
+//   <>
+//     <div class=" absolute bottom-1 right-1 h-auto w-full transition-all ease-in-out max-w-[500px]">
+//       <div
+//         class="relative z-10"
+//         aria-labelledby="modal-title"
+//         role="dialog"
+//         aria-modal="true"
+//       >
+//         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+//         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+//           <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+//             <div className="py-4 px-2">
+//               <select
+//                 id="shops"
+//                 class="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-full"
+//               >
+//                 {" "}
+//                 <option selected>Select Shop</option>
+//                 {shops.map((shop) => (
+//                   <option key={shop._id} value={shop._id}>
+//                     {shop.shop}
+//                   </option>
+//                 ))}
+//               </select>
+//             </div>
+
+//             <div className="px-2 pb-4">
+//               <select
+//                 id="item"
+//                 class="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-full"
+//               >
+//                 {" "}
+//                 <option selected>Select Items</option>
+//                 {items.map((item) => (
+//                   <option key={item._id} value={item._id}>
+//                     {item.name}
+//                   </option>
+//                 ))}
+//               </select>
+//             </div>
+//             <div className="flex space-x-1 mx-2">
+//             <div class="form-outline mb-3 ">
+//               <input
+//                 type="QuantityAddition"
+//                 placeholder="Quantity Addition"
+//                 class="border rounded-full w-60 h-9 pl-8  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
+//               />
+//             </div>
+
+//             <div class="form-outline mb-3 ">
+//               <input
+//                 type="Available Quantity"
+//                 placeholder="Available Quantity"
+//                 class="border rounded-full w-60 h-9 pl-8  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
+//               />
+//             </div>
+//             </div>
+
+//             <div className="flex p-8">
+//               <button
+//                 type="button"
+//                 className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
+//                 onClick={() => setShowModal(false)}
+//               >
+//                 Cancel
+//               </button>
+//               <button
+//                 type="button"
+//                 className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+//                 onClick={() => setShowModal(false)}
+//               >
+//                 Add
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   </>
+// ) : null}

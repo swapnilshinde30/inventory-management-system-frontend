@@ -102,7 +102,7 @@ export default function NavBar() {
                 data-te-nav-item-ref
               >
                 <Link
-                  to="/items"
+                  to="/requisitions"
                   aria-current="page"
                   className=" text-neutral-500 focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                   href="#"
@@ -111,6 +111,7 @@ export default function NavBar() {
                   ITEMS
                 </Link>
               </li>
+
 
               <li
                 id="four"
@@ -140,6 +141,7 @@ export default function NavBar() {
                   SHOP ITEMS
                 </Link>
               </li>
+
               <li
                 id="four"
                 className="mb-4 lg:mb-0 lg:pr-2"

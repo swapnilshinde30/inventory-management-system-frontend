@@ -6,6 +6,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 const Users = () => {
   const users = [
+   
     { _id: 1, firstName: "Sachin", lastName: "Chavan", Role: "ShopKeeper" },
     { _id: 2, firstName: "Swapnil", lastName: "Shinde", Role: "ShopKeeper" },
     { _id: 1, firstName: "Sadanand", lastName: "Fulari", Role: "Customer" },

@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import Items from "./items";
 
+import React from "react";
+import { SlClose } from "react-icons/sl";
 const ItemClasses = () => {
+  const [showModal, setShowModal] = React.useState(false);
   const itemClasses = [
     {
       _id: 1,
@@ -70,18 +73,86 @@ const ItemClasses = () => {
               </div>
             </div>
             <div className="flex-1">
-              <Link
-                to="/itemclasses/new"
-                className="nav-link"
-                aria-current="page"
+              <button
+                type="button"
+                className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
-                <button
-                  type="button"
-                  className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                >
-                  Add Itemclass
-                </button>
-              </Link>
+                Add Item class
+              </button>
+
+              {showModal ? (
+                <>
+                  <div
+                    class="relative z-10"
+                    aria-labelledby="modal-title"
+                    role="dialog"
+                    aria-modal="true"
+                  >
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                    <div class="fixed inset-0 z-10 overflow-y-auto">
+                      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                          <div className="flex border border-b-black">
+                            <div className="font-semibold mt-6 ml-6">
+                              <p>ADD ITEM CLASSE</p>
+                            </div>
+                            <div className="ml-72 mt-6 mb-4">
+                              <SlClose
+                                className="w-7 h-7 text-neutral-500 cursor-pointer"
+                                onClick={() => setShowModal(false)}
+                              />
+                            </div>
+                          </div>
+                          <div className="mx-7 my-5">
+                            <input
+                              type="text"
+                              placeholder="ITEM CLASS"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+                          </div>
+                          <div class="w-full md:w-96 md:max-w-full mx-auto">
+                            <div>
+                              <form
+                                method="POST"
+                                // action="https://herotofu.com/start"
+                                // enctype="multipart/form-data"
+                              >
+                                <label class="">
+                                  <input
+                                    required
+                                    name="photo"
+                                    type="file"
+                                    class=" w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                  />
+                                </label>
+                              </form>
+                            </div>
+                          </div>
+                          <div className="flex p-8">
+                            <button
+                              type="button"
+                              className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="button"
+                              className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -133,5 +204,3 @@ const ItemClasses = () => {
 };
 
 export default ItemClasses;
-
-
