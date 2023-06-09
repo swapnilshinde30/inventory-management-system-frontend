@@ -94,7 +94,7 @@ export default function NavBar() {
               data-te-navbar-nav-ref
             >
               {navLinkNames
-                .filter((n) => n.role === "shopkeeper")
+                .filter((n) => n.role === "admin")
                 .map((x) => (
                   <li
                     id={x.id}
