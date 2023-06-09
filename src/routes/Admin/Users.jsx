@@ -2,65 +2,70 @@
 import { AiOutlineUser } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../navbar";
 import EditUserForm from "../../Forms/EditUserForm";
+import { useUserStore } from "../../stores/userStore";
 
 const Users = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const users = [
-    {
-      _id: 1,
-      firstName: "Sachin",
-      lastName: "Chavan",
-      Role: "ShopKeeper",
-      LastLoggedIn: "08-06-2023",
-    },
-    {
-      _id: 2,
-      firstName: "Swapnil",
-      lastName: "Shinde",
-      Role: "ShopKeeper",
-      LastLoggedIn: "08-06-2023",
-    },
-    {
-      _id: 3,
-      firstName: "Sadanand",
-      lastName: "Fulari",
-      Role: "Customer",
-      LastLoggedIn: "08-06-2023",
-    },
-    {
-      _id: 4,
-      firstName: "Dhiraj",
-      lastName: "Shinde",
-      Role: "Customer",
-      LastLoggedIn: "08-06-2023",
-    },
-    {
-      _id: 5,
-      firstName: "Surya",
-      lastName: "Lad",
-      Role: "Customer",
-      LastLoggedIn: "08-06-2023",
-    },
-    {
-      _id: 6,
-      firstName: "Himanshu",
-      lastName: "Patil",
-      Role: "Customer",
-      LastLoggedIn: "08-06-2023",
-    },
-  ];
+  // const users = [
+  //   {
+  //     _id: 1,
+  //     firstName: "Sachin",
+  //     lastName: "Chavan",
+  //     Role: "ShopKeeper",
+  //     LastLoggedIn: "08-06-2023",
+  //   },
+  //   {
+  //     _id: 2,
+  //     firstName: "Swapnil",
+  //     lastName: "Shinde",
+  //     Role: "ShopKeeper",
+  //     LastLoggedIn: "08-06-2023",
+  //   },
+  //   {
+  //     _id: 3,
+  //     firstName: "Sadanand",
+  //     lastName: "Fulari",
+  //     Role: "Customer",
+  //     LastLoggedIn: "08-06-2023",
+  //   },
+  //   {
+  //     _id: 4,
+  //     firstName: "Dhiraj",
+  //     lastName: "Shinde",
+  //     Role: "Customer",
+  //     LastLoggedIn: "08-06-2023",
+  //   },
+  //   {
+  //     _id: 5,
+  //     firstName: "Surya",
+  //     lastName: "Lad",
+  //     Role: "Customer",
+  //     LastLoggedIn: "08-06-2023",
+  //   },
+  //   {
+  //     _id: 6,
+  //     firstName: "Himanshu",
+  //     lastName: "Patil",
+  //     Role: "Customer",
+  //     LastLoggedIn: "08-06-2023",
+  //   },
+  // ];
+
+  const getAllUsers = useUserStore((state) => state.getUsers);
+  const users = useUserStore((state) => state.users);
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  //   let user1=[...new Map(users.map(x=>[x.Role,x])).values()];
-  // console.log(user1);
-  // const user1=[...new Set(users)]
-  // console.log(user1);
+
   return (
     <>
       <EditUserForm
@@ -123,11 +128,11 @@ const Users = () => {
                 </div>
                 <div className="mt-2 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Role: </span>
-                  {user.Role}
+                  {user.role}
                 </div>
                 <div className="mt-2 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Last LoggedIn: </span>
-                  {user.LastLoggedIn}
+                  {user.lastLoggedIn}
                 </div>
                 {/* 
                 <Link
