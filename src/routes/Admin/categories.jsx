@@ -3,23 +3,34 @@ import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import NavBar from "../navbar";
 import AddCategoryForm from "../../Forms/AddCategoryForm";
+import { useEffect } from "react";
+import { useCategoryStore } from "../../stores/categoryStore";
 
 const Categories = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const items = [
-    { _id: 1, name: "fruits", imagePath: "fruits.jpg" },
-    { _id: 2, name: "vegetables", imagePath: "vege.jpg" },
-    { _id: 3, name: "bakery", imagePath: "cake.jpg" },
-    { _id: 4, name: "eggs & meat", imagePath: "egg.jpg" },
-    { _id: 5, name: "grains", imagePath: "grains.jpg" },
-    { _id: 6, name: "beverage", imagePath: "beverage.jpg" },
-    { _id: 7, name: "sweets", imagePath: "sweets.jpg" },
-    { _id: 8, name: "medicine", imagePath: "medicine.jpg" },
-  ];
+  // const items = [
+  //   { _id: 1, name: "fruits", imagePath: "fruits.jpg" },
+  //   { _id: 2, name: "vegetables", imagePath: "vege.jpg" },
+  //   { _id: 3, name: "bakery", imagePath: "cake.jpg" },
+  //   { _id: 4, name: "eggs & meat", imagePath: "egg.jpg" },
+  //   { _id: 5, name: "grains", imagePath: "grains.jpg" },
+  //   { _id: 6, name: "beverage", imagePath: "beverage.jpg" },
+  //   { _id: 7, name: "sweets", imagePath: "sweets.jpg" },
+  //   { _id: 8, name: "medicine", imagePath: "medicine.jpg" },
+  // ];
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
+  const getAllCategories = useCategoryStore((state) => state.getCategories);
+  const categories = useCategoryStore((state) => state.categories);
+
+  console.log(categories);
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
 
   return (
     <>
@@ -80,14 +91,19 @@ const Categories = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            {items.map((category) => (
+            {categories.map((category) => (
               <div
                 key={category._id}
                 className=" card ml-12 mt-10 text-slate-600 w-32 h-32 rounded-xl overflow-hidden border border-slate-300"
               >
                 {" "}
                 <img
-                  src={process.env.PUBLIC_URL + "/images/" + category.imagePath}
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/images/categories/" +
+                    category.name +
+                    ".jpg"
+                  }
                   alt="fruits"
                   className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
