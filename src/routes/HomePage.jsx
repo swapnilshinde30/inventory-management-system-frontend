@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import image from "../../src/images/images/homePage.jpg";
+import image from "../../src/images/images/homePage1.jpg";
 function HomePage() {
   return (
-    <section className="gradient-form bg-gradient-to-r from-emerald-400 to-teal-600">
+    <section className="gradient-form bg-gradient-to-r from-emerald-400 to-teal-600 h-full">
       <div className="flex items-center justify-center">
         <div
           className="block mt-10 mb-10 shadow-md shadow-black" 
           style={{
             backgroundImage: `url(${image})`,
-            height: "548px",
-            width: "800px",
+            height: "620px",
+            width: "980px",
             backgroundRepeat: "no-repeat",
           }}
         >

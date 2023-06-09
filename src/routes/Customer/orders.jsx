@@ -1,11 +1,13 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import NavBar from "../navbar";
 
 const Order = () => {
   const shopName = "Om Sweets";
   const date = "06/05/2023";
   return (
     <>
+    <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}

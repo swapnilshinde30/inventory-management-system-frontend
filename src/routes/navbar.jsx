@@ -1,4 +1,34 @@
 import { Link } from "react-router-dom";
+const navLinkNames = [
+  { id: 1, name: "CATEGORIES", pageLink: "/categories", role: "admin" },
+  { id: 2, name: "ITEMCLASSES", pageLink: "/itemclasses", role: "admin" },
+  { id: 3, name: "ITEMS", pageLink: "/items", role: "admin" },
+  { id: 4, name: "USERS", pageLink: "/users", role: "admin" },
+  { id: 5, name: "CART", pageLink: "/cart", role: "customer" },
+  { id: 6, name: "ORDER", pageLink: "/orders", role: "customer" },
+  {
+    id: 7,
+    name: "SHOPS FOR CUSTOMER",
+    pageLink: "/shopsForCustomer",
+    role: "customer",
+  },
+  {
+    id: 8,
+    name: "REQUISITION",
+    pageLink: "/requisitions",
+    role: "shopkeeper",
+  },
+  { id: 9, name: "SHOPITEMS", pageLink: "/shopitems", role: "shopkeeper" },
+  { id: 10, name: "SHOPS", pageLink: "/shops", role: "shopkeeper" },
+];
+
+// function roleFilter(){
+//   // if(navLinkNames.role){
+//   //  return navLinkNames.name
+//   // }
+//   return navLinkNames.role==="admin"
+// }
+
 export default function NavBar() {
   return (
     <>
@@ -63,150 +93,26 @@ export default function NavBar() {
               className="list-style-none mr-auto flex flex-col pl-0 lg:flex-row "
               data-te-navbar-nav-ref
             >
-              <li
-                id="one"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                {/* <!-- Dashboard link --> */}
-                <Link
-                  to="/categories"
-                  aria-current="page"
-                  className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px]  focus:border-b-2 border-teal-500 pb-2  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-                  href="#"
-                  data-te-nav-link-ref
-                >
-                  CATEGORIES
-                </Link>
-              </li>
-              {/* <!-- Team link --> */}
-              <li
-                id="two"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/itemclasses"
-                  aria-current="page"
-                  className="text-neutral-500  focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  href="#"
-                  data-te-nav-link-ref
-                >
-                  ITEM CLASSES
-                </Link>
-              </li>
-              {/* <!-- Projects link --> */}
-              <li
-                id="three"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/requisitions"
-                  aria-current="page"
-                  className=" text-neutral-500 focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  href="#"
-                  data-te-nav-link-ref
-                >
-                  ITEMS
-                </Link>
-              </li>
-
-
-              <li
-                id="four"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/users"
-                  className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  data-te-nav-link-ref
-                >
-                  USERS
-                </Link>
-              </li>
-              {/* shop Owner */}
-
-              <li
-                id="four"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/shopitems"
-                  className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  data-te-nav-link-ref
-                >
-                  SHOP ITEMS
-                </Link>
-              </li>
-
-              <li
-                id="four"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/requisition"
-                  className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  data-te-nav-link-ref
-                >
-                  REQUISITION
-                </Link>
-              </li>
-              <li
-                id="four"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/shops"
-                  className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  data-te-nav-link-ref
-                >
-                  SHOPS
-                </Link>
-              </li>
-              <li
-                id="four"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/shopsForCustomer"
-                  className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  data-te-nav-link-ref
-                >
-                  CSHOPS
-                </Link>
-              </li>
-              <li
-                id="four"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/cart"
-                  className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  data-te-nav-link-ref
-                >
-                  CART
-                </Link>
-              </li>
-              <li
-                id="four"
-                className="mb-4 lg:mb-0 lg:pr-2"
-                data-te-nav-item-ref
-              >
-                <Link
-                  to="/orders"
-                  className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  data-te-nav-link-ref
-                >
-                  ORDERS
-                </Link>
-              </li>
+              {navLinkNames
+                .filter((n) => n.role === "customer")
+                .map((x) => (
+                  <li
+                    id={x.id}
+                    className="mb-4 lg:mb-0 lg:pr-2"
+                    data-te-nav-item-ref
+                  >
+                    {/* <!-- Dashboard link --> */}
+                    <Link
+                      to={x.pageLink}
+                      aria-current="page"
+                      className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px]  focus:border-b-2 border-teal-500 pb-2  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
+                      href="#"
+                      data-te-nav-link-ref
+                    >
+                      {x.name}
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
 
@@ -265,3 +171,158 @@ export default function NavBar() {
               placeholder="Search"
             /> */
 }
+
+// <ul
+// className="list-style-none mr-auto flex flex-col pl-0 lg:flex-row "
+// data-te-navbar-nav-ref
+// >
+// <li
+//   id="one"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   {/* <!-- Dashboard link --> */}
+//   <Link
+//     to="/categories"
+//     aria-current="page"
+//     className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px]  focus:border-b-2 border-teal-500 pb-2  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
+//     href="#"
+//     data-te-nav-link-ref
+//   >
+//     CATEGORIES
+//   </Link>
+// </li>
+// {/* <!-- Team link --> */}
+// <li
+//   id="two"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/itemclasses"
+//     aria-current="page"
+//     className="text-neutral-500  focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     href="#"
+//     data-te-nav-link-ref
+//   >
+//     ITEM CLASSES
+//   </Link>
+// </li>
+// {/* <!-- Projects link --> */}
+// <li
+//   id="three"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/items"
+//     aria-current="page"
+//     className=" text-neutral-500 focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     href="#"
+//     data-te-nav-link-ref
+//   >
+//     ITEMS
+//   </Link>
+// </li>
+
+// <li
+//   id="four"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/users"
+//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     data-te-nav-link-ref
+//   >
+//     USERS
+//   </Link>
+// </li>
+// {/* shop Owner */}
+
+// <li
+//   id="four"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/shopitems"
+//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     data-te-nav-link-ref
+//   >
+//     SHOP ITEMS
+//   </Link>
+// </li>
+// {/* <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
+//   <Link
+//     to="/requisitions"
+//     className="focus:border-b-2 border-teal-500 pb-3 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//   ></Link>
+// </li> */}
+
+// <li
+//   id="four"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/requisitions"
+//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     data-te-nav-link-ref
+//   >
+//     REQUISITION
+//   </Link>
+// </li>
+// <li
+//   id="four"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/shops"
+//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     data-te-nav-link-ref
+//   >
+//     SHOPS
+//   </Link>
+// </li>
+// <li
+//   id="four"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/shopsForCustomer"
+//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     data-te-nav-link-ref
+//   >
+//     CSHOPS
+//   </Link>
+// </li>
+// <li
+//   id="four"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/cart"
+//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     data-te-nav-link-ref
+//   >
+//     CART
+//   </Link>
+// </li>
+// <li
+//   id="four"
+//   className="mb-4 lg:mb-0 lg:pr-2"
+//   data-te-nav-item-ref
+// >
+//   <Link
+//     to="/orders"
+//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+//     data-te-nav-link-ref
+//   >
+//     ORDERS
+//   </Link>
+// </li>
+// </ul>

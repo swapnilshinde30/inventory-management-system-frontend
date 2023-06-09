@@ -1,9 +1,11 @@
 import React from "react";
-import { SlClose } from "react-icons/sl";
 import { useState } from "react";
+import NavBar from "../navbar";
+import RequisitionForm from "../../Forms/RequisitionForm";
 const Requisitions = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [shopName, setShopName] = useState("");
+
   const shops = [
     { _id: 1, name: "Sadanand Kirana Store", category: "Grocery" },
     { _id: 2, name: "Surya Sweets", category: "Sweets" },
@@ -19,7 +21,7 @@ const Requisitions = () => {
       mobile: "9922992210",
       date: "05/06/2023",
       Address: "Pashan",
-      Status:"PLACED"
+      Status: "PLACED",
     },
     {
       _id: 2,
@@ -29,7 +31,7 @@ const Requisitions = () => {
       mobile: "9922992211",
       date: "06/06/2023",
       Address: "Bavdhan",
-      Status:"DISPATCHED"
+      Status: "DISPATCHED",
     },
   ];
 
@@ -37,8 +39,17 @@ const Requisitions = () => {
     console.log(name);
     setShopName(name);
   };
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
+      <RequisitionForm
+        isModalOpen={isModalOpen}
+        handleModalClose={handleModalClose}
+      />
+      <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           <p className="mx-12 my-5 font-semibold">Filter</p>
@@ -106,7 +117,7 @@ const Requisitions = () => {
                       key={user._id}
                       className="border rounded-lg h-20 px-2 py-2
                  hover:border-teal-400 focus:outline-none cursor-pointer"
-                      onClick={() => setShowModal(true)}
+                      onClick={() => setIsModalOpen(true)}
                     >
                       <div className="flex flex-row space-x-5  pt-2">
                         <div>
@@ -147,111 +158,24 @@ const Requisitions = () => {
                           <p className=" text-gray-400 dark:text-gray-500">
                             Status
                           </p>
-                          <div className={user.Status==="PLACED" ? "text-teal-500 font-semibold" : "text-green-500 font-semibold"}>{user.Status}</div>
+                          <div
+                            className={
+                              user.Status === "PLACED"
+                                ? "text-teal-500 font-semibold"
+                                : "text-green-500 font-semibold"
+                            }
+                          >
+                            {user.Status}
+                          </div>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
-            
               </div>
-            
-            </div>
-            {/* <div className="h-screen border-r border-slate-200"> */}
-            <div>
-              {showModal ? (
-                <>
-                  <div class=" absolute mt-3 h-auto w-[420px] transition-all ease-in-out">
-                    <div
-                      class="relative"
-                      aria-labelledby="modal-title"
-                      role="dialog"
-                      aria-modal="true"
-                    >
-                      <div class="flex min-h-full items-end justify-center text-center sm:items-center">
-                        <div class="overflow-hidden bg-white text-left border border-cyan-800 transition-all my-1 w-96">
-                          <div className="py-4 px-4">
-                            <div className="flex flex-col">
-                              <div className="text-center" id="Image">
-                                <img
-                                  src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
-                                  className="rounded-full mx-auto"
-                                  style={{ height: "65px", width: "65px" }}
-                                  alt=""
-                                  loading="lazy"
-                                />
-                                <div id="details" className="text-center mb-5">
-                                  Sachin Chavan 9929929921
-                                </div>
-                                <div className="flex flex-row mb-5 pl-5 space-x-[210px] bg-neutral-100 rounded-lg h-10">
-                                  <div className="font-bold">Rs.460</div>
-                                  <div className="font-semibold">02 Items</div>
-                                </div>
-                                <div className="flex flex-col pl-5 mb-2 bg-neutral-50 rounded-lg h-[60px]">
-                                  <div className="text-start text-teal-600">
-                                    Wheat(Punjab Sihor){" "}
-                                  </div>
-                                  <div className="flex flex-row space-x-14">
-                                    <div className="font-bold">Rs.60/Kg</div>
-                                    <span>Ordered:5 KG</span>
-                                    <div className="font-semibold">Rs.300</div>
-                                  </div>
-                                </div>
-                                <div className="flex flex-col pl-5 mb-2 bg-neutral-50 rounded-lg h-[60px]">
-                                  <div className="text-start  text-teal-600">
-                                    Rice(Basmati){" "}
-                                  </div>
-                                  <div className="flex flex-row space-x-14">
-                                    <div className="font-bold">Rs.80/Kg</div>
-                                    <span>Ordered:2 KG</span>
-                                    <div className="font-semibold">Rs.160</div>
-                                  </div>
-                                </div>
-                                <div className="flex flex-col pl-5 mb-5 rounded-lg h-[60px]">
-                                  <div className="text-start  text-teal-600">
-                                    Bill Summary{" "}
-                                  </div>
-                                  <div className="flex flex-row space-x-[200px]">
-                                    <div className="font-bold">Item Total</div>
-                                    <div className="font-semibold">Rs.460</div>
-                                  </div>
-                                </div>
-                                <div className="flex flex-col pl-5 bg-neutral-100 rounded-lg h-[120px]">
-                                  <div className="flex flex-row mt-5 mb-5 space-x-[210px]">
-                                    <div className="font-bold  text-teal-600">Total</div>
-                                    <div className="font-semibold">Rs.460</div>
-                                  </div>
-                                  <div className="flex space-x-[120px]">
-                                    <button
-                                      type="button"
-                                      className="ml rounded-full text-white border border-neutral-500 bg-orange-400 px-6 pb-1 pt-1"
-                                      onClick={() => setShowModal(false)}
-                                    >
-                                      Reject
-                                    </button>
-                                    <button
-                                      type="button"
-                                      className="ml rounded-full text-white border border-neutral-500 bg-teal-600 px-6 pb-1 pt-1"
-                                      onClick={() => setShowModal(false)}
-                                    >
-                                      Accept
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              ) : null}
             </div>
           </div>
-          
         </div>
-        
       </div>
       {/* </div> */}
 

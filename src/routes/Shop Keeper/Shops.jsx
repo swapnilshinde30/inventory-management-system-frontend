@@ -6,21 +6,23 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 import React from "react";
 import { SlClose } from "react-icons/sl";
+import NavBar from "../navbar";
 
 const Shops = () => {
   const [showModal, setShowModal] = React.useState(false);
   const shops = [
-    { _id: 1, shop: "Sadanand Kirana Store", category: "Grocery" },
-    { _id: 1, shop: "Surya Sweets", category: "Sweets" },
-    { _id: 1, shop: "Dhiraj Cafe", category: "Beverage" },
-    { _id: 1, shop: "Himanshu Medical", category: "Medical" },
-    { _id: 1, shop: "Vaishnavi Fruits", category: "Fruits" },
-    { _id: 1, shop: "Swapnil Bakery", category: "Bakery" },
-    { _id: 1, shop: "Sachin Vegitables", category: "Vegitables" },
+    { _id: 1, shop: "Sadanand Kirana Store", category: "Grocery",owner:"Sadanand",shopId:"SADA01" },
+    { _id: 1, shop: "Surya Sweets", category: "Sweets",owner:"Surya",shopId:"SURYA02" },
+    { _id: 1, shop: "Dhiraj Cafe", category: "Beverage",owner:"Dhiraj",shopId:"DHI03" },
+    { _id: 1, shop: "Himanshu Medical", category: "Medical",owner:"Himanshu",shopId:"HIM04" },
+    { _id: 1, shop: "Vaishnavi Fruits", category: "Fruits" ,owner:"Vaishnavi",shopId:"VAIS05"},
+    { _id: 1, shop: "Swapnil Bakery", category: "Bakery",owner:"Swapnil",shopId:"SWAP06" },
+    { _id: 1, shop: "Sachin Vegitables", category: "Vegitables" ,owner:"Sachin",shopId:"SAC07"},
   ];
- 
+
   return (
     <>
+    <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
@@ -79,24 +81,67 @@ const Shops = () => {
                         <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                           <div className="flex border border-b-black">
                             <div className="font-semibold mt-6 ml-6">
-                              <p>ADD CATEGORY</p>
+                              <p>ADD SHOP</p>
                             </div>
-                            <div className="ml-72 mt-6 mb-4">
+                            <div className="ml-[350px] mt-6 mb-4">
                               <SlClose
                                 className="w-7 h-7 text-neutral-500 cursor-pointer"
                                 onClick={() => setShowModal(false)}
                               />
                             </div>
                           </div>
+
                           <div className="mx-7 space-y-2 my-5">
                             <input
                               type="text"
-                              placeholder="Shop Name"
+                              placeholder="Name"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+
+                            <input
+                              type="text"
+                              placeholder="Address Line 1"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+
+                            <input
+                              type="text"
+                              placeholder="Address Line 2"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+
+                            <input
+                              type="text"
+                              placeholder="Area"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+
+                            <input
+                              type="text"
+                              placeholder="City"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+
+                            <input
+                              type="text"
+                              placeholder="State"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+
+                            <input
+                              type="text"
+                              placeholder="ZipCode"
                               // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                               className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             />
                             <select
-                              id="itemClasses"
+                              id="Category"
                               class="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             >
                               {" "}
@@ -110,6 +155,39 @@ const Shops = () => {
                                 </option>
                               ))}
                             </select>
+
+                            <select
+                              id="Owner"
+                              class="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            >
+                              {" "}
+                              <option selected>Owner</option>
+                              {shops.map((owners) => (
+                                <option
+                                  key={owners._id}
+                                  value={owners._id}
+                                >
+                                  {owners.owner}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+  
+                          <div className="ml-7">Contact Person</div>
+                          <div className="flex mx-7 space-x-2 my-5">
+                         
+                            <input
+                              type="text"
+                              placeholder="Name"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
+                          <input
+                              type="text"
+                              placeholder="Phone"
+                              // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                              className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            />
                           </div>
 
                           <div className="flex p-8">
@@ -150,11 +228,15 @@ const Shops = () => {
                 <div class="ml-2 mt-2 w-10 ...">
                   <BsShop className="h-5 w-5 text-neutral-500" />
                 </div>
-                <div class="mt-2 w-80 text-neutral-800">
+                <div class="mt-2 w-[250px] text-neutral-800">
                   <span className="text-neutral-500">Shop: </span>
                   {shop.shop}
                 </div>
-                <div class="mt-2 w-64 text-neutral-800">
+                <div class="mt-2 w-[250px] text-neutral-800">
+                  <span className="text-neutral-500">ShopId: </span>
+                  {shop.shopId}
+                </div>
+                <div class="mt-2 w-[250px] text-neutral-800">
                   <span className="text-neutral-500">Category: </span>
                   {shop.category}
                 </div>
@@ -166,7 +248,7 @@ const Shops = () => {
                 >
                   <button
                     type="button"
-                    className="mt-1 w-10 ml-64 bg-white rounded-full h-10"
+                    className="mt-1 w-10 ml-[80px] bg-white rounded-full h-10"
                   >
                     <FiEdit className="ml-3 h-4 w-4 text-teal-500" />
                   </button>

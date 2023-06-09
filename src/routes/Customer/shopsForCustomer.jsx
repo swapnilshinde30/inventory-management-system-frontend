@@ -1,7 +1,8 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import ListGroup from "./common/listgroup";
+import ListGroup from "../common/listgroup";
+import NavBar from "../navbar";
 
 const ShopsForCustomer = () => {
   const [shopName, setShopName] = useState("");
@@ -103,6 +104,7 @@ const ShopsForCustomer = () => {
 
   return (
     <>
+    <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}

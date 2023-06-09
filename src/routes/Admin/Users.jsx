@@ -3,19 +3,72 @@ import { Link } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
+import { useState } from "react";
+import NavBar from "../navbar";
+import EditUserForm from "../../Forms/EditUserForm";
 
 const Users = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const users = [
-   
-    { _id: 1, firstName: "Sachin", lastName: "Chavan", Role: "ShopKeeper" },
-    { _id: 2, firstName: "Swapnil", lastName: "Shinde", Role: "ShopKeeper" },
-    { _id: 1, firstName: "Sadanand", lastName: "Fulari", Role: "Customer" },
-    { _id: 1, firstName: "Dhiraj", lastName: "Shinde", Role: "Customer" },
-    { _id: 1, firstName: "Surya", lastName: "Lad", Role: "Customer" },
-    { _id: 1, firstName: "Himanshu", lastName: "Patil", Role: "Customer" },
+    {
+      _id: 1,
+      firstName: "Sachin",
+      lastName: "Chavan",
+      Role: "ShopKeeper",
+      LastLoggedIn: "08-06-2023",
+    },
+    {
+      _id: 2,
+      firstName: "Swapnil",
+      lastName: "Shinde",
+      Role: "ShopKeeper",
+      LastLoggedIn: "08-06-2023",
+    },
+    {
+      _id: 3,
+      firstName: "Sadanand",
+      lastName: "Fulari",
+      Role: "Customer",
+      LastLoggedIn: "08-06-2023",
+    },
+    {
+      _id: 4,
+      firstName: "Dhiraj",
+      lastName: "Shinde",
+      Role: "Customer",
+      LastLoggedIn: "08-06-2023",
+    },
+    {
+      _id: 5,
+      firstName: "Surya",
+      lastName: "Lad",
+      Role: "Customer",
+      LastLoggedIn: "08-06-2023",
+    },
+    {
+      _id: 6,
+      firstName: "Himanshu",
+      lastName: "Patil",
+      Role: "Customer",
+      LastLoggedIn: "08-06-2023",
+    },
   ];
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+  //   let user1=[...new Map(users.map(x=>[x.Role,x])).values()];
+  // console.log(user1);
+  // const user1=[...new Set(users)]
+  // console.log(user1);
   return (
     <>
+      <EditUserForm
+        isModalOpen={isModalOpen}
+        handleModalClose={handleModalClose}
+      />
+      <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
@@ -61,37 +114,46 @@ const Users = () => {
         <div>
           <div className="">
             {users.map((user) => (
-              <div class="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-11">
+              <div class="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-5">
                 <div class="ml-2 mt-2 w-10 ...">
                   <AiOutlineUser className="h-5 w-5 text-neutral-500" />
                 </div>
-                <div class="mt-2 w-80 text-neutral-800">
+                <div class="mt-2 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Name: </span>
                   {user.firstName + "  " + user.lastName}
                 </div>
-                <div class="mt-2 w-64 text-neutral-800">
+                <div class="mt-2 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Role: </span>
                   {user.Role}
                 </div>
-
+                <div class="mt-2 w-[220px] text-neutral-800">
+                  <span className="text-neutral-500">Last LoggedIn: </span>
+                  {user.LastLoggedIn}
+                </div>
+                {/* 
                 <Link
                   to="/categories/new"
                   className="nav-link mr-5"
                   aria-current="page"
-                >
+                > */}
+                <div className="flex-1">
                   <button
                     type="button"
-                    className="mt-1 w-10 ml-64  bg-white rounded-full h-10"
+                    className="mt-1 w-10 ml-[180px] mr-3 bg-white rounded-full h-10"
                   >
-                    <FiEdit className="ml-3 h-4 w-4 text-teal-500 hover:scale-110 transition-all duration-500" />
+                    <FiEdit
+                      className="ml-3 h-4 w-4 text-teal-500 hover:scale-110 transition-all duration-500"
+                      onClick={() => setIsModalOpen(true)}
+                    />
                   </button>
-                </Link>
+                </div>
+                {/* </Link> */}
                 <div class="mr-5">
                   <button
                     type="button"
                     className="mt-1 w-10 mr-2 bg-white rounded-full h-10"
                   >
-                    <AiOutlineDelete className="ml-3 h-5 w-5 text-teal-500 hover:scale-110 transition-all duration-500" />
+                    <AiOutlineDelete className="ml-2 h-5 w-5 text-teal-500 hover:scale-110 transition-all duration-500" />
                   </button>
                 </div>
               </div>
