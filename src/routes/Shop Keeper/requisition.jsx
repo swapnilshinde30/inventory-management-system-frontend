@@ -86,7 +86,7 @@ const Requisitions = () => {
           <div className="flex flex-row">
             <div className="pr-10 w-[650px]">
               <div className="mt-5 w-auto">
-                <div class="flex flex-row space-x-2 pl-5 pt-2">
+                <div className="flex flex-row space-x-2 pl-5 pt-2">
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     {shops.map((shop) => (
                       <div
@@ -95,7 +95,7 @@ const Requisitions = () => {
                         className="border rounded-lg w-28 h-20 px-2 py-2  hover:border-teal-400 focus:outline-none cursor-pointer"
                         onClick={() => handleSelectShop(shop.name)}
                       >
-                        <a>
+                        <a href="#">
                           <div>{shop.name}</div>
                         </a>
                       </div>
@@ -110,7 +110,7 @@ const Requisitions = () => {
                 </p>
               </div>
               <div>
-                <div class="flex flex-col pl-5 pt-2 space-y-2 w-auto">
+                <div className="flex flex-col pl-5 pt-2 space-y-2 w-auto">
                   {users.map((user) => (
                     <div
                       id={user._id}
@@ -181,41 +181,41 @@ const Requisitions = () => {
 
       <div className="flex flex-col">
         <div className="flex-none w-56 h-screen border-r border-slate-200  space-y-2">
-          <div class="flex items-center ml-5 mt-5">
+          <div className="flex items-center ml-5 mt-5">
             <input
               type="checkbox"
               value=""
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
               for="disabled-checked-checkbox"
-              class="ml-2 font-base text-gray-400 dark:text-gray-500"
+              className="ml-2 font-base text-gray-400 dark:text-gray-500"
             >
               All
             </label>
           </div>
-          <div class="flex items-center ml-5">
+          <div className="flex items-center ml-5">
             <input
               type="checkbox"
               value=""
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
               for="disabled-checked-checkbox"
-              class="ml-2 font-base text-gray-400 dark:text-gray-500"
+              className="ml-2 font-base text-gray-400 dark:text-gray-500"
             >
               Placed
             </label>
           </div>
-          <div class="flex items-center ml-5">
+          <div className="flex items-center ml-5">
             <input
               type="checkbox"
               value=""
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
               for="disabled-checked-checkbox"
-              class="ml-2 font-base text-gray-400 dark:text-gray-500"
+              className="ml-2 font-base text-gray-400 dark:text-gray-500"
             >
               Dispatched
             </label>
@@ -224,53 +224,53 @@ const Requisitions = () => {
             <div className="flex w-56 border-r border-b border-slate-200 space-y-2"></div>
             <div>
               {" "}
-              <div class="flex items-center ml-5 mt-5">
+              <div className="flex items-center ml-5 mt-5">
                 <input
                   type="checkbox"
                   value=""
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
-                <label class="ml-2 font-base text-gray-400 dark:text-gray-500">
+                <label className="ml-2 font-base text-gray-400 dark:text-gray-500">
                   Today
                 </label>
               </div>
-              <div class="flex items-center ml-5">
+              <div className="flex items-center ml-5">
                 <input
                   type="checkbox"
                   value=""
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
-                <label class="ml-2 font-base text-gray-400 dark:text-gray-500">
+                <label className="ml-2 font-base text-gray-400 dark:text-gray-500">
                   Yesterday
                 </label>
               </div>
-              <div class="flex items-center ml-5">
+              <div className="flex items-center ml-5">
                 <input
                   type="checkbox"
                   value=""
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
-                <label class="ml-2 font-base text-gray-400 dark:text-gray-500">
+                <label className="ml-2 font-base text-gray-400 dark:text-gray-500">
                   Last Week
                 </label>
               </div>
-              <div class="flex items-center ml-5">
+              <div className="flex items-center ml-5">
                 <input
                   type="checkbox"
                   value=""
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
-                <label class="ml-2 font-base text-gray-400 dark:text-gray-500">
+                <label className="ml-2 font-base text-gray-400 dark:text-gray-500">
                   Custom Date
                 </label>
               </div>
-              <div class="flex items-center ml-5">
+              <div className="flex items-center ml-5">
                 <input
                   type="checkbox"
                   value=""
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
-                <label class="ml-2 font-base text-gray-400 dark:text-gray-500">
+                <label className="ml-2 font-base text-gray-400 dark:text-gray-500">
                   Date Range
                 </label>
               </div>

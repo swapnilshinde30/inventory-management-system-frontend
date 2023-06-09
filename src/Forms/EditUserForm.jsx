@@ -50,18 +50,18 @@ const EditUserForm = ({ isModalOpen, handleModalClose }) => {
   return (
     <>
       <div
-        class="relative z-10"
+        className="relative z-10"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
         id="modal-body"
         onClick={(e) => e.target.id === "modal-body" && handleModalClose()}
       >
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
 
-        <div class="fixed inset-0 z-10 overflow-y-auto">
-          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-l transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-l transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div className="flex border border-b-black">
                 <div className="font-semibold text-black mt-6 ml-6">
                   <p>REGISTER</p>
@@ -78,50 +78,50 @@ const EditUserForm = ({ isModalOpen, handleModalClose }) => {
                 <input
                   type="text"
                   placeholder="First Name"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-full py-2 px-3 mb-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
                 <input
                   type="text"
                   placeholder="Last Name"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-full py-2 px-3 mb-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
                 <input
                   type="text"
                   placeholder="Address"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-full py-2 px-3 mb-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
                 <input
                   type="text"
                   placeholder="Email"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-full py-2 px-3 mb-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
                 <input
                   type="text"
                   placeholder="Phone"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-full py-2 px-3 mb-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
 
                 <input
                   type="text"
                   placeholder="User Name"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-full py-2 px-3 mb-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
                 <input
                   type="password"
                   placeholder="Password"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-full py-2 px-3 mb-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
 
                 <select
                   id="Role"
-                  class="w-full py-2 px-3 mb-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                  className="w-full py-2 px-3 mb-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 >
                   {" "}
                   <option selected>Role</option>

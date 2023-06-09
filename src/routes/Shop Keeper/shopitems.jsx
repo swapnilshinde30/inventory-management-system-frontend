@@ -5,10 +5,11 @@ import ListGroup from "../common/listgroup";
 import React from "react";
 import { SlClose } from "react-icons/sl";
 import NavBar from "../navbar";
+import AddShopItemsForm from "../../Forms/AddShopItemsForm";
 
 const ShopItems = () => {
   const [shopName, setShopName] = useState("");
-  const [showModal, setShowModal] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const items = [
     {
@@ -93,9 +94,9 @@ const ShopItems = () => {
     { _id: 2, name: "Surya Sweets" },
     { _id: 3, name: "Dhiraj Cafe" },
     { _id: 4, name: "Himanshu Medical" },
-    { _id: 5, name: "Vaishnavi Fruits"},
-    { _id: 6, name: "Swapnil Bakery"},
-    { _id: 7, name: "Sachin Vegitables"},
+    { _id: 5, name: "Vaishnavi Fruits" },
+    { _id: 6, name: "Swapnil Bakery" },
+    { _id: 7, name: "Sachin Vegitables" },
   ];
 
   let count = 0;
@@ -117,23 +118,20 @@ const ShopItems = () => {
   console.log(arrayitem);
 
   const handleSelectShop = (name) => {
-    // console.log(name);
     setShopName(name);
     console.log(name);
-    // dispatch(
-    //   getAllShops({
-    //     currentPage,
-    //     pageSize,
-    //     genreName: gName,
-    //     title,
-    //     sortColumn,
-    //   })
-    // );
+  };
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
     <>
-    <NavBar />
+      <AddShopItemsForm
+        isModalOpen={isModalOpen}
+        handleModalClose={handleModalClose}
+      />
+      <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
@@ -168,139 +166,13 @@ const ShopItems = () => {
               </div>
             </div>
             <div className="flex-1">
-              {/* <Link
-                to="/categories/new"
-                className="nav-link"
-                aria-current="page"
-              > */}
               <button
                 type="button"
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                onClick={() => setShowModal(true)}
+                onClick={() => setIsModalOpen(true)}
               >
                 Add Item
               </button>
-              {/* </Link> */}
-              {showModal ? (
-                <>
-                  <div class=" absolute bottom-1 right-1 h-auto w-full transition-all ease-in-out max-w-[500px]">
-                    <div
-                      class="relative z-10"
-                      aria-labelledby="modal-title"
-                      role="dialog"
-                      aria-modal="true"
-                    >
-                      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
-                      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                          <div className="flex border border-b-black">
-                            <div className="font-semibold mt-6 ml-6">
-                              <p>ADD ITEMS</p>
-                            </div>
-                            <div className="ml-[350px] mt-6 mb-4">
-                              <SlClose
-                                className="w-7 h-7 text-neutral-500 cursor-pointer"
-                                onClick={() => setShowModal(false)}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="my-5 mx-7">
-                            <select
-                              id="shops"
-                              class="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-full"
-                            >
-                              {" "}
-                              <option selected>Select Shop</option>
-                              {shops.map((shop) => (
-                                <option key={shop._id} value={shop._id}>
-                                  {shop.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          <div className="my-2 mx-7">
-                            <select
-                              id="item"
-                              class="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-full"
-                            >
-                              {" "}
-                              <option selected>Select Items</option>
-                              {items.map((item) => (
-                                <option key={item._id} value={item._id}>
-                                  {item.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div className="flex flex-row">
-                            <div className="ml-[50px]"> 
-                              <p className="text-xl font-semibold text-emerald-500">Quantity Addition</p>
-                            </div>
-                            <div className="ml-[70px]">
-                              <p className="text-xl font-semibold text-emerald-500">Available Quantity</p>
-                            </div>
-                          </div>
-                          <div className="flex space-x-1 my-2 mx-7">
-                            <div class="form-outline mb-2 ">
-                              <input
-                                type="QuantityAddition"
-                                placeholder="Ammount"
-                                class="border rounded-full w-[100px] h-9 pl-4  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
-                              />
-                            </div>
-
-                            <div class="form-outline mb-2 ">
-                              <input
-                                type="QuantityAddition"
-                                placeholder="Unit"
-                                class="border rounded-full w-[100px] h-9 pl-8 mr-7 border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
-                              />
-                            </div>
-  
-
-                            <div class="form-outline mb-2 ">
-                              <input
-                                type="QuantityAddition"
-                                placeholder="Ammount"
-                                class="border rounded-full w-[100px] h-9 pl-4  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
-                              />
-                            </div>
-
-                            <div class="form-outline mb-2 ">
-                              <input
-                                type="Available Quantity"
-                                placeholder="Unit"
-                                class="border rounded-full w-[100px] h-9 pl-8  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
-                              />
-                            </div>
-                          </div>
-                       
-
-                          <div className="flex p-8">
-                            <button
-                              type="button"
-                              className="ml-[50px] rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                              onClick={() => setShowModal(false)}
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="button"
-                              className="ml-[150px] rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                              onClick={() => setShowModal(false)}
-                            >
-                              Add
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              ) : null}
             </div>
           </div>
         </div>

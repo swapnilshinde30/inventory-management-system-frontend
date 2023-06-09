@@ -2,7 +2,6 @@ import React from "react";
 import { SlClose } from "react-icons/sl";
 
 const AddItemsForm = ({ isModalOpen, handleModalClose }) => {
-  //   const [showModal, setShowModal] =useState(true);
   const itemClasses = [
     {
       _id: 1,
@@ -40,18 +39,18 @@ const AddItemsForm = ({ isModalOpen, handleModalClose }) => {
   return (
     <>
       <div
-        class="relative z-10"
+        className="relative z-10"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
         id="modal-body"
         onClick={(e) => e.target.id === "modal-body" && handleModalClose()}
       >
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
-        <div class="fixed inset-0 z-10 overflow-y-auto">
-          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div className="flex border border-b-black">
                 <div className="font-semibold mt-6 ml-6">
                   <p>ADD ITEMS</p>
@@ -67,12 +66,12 @@ const AddItemsForm = ({ isModalOpen, handleModalClose }) => {
                 <input
                   type="text"
                   placeholder="Name"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
                 <select
                   id="itemClasses"
-                  class="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                  className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 >
                   <option selected>Item Class</option>
                   {itemClasses.map((itemClass) => (
@@ -87,23 +86,23 @@ const AddItemsForm = ({ isModalOpen, handleModalClose }) => {
                 <input
                   type="text"
                   placeholder="Description"
-                  // class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                  // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                   className="w-[450px] py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                 />
               </div>
-              <div class="w-full md:w-[450px] md:max-w-full mx-auto">
+              <div className="w-full md:w-[450px] md:max-w-full mx-auto">
                 <div>
                   <form
                     method="POST"
                     // action="https://herotofu.com/start"
                     // enctype="multipart/form-data"
                   >
-                    <label class="">
+                    <label className="">
                       <input
                         required
                         name="photo"
                         type="file"
-                        class=" w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className=" w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                       />
                     </label>
                   </form>

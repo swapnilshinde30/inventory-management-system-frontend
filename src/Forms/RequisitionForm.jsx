@@ -1,46 +1,23 @@
 import React from "react";
-import { SlClose } from "react-icons/sl";
 
 const RequisitionForm = ({ isModalOpen, handleModalClose }) => {
   if (!isModalOpen) return null;
-  const users = [
-    {
-      _id: 1,
-      firstName: "Sachin",
-      lastName: "Chavan",
-      Role: "Shopkeeper",
-      mobile: "9922992210",
-      date: "05/06/2023",
-      Address: "Pashan",
-      Status: "PLACED",
-    },
-    {
-      _id: 2,
-      firstName: "Swapnil",
-      lastName: "Shinde",
-      Role: "Customer",
-      mobile: "9922992211",
-      date: "06/06/2023",
-      Address: "Bavdhan",
-      Status: "DISPATCHED",
-    },
-  ];
 
   return (
     <>
       <div
-        class="relative z-10"
+        className="relative z-10"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
         id="modal-body"
         onClick={(e) => e.target.id === "modal-body" && handleModalClose()}
       >
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
 
-        <div class="fixed inset-0 z-10 overflow-y-auto">
-          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-l transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-l transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div className="flex flex-col">
                 <div className="text-center" id="Image">
                   <img

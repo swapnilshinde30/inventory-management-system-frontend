@@ -1,5 +1,4 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -114,19 +113,19 @@ const Users = () => {
         <div>
           <div className="">
             {users.map((user) => (
-              <div class="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-5">
-                <div class="ml-2 mt-2 w-10 ...">
+              <div className="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-5">
+                <div className="ml-2 mt-2 w-10 ...">
                   <AiOutlineUser className="h-5 w-5 text-neutral-500" />
                 </div>
-                <div class="mt-2 w-[220px] text-neutral-800">
+                <div className="mt-2 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Name: </span>
                   {user.firstName + "  " + user.lastName}
                 </div>
-                <div class="mt-2 w-[220px] text-neutral-800">
+                <div className="mt-2 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Role: </span>
                   {user.Role}
                 </div>
-                <div class="mt-2 w-[220px] text-neutral-800">
+                <div className="mt-2 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Last LoggedIn: </span>
                   {user.LastLoggedIn}
                 </div>
@@ -148,7 +147,7 @@ const Users = () => {
                   </button>
                 </div>
                 {/* </Link> */}
-                <div class="mr-5">
+                <div className="mr-5">
                   <button
                     type="button"
                     className="mt-1 w-10 mr-2 bg-white rounded-full h-10"

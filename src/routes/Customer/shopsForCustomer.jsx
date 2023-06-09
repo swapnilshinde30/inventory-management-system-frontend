@@ -1,5 +1,4 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import ListGroup from "../common/listgroup";
 import NavBar from "../navbar";
@@ -104,7 +103,7 @@ const ShopsForCustomer = () => {
 
   return (
     <>
-    <NavBar />
+      <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
@@ -138,20 +137,6 @@ const ShopsForCustomer = () => {
                 </svg>
               </div>
             </div>
-            {/* <div className="flex-1">
-              <Link
-                to="/categories/new"
-                className="nav-link"
-                aria-current="page"
-              >
-                <button
-                  type="button"
-                  className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                >
-                  Add Item
-                </button>
-              </Link>
-            </div> */}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const navLinkNames = [
   { id: 1, name: "CATEGORIES", pageLink: "/categories", role: "admin" },
   { id: 2, name: "ITEMCLASSES", pageLink: "/itemclasses", role: "admin" },
@@ -94,7 +94,7 @@ export default function NavBar() {
               data-te-navbar-nav-ref
             >
               {navLinkNames
-                .filter((n) => n.role === "customer")
+                .filter((n) => n.role === "shopkeeper")
                 .map((x) => (
                   <li
                     id={x.id}
@@ -102,7 +102,7 @@ export default function NavBar() {
                     data-te-nav-item-ref
                   >
                     {/* <!-- Dashboard link --> */}
-                    <Link
+                    <NavLink
                       to={x.pageLink}
                       aria-current="page"
                       className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px]  focus:border-b-2 border-teal-500 pb-2  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
@@ -110,7 +110,7 @@ export default function NavBar() {
                       data-te-nav-link-ref
                     >
                       {x.name}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
             </ul>
