@@ -1,44 +1,45 @@
 // import React from "react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import AddItemClassesForm from "../../Forms/AddItemClassesForm";
 
 import NavBar from "../navbar";
+import { useItemClassStore } from "../../stores/itemClasseStore";
 const ItemClasses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [showModal, setShowModal] = useState(false);
-  const itemClasses = [
-    {
-      _id: 1,
-      name: "mocktail",
-      category: "beverage",
-      imagePath: "mocktail.jpg",
-    },
-    {
-      _id: 2,
-      name: "colddrink",
-      category: "bevarage",
-      imagePath: "colddrink.jpg",
-    },
-    { _id: 3, name: "khari", category: "bakery", imagePath: "khari.jpeg" },
-    { _id: 4, name: "cake", category: "bakery", imagePath: "cake.jpg" },
-    { _id: 5, name: "burfi", category: "sweets", imagePath: "burfi.jpg" },
-    { _id: 6, name: "namkeen", category: "sweets", imagePath: "namkeen.jpg" },
-    { _id: 7, name: "rice", category: "grains", imagePath: "rice.jpg" },
-    { _id: 8, name: "wheat", category: "grains", imagePath: "wheat.jpg" },
-    {
-      _id: 9,
-      name: "leafy greens",
-      category: "vegetables",
-      imagePath: "leafy greens.jpg",
-    },
-    {
-      _id: 10,
-      name: "cough syrup",
-      category: "medicine",
-      imagePath: "coughsyrup.jpg",
-    },
-  ];
+
+  // const itemClasses = [
+  //   {
+  //     _id: 1,
+  //     name: "mocktail",
+  //     category: "beverage",
+  //     imagePath: "mocktail.jpg",
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: "colddrink",
+  //     category: "bevarage",
+  //     imagePath: "colddrink.jpg",
+  //   },
+  //   { _id: 3, name: "khari", category: "bakery", imagePath: "khari.jpeg" },
+  //   { _id: 4, name: "cake", category: "bakery", imagePath: "cake.jpg" },
+  //   { _id: 5, name: "burfi", category: "sweets", imagePath: "burfi.jpg" },
+  //   { _id: 6, name: "namkeen", category: "sweets", imagePath: "namkeen.jpg" },
+  //   { _id: 7, name: "rice", category: "grains", imagePath: "rice.jpg" },
+  //   { _id: 8, name: "wheat", category: "grains", imagePath: "wheat.jpg" },
+  //   {
+  //     _id: 9,
+  //     name: "leafy greens",
+  //     category: "vegetables",
+  //     imagePath: "leafy greens.jpg",
+  //   },
+  //   {
+  //     _id: 10,
+  //     name: "cough syrup",
+  //     category: "medicine",
+  //     imagePath: "coughsyrup.jpg",
+  //   },
+  // ];
   // let itemClasses1=[...new Map(itemClasses.map(x=>[x.category,x])).values()];
   // console.log(itemClasses1);
   const shops = [
@@ -48,6 +49,12 @@ const ItemClasses = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+  const getAllItemClasses = useItemClassStore((state) => state.getItemClasses);
+  const itemClasses = useItemClassStore((state) => state.itemClasses);
+
+  useEffect(() => {
+    getAllItemClasses();
+  }, []);
 
   return (
     <>
@@ -118,7 +125,8 @@ const ItemClasses = () => {
                   src={
                     process.env.PUBLIC_URL +
                     "/images/itemclass/" +
-                    itemclass.imagePath
+                    itemclass.name +
+                    ".jpg"
                   }
                   alt="fruits"
                   className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
