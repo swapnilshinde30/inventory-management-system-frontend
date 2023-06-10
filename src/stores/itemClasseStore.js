@@ -8,7 +8,7 @@ export const useItemClassStore = create(
   devtools(
     immer((set) => ({
       itemClasses: [],
-      getItemClasses: async () => {
+      getAllItemClassesAPI: async () => {
         const response = await axios.get("http://localhost:3030/itemclasses");
         set((state) => {
           state.itemClasses = response.data.data;
@@ -16,7 +16,7 @@ export const useItemClassStore = create(
         });
       },
 
-      addItemClasses: async (payload) => {
+      addItemClassesAPI: async (payload) => {
         const response = await axios.post(
           "http://localhost:3030/itemclasses",
           payload

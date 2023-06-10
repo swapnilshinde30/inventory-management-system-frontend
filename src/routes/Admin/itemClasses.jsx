@@ -8,11 +8,13 @@ const ItemClasses = () => {
     { _id: 1, name: "Sadanand Kirana Store" },
     { _id: 2, name: "Surya Sweets" },
   ];
-  const getAllItemClasses = useItemClassStore((state) => state.getItemClasses);
+  const callGetAllItemClasses = useItemClassStore(
+    (state) => state.getAllItemClassesAPI
+  );
   const itemClasses = useItemClassStore((state) => state.itemClasses);
   console.log(itemClasses);
   useEffect(() => {
-    getAllItemClasses();
+    callGetAllItemClasses();
   }, []);
 
   return (

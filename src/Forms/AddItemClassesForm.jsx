@@ -14,7 +14,7 @@ const schema = yup.object().shape({
 const AddItemClassesForm = () => {
   const navigate = useNavigate();
   const [showModal] = useState(true);
-  const callAddItemAPI = useItemClassStore((state) => state.addItemClasses);
+  const callAddItemAPI = useItemClassStore((state) => state.addItemClassesAPI);
   const categories = useCategoryStore((state) => state.categories);
   const callgetAllCategoriesAPI = useCategoryStore(
     (state) => state.getCategories
