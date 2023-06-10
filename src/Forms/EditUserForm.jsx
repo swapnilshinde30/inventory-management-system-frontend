@@ -1,8 +1,11 @@
 import React from "react";
 import { SlClose } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const EditUserForm = ({ isModalOpen, handleModalClose }) => {
-  if (!isModalOpen) return null;
+const EditUserForm = () => {
+  const [showModal] = useState(true);
+  const navigate = useNavigate();
   const users = [
     {
       _id: 1,
@@ -49,13 +52,13 @@ const EditUserForm = ({ isModalOpen, handleModalClose }) => {
   ];
   return (
     <>
+    {showModal?(
       <div
         className="relative z-10"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
-        id="modal-body"
-        onClick={(e) => e.target.id === "modal-body" && handleModalClose()}
+      
       >
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
 
@@ -69,7 +72,7 @@ const EditUserForm = ({ isModalOpen, handleModalClose }) => {
                 <div className="ml-[360px] mt-6 mb-4">
                   <SlClose
                     className="w-7 h-7 text-neutral-500 cursor-pointer"
-                    onClick={() => handleModalClose()}
+                    onClick={() => navigate('/users')}
                   />
                 </div>
               </div>
@@ -137,7 +140,7 @@ const EditUserForm = ({ isModalOpen, handleModalClose }) => {
                 <button
                   type="button"
                   className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                  onClick={() => handleModalClose()}
+                  onClick={() => navigate('/users')}
                 >
                   Cancel
                 </button>
@@ -152,7 +155,7 @@ const EditUserForm = ({ isModalOpen, handleModalClose }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div>):null}
     </>
   );
 };

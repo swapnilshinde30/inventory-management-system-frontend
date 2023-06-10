@@ -2,17 +2,10 @@
 import { Link, NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import NavBar from "../navbar";
-import AddCategoryForm from "../../Forms/AddCategoryForm";
 import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
 
 const Categories = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
   const getAllCategories = useCategoryStore((state) => state.getCategories);
   const categories = useCategoryStore((state) => state.categories);
 
@@ -24,10 +17,6 @@ const Categories = () => {
 
   return (
     <>
-      <AddCategoryForm
-        isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-      />
       <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
@@ -62,14 +51,13 @@ const Categories = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1">
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(true)}
+            <div className="flex-1 mt-5">
+              <NavLink
+                to={`/categories/new`}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
               >
                 Add Category
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import NavBar from "../navbar";
-import RequisitionForm from "../../Forms/RequisitionForm";
 import { useRequisitionStore } from "../../stores/requisitionStore";
+import { NavLink } from "react-router-dom";
 const Requisitions = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [shopName, setShopName] = useState("");
 
   const getAllRequisitions = useRequisitionStore(
@@ -49,16 +48,9 @@ const Requisitions = () => {
     console.log(name);
     setShopName(name);
   };
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <>
-      <RequisitionForm
-        isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-      />
       <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
@@ -122,12 +114,13 @@ const Requisitions = () => {
               <div>
                 <div className="flex flex-col pl-5 pt-2 space-y-2 w-auto">
                   {users.map((user) => (
+                    <NavLink to={'/requisitions/new'}>
                     <div
                       id={user._id}
                       key={user._id}
                       className="border rounded-lg h-20 px-2 py-2
                  hover:border-teal-400 focus:outline-none cursor-pointer"
-                      onClick={() => setIsModalOpen(true)}
+                      // onClick={() => setIsModalOpen(true)}
                     >
                       <div className="flex flex-row space-x-5  pt-2">
                         <div>
@@ -180,6 +173,7 @@ const Requisitions = () => {
                         </div>
                       </div>
                     </div>
+                    </NavLink>
                   ))}
                 </div>
               </div>

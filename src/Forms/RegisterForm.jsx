@@ -3,9 +3,12 @@ import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FiPhone } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
+// import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const RegisterForm = ({ isModalOpen, handleModalClose }) => {
-  if (!isModalOpen) return null;
+const RegisterForm = () => {
+  // const navigate = useNavigate();
+  const [showModal] = useState(true);
   const users = [
     {
       _id: 1,
@@ -31,13 +34,13 @@ const RegisterForm = ({ isModalOpen, handleModalClose }) => {
 
   return (
     <>
+    {showModal?(
       <div
         className="relative z-10"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
-        id="modal-body"
-        onClick={(e) => e.target.id === "modal-body" && handleModalClose()}
+      
       >
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
@@ -397,6 +400,7 @@ const RegisterForm = ({ isModalOpen, handleModalClose }) => {
           </div>
         </div>
       </div>
+    ):null}
     </>
   );
 };

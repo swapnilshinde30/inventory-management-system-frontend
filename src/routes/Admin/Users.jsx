@@ -6,20 +6,15 @@ import { useEffect, useState } from "react";
 import NavBar from "../navbar";
 import EditUserForm from "../../Forms/EditUserForm";
 import { useUserStore } from "../../stores/userStore";
+import { NavLink } from "react-router-dom";
 
 const Users = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const getAllUsers = useUserStore((state) => state.getUsers);
   const users = useUserStore((state) => state.users);
 
   useEffect(() => {
     getAllUsers();
   }, []);
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   const handleSelect = (role) => {
     getAllUsers(role);
@@ -33,10 +28,6 @@ const Users = () => {
   let a = Math.random();
   return (
     <>
-      <EditUserForm
-        isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-      />
       <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
@@ -123,15 +114,12 @@ const Users = () => {
                   aria-current="page"
                 > */}
                 <div className="flex-1">
-                  <button
-                    type="button"
+                  <NavLink
+                    to={"/users/new"}
                     className="mt-1 w-10 ml-[180px] mr-3 bg-white rounded-full h-10"
                   >
-                    <FiEdit
-                      className="ml-3 h-4 w-4 text-teal-500 hover:scale-110 transition-all duration-500"
-                      onClick={() => setIsModalOpen(true)}
-                    />
-                  </button>
+                    <FiEdit className="ml-3 h-4 w-4 text-teal-500 hover:scale-110 transition-all duration-500" />
+                  </NavLink>
                 </div>
                 {/* </Link> */}
                 <div className="mr-5">

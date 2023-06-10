@@ -1,5 +1,5 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, NavLink, Navigate } from "react-router-dom";
 import { BsShop } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -8,12 +8,9 @@ import { useEffect, useState } from "react";
 import React from "react";
 
 import NavBar from "../navbar";
-import AddShopForm from "../../Forms/AddShopForm";
 import { useShopStore } from "../../stores/shopStore";
 
 const Shops = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const getAllShops = useShopStore((state) => state.getShops);
   const shops = useShopStore((state) => state.shops);
 
@@ -72,16 +69,8 @@ const Shops = () => {
   //   },
   // ];
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <>
-      <AddShopForm
-        isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-      />
       <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
@@ -116,14 +105,13 @@ const Shops = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1">
-              <button
-                type="button"
-                className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                onClick={() => setIsModalOpen(true)}
+            <div className="flex-1 mt-5">
+              <NavLink
+                to={"/shops/new"}
+                className="ml-10  md:ml-96  rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
               >
                 Add Shop
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -153,18 +141,13 @@ const Shops = () => {
                   {shop.area}
                 </div>
 
-                <Link
-                  to="/categories/new"
-                  className="nav-link mr-5"
-                  aria-current="page"
+                <NavLink
+                  to={"/shops/new"}
+                  className="mt-1 w-10 ml-[80px] mr-2 bg-white rounded-full h-10"
                 >
-                  <button
-                    type="button"
-                    className="mt-1 w-10 ml-[80px] bg-white rounded-full h-10"
-                  >
-                    <FiEdit className="ml-3 h-4 w-4 text-teal-500" />
-                  </button>
-                </Link>
+                  <FiEdit className="mt-3 ml-3 h-4 w-4 text-teal-500" />
+                </NavLink>
+
                 <div className="mr-5">
                   <button
                     type="button"

@@ -1,25 +1,15 @@
 import image from "../../src/images/images/loginPage1.jpg";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiLock } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React from "react";
 import { useState } from "react";
 
-import RegisterForm from "../Forms/RegisterForm";
-
 function LoginPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <>
-      <RegisterForm
-        isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-      />
+  
       <section className="gradient-form bg-gradient-to-r from-emerald-400 to-teal-600 h-full">
         <div className="flex items-center justify-center ">
           <div
@@ -73,10 +63,11 @@ function LoginPage() {
                         Login
                       </button>
                     </Link>
+                    
                     <div className="ml-14 mb-8 text-sm text-blue-600">
-                      <a href="#!" onClick={() => setIsModalOpen(true)}>
+                    <NavLink to={'/login/new'}>
                         Create Account
-                      </a>
+                        </NavLink>
                     </div>
 
                     <div className="ml-14 text-xs  text-blue-600">

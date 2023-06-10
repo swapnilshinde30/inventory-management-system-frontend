@@ -2,11 +2,11 @@
 
 import React from "react";
 import NavBar from "../navbar";
-import AddItemsForm from "../../Forms/AddItemsForm";
+import AddItemsForm from "../../Forms/ItemsForm";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Items = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const items = [
     {
       _id: 1,
@@ -78,10 +78,6 @@ const Items = () => {
     },
   ];
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
   let count = 0;
 
   let arrayitem = [];
@@ -102,10 +98,6 @@ const Items = () => {
 
   return (
     <>
-      <AddItemsForm
-        isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-      />
       <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
@@ -140,14 +132,13 @@ const Items = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1">
-              <button
-                type="button"
+            <div className="flex-1 mt-5">
+              <NavLink
+                to={"/items/new"}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                onClick={() => setIsModalOpen(true)}
               >
                 Add Item
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>

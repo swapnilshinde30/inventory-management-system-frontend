@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 import ListGroup from "../common/listgroup";
 import React from "react";
 import NavBar from "../navbar";
-import AddShopItemsForm from "../../Forms/AddShopItemsForm";
 import { useShopItemStore } from "../../stores/shopitemStore";
+import { NavLink } from "react-router-dom";
 
 const ShopItems = () => {
   const [shopName, setShopName] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getAllShopItems = useShopItemStore((state) => state.getShopItems);
   const shopitems = useShopItemStore((state) => state.shopitems);
@@ -128,16 +127,9 @@ const ShopItems = () => {
     setShopName(name);
     console.log(name);
   };
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <>
-      <AddShopItemsForm
-        isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-      />
       <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
@@ -172,14 +164,14 @@ const ShopItems = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1">
-              <button
-                type="button"
+            <div className="flex-1 mt-5">
+              <NavLink
+                to={'/shopitems/new'}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                onClick={() => setIsModalOpen(true)}
+          
               >
                 Add Item
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>

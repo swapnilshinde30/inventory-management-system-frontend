@@ -12,7 +12,6 @@ import Users from "../src/routes/Admin/Users";
 import Shops from "./routes/Shop Keeper/Shops";
 import { ThemeProvider } from "@material-tailwind/react";
 import ItemClasses from "../src/routes/Admin/itemClasses";
-import ItemclassForm from "./routes/itemclassForm";
 import Items from "../src/routes/Admin/items";
 
 import ShopItems from "./routes/Shop Keeper/shopitems";
@@ -25,8 +24,14 @@ import Error404 from "./routes/errorPage/404";
 import Error403 from "./routes/errorPage/403";
 import Error401 from "./routes/errorPage/401";
 import Error500 from "./routes/errorPage/500";
-import AddItemClassesForm from "./Forms/AddItemClassesForm";
-import AddItemsForm from "./Forms/AddItemsForm";
+import ItemClassesForm from "./Forms/ItemClassesForm";
+import CategoryForm from "./Forms/CategoryForm";
+import ItemsForm from "./Forms/ItemsForm";
+import EditUserForm from "./Forms/EditUserForm";
+import ShopItemsForm from "./Forms/ShopItemsForm";
+import ShopForm from "./Forms/ShopForm";
+import RegisterForm from "./Forms/RegisterForm";
+import RequisitionForm from "./Forms/RequisitionForm";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -37,18 +42,25 @@ root.render(
           <Route path="/" element={<App />}>
             {/* <Route index="true" element={<HomePage/>}/> */}
             <Route path="login" element={<LoginPage />} />
+            <Route path="login/new" element={<RegisterForm />} />
             <Route index={true} element={<Categories />} />
             <Route path="categories" element={<Categories />} />
+            <Route path="/categories/new" element={<CategoryForm />} />
             <Route path="users" element={<Users />} />
+            <Route path="users/new" element={<EditUserForm />} />
             <Route path="shops" element={<Shops />} />
+            <Route path="/shops/new" element={<ShopForm />} />
             <Route path="/itemclasses" element={<ItemClasses />} />
-            <Route path="/itemclasses/new" element={<AddItemClassesForm />} />
+            <Route path="/itemclasses/new" element={<ItemClassesForm />} />
             <Route path="items" element={<Items />} />
+            <Route path="items/new" element={<ItemsForm />} />
             <Route path="shopitems" element={<ShopItems />} />
+            <Route path="/shopitems/new" element={<ShopItemsForm />} />
             <Route path="shopsForCustomer" element={<ShopsForCustomer />} />
             <Route path="cart" element={<Cart />} />
             <Route path="orders" element={<Order />} />
             <Route path="requisitions" element={<Requisitions />} />
+            <Route path="requisitions/new" element={<RequisitionForm />} />
             <Route path="home" element={<HomePage />} />
             <Route path="error404" element={<Error404 />} />
             <Route path="error403" element={<Error403 />} />
