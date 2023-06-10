@@ -1,67 +1,22 @@
 // import React from "react";
 import React, { useEffect, useState } from "react";
-
-import AddItemClassesForm from "../../Forms/AddItemClassesForm";
-
 import NavBar from "../navbar";
 import { useItemClassStore } from "../../stores/itemClasseStore";
+import { NavLink } from "react-router-dom";
 const ItemClasses = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const itemClasses = [
-  //   {
-  //     _id: 1,
-  //     name: "mocktail",
-  //     category: "beverage",
-  //     imagePath: "mocktail.jpg",
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "colddrink",
-  //     category: "bevarage",
-  //     imagePath: "colddrink.jpg",
-  //   },
-  //   { _id: 3, name: "khari", category: "bakery", imagePath: "khari.jpeg" },
-  //   { _id: 4, name: "cake", category: "bakery", imagePath: "cake.jpg" },
-  //   { _id: 5, name: "burfi", category: "sweets", imagePath: "burfi.jpg" },
-  //   { _id: 6, name: "namkeen", category: "sweets", imagePath: "namkeen.jpg" },
-  //   { _id: 7, name: "rice", category: "grains", imagePath: "rice.jpg" },
-  //   { _id: 8, name: "wheat", category: "grains", imagePath: "wheat.jpg" },
-  //   {
-  //     _id: 9,
-  //     name: "leafy greens",
-  //     category: "vegetables",
-  //     imagePath: "leafy greens.jpg",
-  //   },
-  //   {
-  //     _id: 10,
-  //     name: "cough syrup",
-  //     category: "medicine",
-  //     imagePath: "coughsyrup.jpg",
-  //   },
-  // ];
-  // let itemClasses1=[...new Map(itemClasses.map(x=>[x.category,x])).values()];
-  // console.log(itemClasses1);
   const shops = [
     { _id: 1, name: "Sadanand Kirana Store" },
     { _id: 2, name: "Surya Sweets" },
   ];
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
   const getAllItemClasses = useItemClassStore((state) => state.getItemClasses);
   const itemClasses = useItemClassStore((state) => state.itemClasses);
-
+  console.log(itemClasses);
   useEffect(() => {
     getAllItemClasses();
   }, []);
 
   return (
     <>
-      <AddItemClassesForm
-        isModalOpen={isModalOpen}
-        handleModalClose={handleModalClose}
-      />
       <NavBar />
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
@@ -97,13 +52,12 @@ const ItemClasses = () => {
               </div>
             </div>
             <div className="flex-1">
-              <button
-                type="button"
+              <NavLink
+                to={`/itemclasses/new`}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                onClick={() => setIsModalOpen(true)}
               >
                 Add Item class
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>

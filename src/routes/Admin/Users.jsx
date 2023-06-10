@@ -10,51 +10,6 @@ import { useUserStore } from "../../stores/userStore";
 const Users = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const users = [
-  //   {
-  //     _id: 1,
-  //     firstName: "Sachin",
-  //     lastName: "Chavan",
-  //     Role: "ShopKeeper",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 2,
-  //     firstName: "Swapnil",
-  //     lastName: "Shinde",
-  //     Role: "ShopKeeper",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 3,
-  //     firstName: "Sadanand",
-  //     lastName: "Fulari",
-  //     Role: "Customer",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 4,
-  //     firstName: "Dhiraj",
-  //     lastName: "Shinde",
-  //     Role: "Customer",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 5,
-  //     firstName: "Surya",
-  //     lastName: "Lad",
-  //     Role: "Customer",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 6,
-  //     firstName: "Himanshu",
-  //     lastName: "Patil",
-  //     Role: "Customer",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  // ];
-
   const getAllUsers = useUserStore((state) => state.getUsers);
   const users = useUserStore((state) => state.users);
 
@@ -66,6 +21,16 @@ const Users = () => {
     setIsModalOpen(false);
   };
 
+  const handleSelect = (role) => {
+    getAllUsers(role);
+  };
+
+  const userFilter = [
+    { id: 1, name: "All Users" },
+    { id: 2, name: "ShopKeeper", role: "shopkeeper" },
+    { id: 3, name: "Customer", role: "customer" },
+  ];
+  let a = Math.random();
   return (
     <>
       <EditUserForm
@@ -110,15 +75,32 @@ const Users = () => {
           </div>
         </div>
       </div>
-
       <div className="flex flex-row">
         <div className="flex-none w-56 h-screen border-r border-slate-200">
           {/* 3 */}
+          <div className=" mt-4 ">
+            <h4 className="ml-10 text-teal-700 mb-3 font-semibold">Users</h4>
+            <ul className="list-group ml-10 mt-2 mr-4">
+              {userFilter.map((user) => (
+                <li
+                  key={user.id + a}
+                  className="rounded-lg  text-left py-2 text-neutral-500 transition duration-500 hover:bg-teal-100 hover:text-neutral-700 focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 dark:focus:bg-neutral-600 dark:focus:text-neutral-200"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSelect(user.role)}
+                >
+                  {user.name}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div>
           <div className="">
             {users.map((user) => (
-              <div className="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-5">
+              <div
+                className="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-5"
+                key={user._id}
+              >
                 <div className="ml-2 mt-2 w-10 ...">
                   <AiOutlineUser className="h-5 w-5 text-neutral-500" />
                 </div>
@@ -165,7 +147,6 @@ const Users = () => {
           </div>
         </div>
       </div>
-
       {/* <div className="grid grid-row-2 gride-col-2">
         <div className="w-32 h-16  border-b border-r border-slate-200">1</div>
         <div className="w-32 border-r h-screen border-slate-200">2</div>

@@ -97,7 +97,7 @@ export default function NavBar() {
                 .filter((n) => n.role === "admin")
                 .map((x) => (
                   <li
-                    id={x.id}
+                    id={x.id + Math.random()}
                     className="mb-4 lg:mb-0 lg:pr-2"
                     data-te-nav-item-ref
                   >

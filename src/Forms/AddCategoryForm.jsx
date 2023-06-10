@@ -1,6 +1,7 @@
 import React from "react";
 import { SlClose } from "react-icons/sl";
-
+import { useItemClassStore } from "../stores/itemClasseStore";
+import { useCategoryStore } from "../stores/categoryStore";
 const AddCategoryForm = ({ isModalOpen, handleModalClose }) => {
 
   if (!isModalOpen) return null;

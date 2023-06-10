@@ -25,6 +25,8 @@ import Error404 from "./routes/errorPage/404";
 import Error403 from "./routes/errorPage/403";
 import Error401 from "./routes/errorPage/401";
 import Error500 from "./routes/errorPage/500";
+import AddItemClassesForm from "./Forms/AddItemClassesForm";
+import AddItemsForm from "./Forms/AddItemsForm";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -39,8 +41,8 @@ root.render(
             <Route path="categories" element={<Categories />} />
             <Route path="users" element={<Users />} />
             <Route path="shops" element={<Shops />} />
-            <Route path="itemclasses" element={<ItemClasses />} />
-            <Route path="itemclasses/new" element={<ItemclassForm />} />
+            <Route path="/itemclasses" element={<ItemClasses />} />
+            <Route path="/itemclasses/new" element={<AddItemClassesForm />} />
             <Route path="items" element={<Items />} />
             <Route path="shopitems" element={<ShopItems />} />
             <Route path="shopsForCustomer" element={<ShopsForCustomer />} />
