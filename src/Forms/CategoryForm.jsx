@@ -2,10 +2,34 @@ import React from "react";
 import { useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useCategoryStore } from "../stores/categoryStore";
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+});
 
 const CategoryForm = () => {
   const [showModal] = useState(true);
   const navigate = useNavigate();
+  const callAddCategoryAPI = useCategoryStore((state) => state.addCategoryAPI);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmitHandler = (data) => {
+    callAddCategoryAPI(data);
+    navigate("/categories");
+  };
+
   return (
     <>
       {showModal ? (
@@ -31,15 +55,17 @@ const CategoryForm = () => {
                     />
                   </div>
                 </div>
-                <div className="mx-7 my-5">
-                  <input
-                    type="text"
-                    placeholder="Category Name"
-                    // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                    className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                  />
-                </div>
-                <div className="w-full md:w-96 md:max-w-full mx-auto">
+                <form onSubmit={handleSubmit(onSubmitHandler)}>
+                  <div className="mx-7 my-5">
+                    <input
+                      type="text"
+                      placeholder="Category Name"
+                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                      {...register("name")}
+                    />
+                  </div>
+                  {/* <div className="w-full md:w-96 md:max-w-full mx-auto">
                   <div>
                     <form
                       method="POST"
@@ -56,23 +82,24 @@ const CategoryForm = () => {
                       </label>
                     </form>
                   </div>
-                </div>
-                <div className="flex p-8">
-                  <button
-                    type="button"
-                    className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                    onClick={() => navigate("/categories")}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                    //   onClick={() => setShowModal(false)}
-                  >
-                    Add
-                  </button>
-                </div>
+                </div> */}
+                  <div className="flex p-8">
+                    <button
+                      type="button"
+                      className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
+                      onClick={() => navigate("/categories")}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                      //   onClick={() => setShowModal(false)}
+                    >
+                      Add
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

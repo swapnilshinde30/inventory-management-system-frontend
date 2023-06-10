@@ -1,82 +1,99 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
 
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "../navbar";
 import AddItemsForm from "../../Forms/ItemsForm";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useItemStore } from "../../stores/itemStore";
+import { useItemClassStore } from "../../stores/itemClasseStore";
 
 const Items = () => {
-  const items = [
-    {
-      _id: 1,
-      name: "blue lagoon",
-      itemClass: "Mocktail",
-      imagePath: "bluelagoon.jpg",
-    },
-    {
-      _id: 2,
-      name: "fruit cake",
-      itemClass: "Cake",
-      imagePath: "fruitcake.jpg",
-    },
-    {
-      _id: 3,
-      name: "chocolate cake",
-      itemClass: "Cake",
-      imagePath: "chocolate cake.jpg",
-    },
-    {
-      _id: 4,
-      name: "coughsils",
-      itemClass: "Cough Syrup",
-      imagePath: "coughsils.jpg",
-    },
-    {
-      _id: 5,
-      name: "benadryl",
-      itemClass: "Cough Syrup",
-      imagePath: "benadryl.jpg",
-    },
-    {
-      _id: 6,
-      name: "mango burfi",
-      itemClass: "Burfi",
-      imagePath: "mangoburfi.jpg",
-    },
-  ];
-  const itemClasses = [
-    {
-      _id: 1,
-      name: "Mocktail",
-      category: "beverage",
-      imagePath: "mocktail.jpg",
-    },
-    {
-      _id: 2,
-      name: "Colddrink",
-      category: "bevarage",
-      imagePath: "colddrink.jpg",
-    },
-    { _id: 3, name: "Khari", category: "bakery", imagePath: "khari.jpeg" },
-    { _id: 4, name: "Cake", category: "bakery", imagePath: "cake.jpg" },
-    { _id: 5, name: "Burfi", category: "sweets", imagePath: "burfi.jpg" },
-    { _id: 6, name: "Namkeen", category: "sweets", imagePath: "namkeen.jpg" },
-    { _id: 7, name: "Rice", category: "grains", imagePath: "rice.jpg" },
-    { _id: 8, name: "Wheat", category: "grains", imagePath: "wheat.jpg" },
-    {
-      _id: 9,
-      name: "Leafy greens",
-      category: "vegetables",
-      imagePath: "leafy greens.jpg",
-    },
-    {
-      _id: 10,
-      name: "Cough Syrup",
-      category: "medicine",
-      imagePath: "coughsyrup.jpg",
-    },
-  ];
+  // const items = [
+  //   {
+  //     _id: 1,
+  //     name: "blue lagoon",
+  //     itemClass: "Mocktail",
+  //     imagePath: "bluelagoon.jpg",
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: "fruit cake",
+  //     itemClass: "Cake",
+  //     imagePath: "fruitcake.jpg",
+  //   },
+  //   {
+  //     _id: 3,
+  //     name: "chocolate cake",
+  //     itemClass: "Cake",
+  //     imagePath: "chocolate cake.jpg",
+  //   },
+  //   {
+  //     _id: 4,
+  //     name: "coughsils",
+  //     itemClass: "Cough Syrup",
+  //     imagePath: "coughsils.jpg",
+  //   },
+  //   {
+  //     _id: 5,
+  //     name: "benadryl",
+  //     itemClass: "Cough Syrup",
+  //     imagePath: "benadryl.jpg",
+  //   },
+  //   {
+  //     _id: 6,
+  //     name: "mango burfi",
+  //     itemClass: "Burfi",
+  //     imagePath: "mangoburfi.jpg",
+  //   },
+  // ];
+  // const itemClasses = [
+  //   {
+  //     _id: 1,
+  //     name: "Mocktail",
+  //     category: "beverage",
+  //     imagePath: "mocktail.jpg",
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: "Colddrink",
+  //     category: "bevarage",
+  //     imagePath: "colddrink.jpg",
+  //   },
+  //   { _id: 3, name: "Khari", category: "bakery", imagePath: "khari.jpeg" },
+  //   { _id: 4, name: "Cake", category: "bakery", imagePath: "cake.jpg" },
+  //   { _id: 5, name: "Burfi", category: "sweets", imagePath: "burfi.jpg" },
+  //   { _id: 6, name: "Namkeen", category: "sweets", imagePath: "namkeen.jpg" },
+  //   { _id: 7, name: "Rice", category: "grains", imagePath: "rice.jpg" },
+  //   { _id: 8, name: "Wheat", category: "grains", imagePath: "wheat.jpg" },
+  //   {
+  //     _id: 9,
+  //     name: "Leafy greens",
+  //     category: "vegetables",
+  //     imagePath: "leafy greens.jpg",
+  //   },
+  //   {
+  //     _id: 10,
+  //     name: "Cough Syrup",
+  //     category: "medicine",
+  //     imagePath: "coughsyrup.jpg",
+  //   },
+  // ];
+
+  const callGetAllItems = useItemStore((state) => state.getAllItemsAPI);
+  const items = useItemStore((state) => state.items);
+
+  const callGetAllItemClasses = useItemClassStore(
+    (state) => state.getAllItemClassesAPI
+  );
+  const itemClasses = useItemClassStore((state) => state.itemClasses);
+
+  useEffect(() => {
+    callGetAllItems();
+    callGetAllItemClasses();
+    console.log(items);
+    console.log(itemClasses);
+  }, []);
 
   let count = 0;
 
@@ -84,7 +101,7 @@ const Items = () => {
 
   itemClasses.map((itemclass) => {
     let noOfItems = items.filter(
-      (item) => item.itemClass === itemclass.name
+      (item) => item.itemClass === itemclass._id
     ).length;
     // if (noOfItems > 0) {
     arrayitem[count] = { name: itemclass.name, quantity: noOfItems };
@@ -145,14 +162,14 @@ const Items = () => {
       </div>
 
       <div className="flex flex-row">
-        <div className="flex-none w-56 h-screen border-r border-slate-200">
+        <div className="flex-none w-56  border-r border-slate-200">
           {/* 3 */}
         </div>
         <div>
           <div>
             {/* Outside */}
             <div>
-              {itemClasses.map((i, index) => (
+              {itemClasses.map((itemClass, index) => (
                 <>
                   {arrayitem[index].quantity > 0 && (
                     <p className="text-gray-500 ml-12 mt-4 text-xl">
@@ -164,8 +181,8 @@ const Items = () => {
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-6">
-                    {items.map((b) => {
-                      if (i.name === b.itemClass) {
+                    {items.map((item) => {
+                      if (itemClass._id === item.itemClass) {
                         return (
                           <>
                             {/* <p>{arrayitem.find((a) => a.name === i.name)}</p> */}
@@ -175,7 +192,7 @@ const Items = () => {
                               {/* </p>  */}
 
                               <div
-                                key={b._id}
+                                key={item._id}
                                 className=" card ml-12 mb-8 mt-5 text-slate-600 w-32 h-32 rounded-xl overflow-hidden border border-slate-300"
                               >
                                 {" "}
@@ -183,13 +200,14 @@ const Items = () => {
                                   src={
                                     process.env.PUBLIC_URL +
                                     "/images/items/" +
-                                    b.imagePath
+                                    item.name +
+                                    ".jpg"
                                   }
                                   alt="fruits"
                                   className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                                 />
                                 <div className="ml-2 mb-1 text-gray-400 ">
-                                  {b.name}
+                                  {item.name}
                                 </div>
                                 <div className="flex w-auto">
                                   <div

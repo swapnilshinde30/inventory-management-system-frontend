@@ -5,35 +5,38 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useItemClassStore } from "../stores/itemClasseStore";
-import { useCategoryStore } from "../stores/categoryStore";
+import { useItemStore } from "../stores/itemStore";
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  description: yup.string().required(),
+});
 
 const ItemsForm = () => {
   const navigate = useNavigate();
-  console.log("imhere");
   const [showModal] = useState(true);
-  const callAddItemAPI = useItemClassStore((state) => state.addItemClasses);
-  const categories = useCategoryStore((state) => state.categories);
-  const callgetAllCategoriesAPI = useCategoryStore(
-    (state) => state.getCategories
+  const callAddItemAPI = useItemStore((state) => state.addItemAPI);
+
+  const callGetAllItemClassesAPI = useItemClassStore(
+    (state) => state.getAllItemClassesAPI
   );
-  console.log(categories);
+  const itemClasses = useItemClassStore((state) => state.itemClasses);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
   } = useForm({
-    //  resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
   });
 
   const onSubmitHandler = (data) => {
-    console.log(data);
     callAddItemAPI(data);
+    navigate("/items");
   };
   useEffect(() => {
-    console.log("in Effect");
-    callgetAllCategoriesAPI();
-    console.log(categories);
+    callGetAllItemClassesAPI();
   }, []);
 
   return (
@@ -73,12 +76,12 @@ const ItemsForm = () => {
                     <select
                       id="itemClasses"
                       className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("category")}
+                      {...register("itemClass")}
                     >
                       <option>Item Class</option>
-                      {categories.map((category) => (
-                        <option key={category._id} value={category._id}>
-                          {category.name}
+                      {itemClasses.map((itemClass) => (
+                        <option key={itemClass._id} value={itemClass._id}>
+                          {itemClass.name}
                         </option>
                       ))}
                     </select>
@@ -90,9 +93,10 @@ const ItemsForm = () => {
                       placeholder="Description"
                       // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                       className="w-[450px] py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                      {...register("description")}
                     />
                   </div>
-                  <div className="w-full md:w-[450px] md:max-w-full mx-auto">
+                  {/* <div className="w-full md:w-[450px] md:max-w-full mx-auto">
                     <div>
                       <form
                         method="POST"
@@ -109,7 +113,7 @@ const ItemsForm = () => {
                         </label>
                       </form>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="flex p-8">
                     <button
                       type="button"

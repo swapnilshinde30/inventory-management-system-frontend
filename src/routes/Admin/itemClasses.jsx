@@ -3,11 +3,8 @@ import React, { useEffect, useState } from "react";
 import NavBar from "../navbar";
 import { useItemClassStore } from "../../stores/itemClasseStore";
 import { NavLink } from "react-router-dom";
+
 const ItemClasses = () => {
-  const shops = [
-    { _id: 1, name: "Sadanand Kirana Store" },
-    { _id: 2, name: "Surya Sweets" },
-  ];
   const callGetAllItemClasses = useItemClassStore(
     (state) => state.getAllItemClassesAPI
   );

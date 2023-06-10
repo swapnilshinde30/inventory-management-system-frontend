@@ -17,8 +17,9 @@ const ItemClassesForm = () => {
   const callAddItemAPI = useItemClassStore((state) => state.addItemClassesAPI);
   const categories = useCategoryStore((state) => state.categories);
   const callgetAllCategoriesAPI = useCategoryStore(
-    (state) => state.getCategories
+    (state) => state.getAllCategoriesAPI
   );
+
   console.log(categories);
   const {
     register,
@@ -30,14 +31,11 @@ const ItemClassesForm = () => {
   });
 
   const onSubmitHandler = (data) => {
-    console.log(data);
     callAddItemAPI(data);
     navigate("/itemclasses");
   };
   useEffect(() => {
-    console.log("in Effect");
     callgetAllCategoriesAPI();
-    console.log(categories);
   }, []);
 
   return (

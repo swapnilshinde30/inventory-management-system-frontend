@@ -6,7 +6,9 @@ import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
 
 const Categories = () => {
-  const getAllCategories = useCategoryStore((state) => state.getCategories);
+  const getAllCategories = useCategoryStore(
+    (state) => state.getAllCategoriesAPI
+  );
   const categories = useCategoryStore((state) => state.categories);
 
   console.log(categories);
