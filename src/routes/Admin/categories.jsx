@@ -8,16 +8,6 @@ import { useCategoryStore } from "../../stores/categoryStore";
 
 const Categories = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const items = [
-  //   { _id: 1, name: "fruits", imagePath: "fruits.jpg" },
-  //   { _id: 2, name: "vegetables", imagePath: "vege.jpg" },
-  //   { _id: 3, name: "bakery", imagePath: "cake.jpg" },
-  //   { _id: 4, name: "eggs & meat", imagePath: "egg.jpg" },
-  //   { _id: 5, name: "grains", imagePath: "grains.jpg" },
-  //   { _id: 6, name: "beverage", imagePath: "beverage.jpg" },
-  //   { _id: 7, name: "sweets", imagePath: "sweets.jpg" },
-  //   { _id: 8, name: "medicine", imagePath: "medicine.jpg" },
-  // ];
 
   const handleModalClose = () => {
     setIsModalOpen(false);
