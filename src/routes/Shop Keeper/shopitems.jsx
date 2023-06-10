@@ -1,15 +1,22 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import ListGroup from "../common/listgroup";
 import React from "react";
-import { SlClose } from "react-icons/sl";
 import NavBar from "../navbar";
 import AddShopItemsForm from "../../Forms/AddShopItemsForm";
+import { useShopItemStore } from "../../stores/shopitemStore";
 
 const ShopItems = () => {
   const [shopName, setShopName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const getAllShopItems = useShopItemStore((state) => state.getShopItems);
+  const shopitems = useShopItemStore((state) => state.shopitems);
+
+  useEffect(() => {
+    getAllShopItems();
+  }, []);
 
   const items = [
     {

@@ -3,66 +3,74 @@ import { Link } from "react-router-dom";
 import { BsShop } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import React from "react";
 
 import NavBar from "../navbar";
 import AddShopForm from "../../Forms/AddShopForm";
+import { useShopStore } from "../../stores/shopStore";
 
 const Shops = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const shops = [
-    {
-      _id: 1,
-      shop: "Sadanand Kirana Store",
-      category: "Grocery",
-      owner: "Sadanand",
-      shopId: "SADA01",
-    },
-    {
-      _id: 1,
-      shop: "Surya Sweets",
-      category: "Sweets",
-      owner: "Surya",
-      shopId: "SURYA02",
-    },
-    {
-      _id: 1,
-      shop: "Dhiraj Cafe",
-      category: "Beverage",
-      owner: "Dhiraj",
-      shopId: "DHI03",
-    },
-    {
-      _id: 1,
-      shop: "Himanshu Medical",
-      category: "Medical",
-      owner: "Himanshu",
-      shopId: "HIM04",
-    },
-    {
-      _id: 1,
-      shop: "Vaishnavi Fruits",
-      category: "Fruits",
-      owner: "Vaishnavi",
-      shopId: "VAIS05",
-    },
-    {
-      _id: 1,
-      shop: "Swapnil Bakery",
-      category: "Bakery",
-      owner: "Swapnil",
-      shopId: "SWAP06",
-    },
-    {
-      _id: 1,
-      shop: "Sachin Vegitables",
-      category: "Vegitables",
-      owner: "Sachin",
-      shopId: "SAC07",
-    },
-  ];
+
+  const getAllShops = useShopStore((state) => state.getShops);
+  const shops = useShopStore((state) => state.shops);
+
+  useEffect(() => {
+    getAllShops();
+  }, []);
+  // const shops = [
+  //   {
+  //     _id: 1,
+  //     shop: "Sadanand Kirana Store",
+  //     category: "Grocery",
+  //     owner: "Sadanand",
+  //     shopId: "SADA01",
+  //   },
+  //   {
+  //     _id: 1,
+  //     shop: "Surya Sweets",
+  //     category: "Sweets",
+  //     owner: "Surya",
+  //     shopId: "SURYA02",
+  //   },
+  //   {
+  //     _id: 1,
+  //     shop: "Dhiraj Cafe",
+  //     category: "Beverage",
+  //     owner: "Dhiraj",
+  //     shopId: "DHI03",
+  //   },
+  //   {
+  //     _id: 1,
+  //     shop: "Himanshu Medical",
+  //     category: "Medical",
+  //     owner: "Himanshu",
+  //     shopId: "HIM04",
+  //   },
+  //   {
+  //     _id: 1,
+  //     shop: "Vaishnavi Fruits",
+  //     category: "Fruits",
+  //     owner: "Vaishnavi",
+  //     shopId: "VAIS05",
+  //   },
+  //   {
+  //     _id: 1,
+  //     shop: "Swapnil Bakery",
+  //     category: "Bakery",
+  //     owner: "Swapnil",
+  //     shopId: "SWAP06",
+  //   },
+  //   {
+  //     _id: 1,
+  //     shop: "Sachin Vegitables",
+  //     category: "Vegitables",
+  //     owner: "Sachin",
+  //     shopId: "SAC07",
+  //   },
+  // ];
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -134,15 +142,15 @@ const Shops = () => {
                 </div>
                 <div className="mt-2 w-[250px] text-neutral-800">
                   <span className="text-neutral-500">Shop: </span>
-                  {shop.shop}
+                  {shop.name}
                 </div>
                 <div className="mt-2 w-[250px] text-neutral-800">
                   <span className="text-neutral-500">ShopId: </span>
                   {shop.shopId}
                 </div>
                 <div className="mt-2 w-[250px] text-neutral-800">
-                  <span className="text-neutral-500">Category: </span>
-                  {shop.category}
+                  <span className="text-neutral-500">Address: </span>
+                  {shop.area}
                 </div>
 
                 <Link

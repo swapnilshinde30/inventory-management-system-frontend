@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import NavBar from "../navbar";
 import RequisitionForm from "../../Forms/RequisitionForm";
+import { useRequisitionStore } from "../../stores/requisitionStore";
 const Requisitions = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [shopName, setShopName] = useState("");
+
+  const getAllRequisitions = useRequisitionStore(
+    (state) => state.getRequisition
+  );
+  const requisitions = useRequisitionStore((state) => state.requisitions);
+
+  useEffect(() => {
+    getAllRequisitions();
+  }, []);
 
   const shops = [
     { _id: 1, name: "Sadanand Kirana Store", category: "Grocery" },
