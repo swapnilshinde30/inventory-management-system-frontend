@@ -87,7 +87,7 @@ const Items = () => {
     (state) => state.getAllItemClassesAPI
   );
   const itemClasses = useItemClassStore((state) => state.itemClasses);
-
+  const callDeleteItemAPI = useItemStore((state) => state.deleteItemAPI);
   useEffect(() => {
     callGetAllItems();
     callGetAllItemClasses();
@@ -111,7 +111,7 @@ const Items = () => {
   });
   // count = 0;
 
-  console.log(arrayitem);
+  // console.log(arrayitem);
 
   return (
     <>
@@ -214,7 +214,12 @@ const Items = () => {
                                     className=" badge text-gray-400 bg-slate-300 w-52 text-center p-1 hover:bg-slate-500 hover:text-white"
                                     style={{ marginTop: "-4px" }}
                                   >
-                                    <button className="hover:font-bold ">
+                                    <button
+                                      className="hover:font-bold "
+                                      onClick={() =>
+                                        callDeleteItemAPI(item._id)
+                                      }
+                                    >
                                       Delete
                                     </button>
                                   </div>

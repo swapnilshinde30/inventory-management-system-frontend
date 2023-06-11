@@ -9,6 +9,10 @@ const ItemClasses = () => {
     (state) => state.getAllItemClassesAPI
   );
   const itemClasses = useItemClassStore((state) => state.itemClasses);
+  const callDeleteItemClassAPI = useItemClassStore(
+    (state) => state.deleteItemClassAPI
+  );
+
   console.log(itemClasses);
   useEffect(() => {
     callGetAllItemClasses();
@@ -90,7 +94,12 @@ const ItemClasses = () => {
                     className=" badge text-gray-400 bg-slate-300 w-52 text-center p-1 hover:bg-slate-500 hover:text-white"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button className="hover:font-bold ">Delete</button>
+                    <button
+                      className="hover:font-bold "
+                      onClick={() => callDeleteItemClassAPI(itemclass._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                   <div
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"

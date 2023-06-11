@@ -25,6 +25,17 @@ export const useCategoryStore = create(
           state.categories = [...state.categories, response.data];
         });
       },
+
+      deleteCategoryAPI: async (id) => {
+        const response = await axios.delete(
+          `http://localhost:3030/categories/${id}`
+        );
+        set((state) => {
+          state.categories = state.categories.filter(
+            (category) => category._id != response.data._id
+          );
+        });
+      },
     }))
   )
 );

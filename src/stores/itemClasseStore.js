@@ -25,6 +25,17 @@ export const useItemClassStore = create(
           state.itemClasses = [...state.itemClasses, response.data];
         });
       },
+
+      deleteItemClassAPI: async (id) => {
+        const response = await axios.delete(
+          `http://localhost:3030/itemclasses/${id}`
+        );
+        set((state) => {
+          state.itemClasses = state.itemClasses.filter(
+            (itemClass) => itemClass._id != response.data._id
+          );
+        });
+      },
     }))
   )
 );

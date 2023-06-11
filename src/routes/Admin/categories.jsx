@@ -10,7 +10,9 @@ const Categories = () => {
     (state) => state.getAllCategoriesAPI
   );
   const categories = useCategoryStore((state) => state.categories);
-
+  const callDeleteCategoryAPI = useCategoryStore(
+    (state) => state.deleteCategoryAPI
+  );
   console.log(categories);
 
   useEffect(() => {
@@ -93,7 +95,12 @@ const Categories = () => {
                     className=" badge text-gray-400 bg-slate-300 w-52 text-center p-1 hover:bg-slate-500 hover:text-white"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button className="hover:font-bold ">Delete</button>
+                    <button
+                      className="hover:font-bold "
+                      onClick={() => callDeleteCategoryAPI(category._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                   <div
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"

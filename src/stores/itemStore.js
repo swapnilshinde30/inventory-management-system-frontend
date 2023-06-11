@@ -28,6 +28,17 @@ export const useItemStore = create(
           state.items = [...state.items, response.data];
         });
       },
+
+      deleteItemAPI: async (id) => {
+        const response = await axios.delete(
+          `http://localhost:3030/items/${id}`
+        );
+        set((state) => {
+          state.items = state.items.filter(
+            (item) => item._id != response.data._id
+          );
+        });
+      },
     }))
   )
 );
