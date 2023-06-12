@@ -65,14 +65,14 @@ const ShopItemsForm = () => {
     <>
       {showModal ? (
         // <div className=" absolute bottom-1 right-1 h-auto w-full transition-all ease-in-out max-w-[500px]">
-          <div
-            className="relative z-10"
-            aria-labelledby="modal-title"
-            role="dialog"
-            aria-modal="true"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
+        <div
+          className="relative z-10"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+          <div className="fixed inset-0 z-10 overflow-y-auto">
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex border border-b-black">
@@ -90,7 +90,7 @@ const ShopItemsForm = () => {
                 <div className="my-5 mx-7">
                   <select
                     id="shops"
-                    className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-full"
+                    className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg"
                   >
                     {" "}
                     <option selected>Select Shop</option>
@@ -105,7 +105,7 @@ const ShopItemsForm = () => {
                 <div className="my-2 mx-7">
                   <select
                     id="item"
-                    className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-full"
+                    className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg"
                   >
                     {" "}
                     <option selected>Select Items</option>
@@ -128,51 +128,51 @@ const ShopItemsForm = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex space-x-1 my-2 mx-7">
-                  <div className="form-outline mb-2 ">
+                <div className="flex space-x-2 my-2 mx-7 ">
+                  <div className="form-outline mb-1">
                     <input
-                      type="QuantityAddition"
+                      type="Quantity Addition"
                       placeholder="Ammount"
-                      className="border rounded-full w-[100px] h-9 pl-4  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
+                      className="border rounded-lg w-[100px] h-9 pl-4  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                     />
                   </div>
 
-                  <div className="form-outline mb-2 ">
+                  <div className="form-outline mb-1 ">
                     <input
-                      type="QuantityAddition"
+                      type="Quantity Addition"
                       placeholder="Unit"
-                      className="border rounded-full w-[100px] h-9 pl-8 mr-7 border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
+                      className="border rounded-lg w-[100px] h-9 pl-8 mr-7 border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                     />
                   </div>
 
-                  <div className="form-outline mb-2 ">
+                  <div className="form-outline mb-1">
                     <input
-                      type="QuantityAddition"
+                      type="Available Quantity"
                       placeholder="Ammount"
-                      className="border rounded-full w-[100px] h-9 pl-4  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
+                      className="border rounded-lg w-[100px] h-9 pl-4  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                     />
                   </div>
 
-                  <div className="form-outline mb-2 ">
+                  <div className="form-outline mb-1 ">
                     <input
                       type="Available Quantity"
                       placeholder="Unit"
-                      className="border rounded-full w-[100px] h-9 pl-8  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
+                      className="border rounded-lg w-[100px] h-9 pl-8  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                     />
                   </div>
                 </div>
 
-                <div className="flex p-8">
+                <div className="flex p-5">
                   <button
                     type="button"
-                    className="ml-[50px] rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
+                    className="ml-[50px] rounded-full text-neutral-500 border border-neutral-500 px-10 pb-1 pt-1"
                     onClick={() => navigate("/shopitems")}
                   >
                     Cancel
                   </button>
                   <button
                     type="button"
-                    className="ml-[150px] rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                    className="ml-[120px] rounded-full bg-teal-500 px-11 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
                     //   onClick={() => setShowModal(false)}
                   >
                     Add
@@ -181,7 +181,8 @@ const ShopItemsForm = () => {
               </div>
             </div>
           </div>
-        // </div>
+          //{" "}
+        </div>
       ) : null}
     </>
   );

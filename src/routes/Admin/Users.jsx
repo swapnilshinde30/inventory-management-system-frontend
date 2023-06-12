@@ -9,8 +9,9 @@ import { useUserStore } from "../../stores/userStore";
 import { NavLink } from "react-router-dom";
 
 const Users = () => {
-  const getAllUsers = useUserStore((state) => state.getUsers);
+  const getAllUsers = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
+  const calldeleteUserAPI = useUserStore((state) => state.deleteUserAPI);
 
   useEffect(() => {
     getAllUsers();
@@ -103,7 +104,7 @@ const Users = () => {
                   <span className="text-neutral-500">Role: </span>
                   {user.role}
                 </div>
-                <div className="mt-2 w-[220px] text-neutral-800">
+                <div className="mt-2 w-[300px] text-neutral-800">
                   <span className="text-neutral-500">Last LoggedIn: </span>
                   {user.lastLoggedIn}
                 </div>
@@ -116,9 +117,9 @@ const Users = () => {
                 <div className="flex-1">
                   <NavLink
                     to={"/users/new"}
-                    className="mt-1 w-10 ml-[180px] mr-3 bg-white rounded-full h-10"
+                    className="mt-1 w-10 ml-[150px] mr-3 bg-white rounded-full h-10"
                   >
-                    <FiEdit className="ml-3 h-4 w-4 text-teal-500 hover:scale-110 transition-all duration-500" />
+                    <FiEdit className="ml-[110px] h-4 w-4 -mt-2 text-teal-500 hover:scale-110 transition-all duration-500" />
                   </NavLink>
                 </div>
                 {/* </Link> */}
@@ -126,6 +127,7 @@ const Users = () => {
                   <button
                     type="button"
                     className="mt-1 w-10 mr-2 bg-white rounded-full h-10"
+                    onClick={() => calldeleteUserAPI(user._id)}
                   >
                     <AiOutlineDelete className="ml-2 h-5 w-5 text-teal-500 hover:scale-110 transition-all duration-500" />
                   </button>
