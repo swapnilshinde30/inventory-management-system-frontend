@@ -11,11 +11,12 @@ import NavBar from "../navbar";
 import { useShopStore } from "../../stores/shopStore";
 
 const Shops = () => {
-  const getAllShops = useShopStore((state) => state.getShops);
+  const callgetAllShops = useShopStore((state) => state.getAllShopsAPI);
   const shops = useShopStore((state) => state.shops);
-
+  const callDeleteShopAPI = useShopStore((state) => state.deleteShopAPI);
+  console.log(shops);
   useEffect(() => {
-    getAllShops();
+    callgetAllShops();
   }, []);
   // const shops = [
   //   {
@@ -152,6 +153,7 @@ const Shops = () => {
                   <button
                     type="button"
                     className="mt-1 w-10 mr-2  bg-white rounded-full h-10"
+                    onClick={() => callDeleteShopAPI(shop._id)}
                   >
                     <AiOutlineDelete className="ml-3 h-5 w-5 text-teal-500" />
                   </button>

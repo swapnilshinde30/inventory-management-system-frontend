@@ -4,14 +4,15 @@ import React, { useState } from "react";
 import NavBar from "../navbar";
 import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
-
+import CategoryForm from "../../Forms/CategoryForm";
 const Categories = () => {
+  const [showModal, setShowModal] = useState(false);
   const getAllCategories = useCategoryStore(
     (state) => state.getAllCategoriesAPI
   );
   const categories = useCategoryStore((state) => state.categories);
 
-  console.log(categories);
+  console.log(showModal);
 
   useEffect(() => {
     getAllCategories();
@@ -54,17 +55,19 @@ const Categories = () => {
               </div>
             </div>
             <div className="flex-1 mt-5">
-              <NavLink
-                to={`/categories/new`}
+              <button
+                // to={`/categories/new`}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => {
+                  setShowModal(true);
+                }}
               >
                 Add Category
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
       </div>
-
       <div className="flex flex-row">
         <div className="flex-none w-56 h-screen border-r border-slate-200">
           {/* 3 */}
@@ -108,12 +111,12 @@ const Categories = () => {
           {/* <!-- Button trigger modal --> */}
         </div>
       </div>
-
       {/* <div classNameName="grid grid-row-2 gride-col-2">
         <div classNameName="w-32 h-16  border-b border-r border-slate-200">1</div>
         <div classNameName="w-32 border-r h-screen border-slate-200">2</div>
       </div>
       <div classNameName="grid grid-row-2"></div> */}
+      <CategoryForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

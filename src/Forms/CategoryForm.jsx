@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -11,8 +10,9 @@ const schema = yup.object().shape({
   name: yup.string().required(),
 });
 
-const CategoryForm = () => {
-  const [showModal] = useState(true);
+const CategoryForm = (props) => {
+  const { showModal, setShowModal } = props;
+  console.log(showModal);
   const navigate = useNavigate();
   const callAddCategoryAPI = useCategoryStore((state) => state.addCategoryAPI);
 
@@ -51,7 +51,7 @@ const CategoryForm = () => {
                   <div className="ml-80 mt-6 mr-5 mb-4">
                     <SlClose
                       className="w-7 h-7 text-neutral-500 cursor-pointer"
-                      onClick={() => navigate("/categories")}
+                      onClick={() => setShowModal(false)}
                     />
                   </div>
                 </div>
@@ -87,14 +87,15 @@ const CategoryForm = () => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => navigate("/categories")}
+                      onClick={() => {
+                        setShowModal(false);
+                      }}
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                      //   onClick={() => setShowModal(false)}
                     >
                       Add
                     </button>
