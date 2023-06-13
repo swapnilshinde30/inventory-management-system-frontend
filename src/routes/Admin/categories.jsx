@@ -110,7 +110,7 @@ const Categories = () => {
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button className="hover:font-bold">Edit</button>
+                    <button className="hover:font-bold" >Edit</button>
                   </div>
                 </div>
               </div>

@@ -27,8 +27,9 @@ function LoginPage() {
   });
   const navigate = useNavigate();
   const callloginUserAPI = useLoginStore((state) => state.loginUserAPI);
-  const user = useLoginStore((state) => state.user);
-  const token = useLoginStore((state) => state.token);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+
+  const token = sessionStorage.getItem("token");
 
   const onSubmitHandler = (data) => {
     data.strategy = "local";
@@ -38,13 +39,13 @@ function LoginPage() {
   };
   useEffect(() => {
     console.log(user);
-    if (!sessionStorage.getItem("token")) return;
-    // if (user === {}) return;
-    //  console.log(localStorage.getItem("token"));
+    if (user === null) {
+      return;
+    }
     if (user.role === "admin") navigate("/categories");
     if (user.role === "shopkeeper") navigate("/shopitems");
     if (user.role === "customer") navigate("/shopsForCustomer");
-  }, [user.role]);
+  }, [user]);
 
   return (
     <>

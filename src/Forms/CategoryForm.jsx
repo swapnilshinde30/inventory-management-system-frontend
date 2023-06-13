@@ -28,6 +28,7 @@ const CategoryForm = (props) => {
   const onSubmitHandler = (data) => {
     callAddCategoryAPI(data);
     navigate("/categories");
+    setShowModal(false);
   };
 
   return (

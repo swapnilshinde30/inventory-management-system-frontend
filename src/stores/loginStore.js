@@ -16,6 +16,7 @@ export const useLoginStore = create(
         );
         // console.log(response.data);
         sessionStorage.setItem("token", response.data.accessToken);
+        sessionStorage.setItem("user", JSON.stringify(response.data.user));
         //  console.log(sessionStorage.getItem("token"));
         set((state) => {
           state.user = response.data.user;
