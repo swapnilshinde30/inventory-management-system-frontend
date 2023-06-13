@@ -4,12 +4,13 @@ import { FiLock } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 import React from "react";
 import { useState } from "react";
+import RegisterForm from "../Forms/RegisterForm";
 
 function LoginPage() {
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-  
       <section className="gradient-form bg-gradient-to-r from-emerald-400 to-teal-600 h-full">
         <div className="flex items-center justify-center ">
           <div
@@ -63,15 +64,15 @@ function LoginPage() {
                         Login
                       </button>
                     </Link>
-                    
+
                     <div className="ml-14 mb-8 text-sm text-blue-600">
-                    <NavLink to={'/login/new'}>
-                        Create Account
-                        </NavLink>
+                      <button to={"/login/new"} onClick={()=>setShowModal(true)}>Create Account</button>
                     </div>
 
                     <div className="ml-14 text-xs  text-blue-600">
-                      <a href="#!">Forget Password?</a>
+                      <button>
+                        Forget Password?
+                      </button>
                     </div>
                   </form>
                 </div>
@@ -80,6 +81,7 @@ function LoginPage() {
           </div>
         </div>
       </section>
+      <RegisterForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 }

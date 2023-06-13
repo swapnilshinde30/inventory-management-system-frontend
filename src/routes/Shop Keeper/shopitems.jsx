@@ -6,8 +6,10 @@ import React from "react";
 import NavBar from "../navbar";
 import { useShopItemStore } from "../../stores/shopitemStore";
 import { NavLink } from "react-router-dom";
+import ShopItemsForm from "../../Forms/ShopItemsForm";
 
 const ShopItems = () => {
+  const [showModal, setShowModal] = useState(false);
   const [shopName, setShopName] = useState("");
 
   const getAllShopItems = useShopItemStore((state) => state.getShopItems);
@@ -164,13 +166,14 @@ const ShopItems = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1 mt-5">
-              <NavLink
+            <div className="flex-1">
+              <button
                 to={"/shopitems/new"}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
                 Add Item
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -235,6 +238,7 @@ const ShopItems = () => {
           </div>
         </div>
       </div>
+      <ShopItemsForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

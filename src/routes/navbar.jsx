@@ -1,4 +1,5 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
 const navLinkNames = [
   { id: 1, name: "CATEGORIES", pageLink: "/categories", role: "admin" },
   { id: 2, name: "ITEMCLASSES", pageLink: "/itemclasses", role: "admin" },
@@ -20,7 +21,7 @@ const navLinkNames = [
   },
   { id: 9, name: "SHOPITEMS", pageLink: "/shopitems", role: "shopkeeper" },
   { id: 10, name: "SHOPS", pageLink: "/shops", role: "shopkeeper" },
-];
+];d
 
 // function roleFilter(){
 //   // if(navLinkNames.role){
@@ -141,6 +142,8 @@ export default function NavBar() {
                 alt=""
                 loading="lazy"
               />
+
+              <span class="relative bottom-4 right-4 w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
             </a>
           </div>
         </div>

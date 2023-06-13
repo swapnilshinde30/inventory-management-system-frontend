@@ -9,6 +9,7 @@ import { useUserStore } from "../../stores/userStore";
 import { NavLink } from "react-router-dom";
 
 const Users = () => {
+  const [showModal,setShowModal]=useState(false);
   const getAllUsers = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
   const calldeleteUserAPI = useUserStore((state) => state.deleteUserAPI);
@@ -90,21 +91,21 @@ const Users = () => {
           <div className="">
             {users.map((user) => (
               <div
-                className="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-5"
+                className="flex bg-neutral-100 rounded-lg h-12 mt-6 ml-5"
                 key={user._id}
               >
-                <div className="ml-2 mt-2 w-10 ...">
+                <div className="ml-2 mt-3 w-10 ...">
                   <AiOutlineUser className="h-5 w-5 text-neutral-500" />
                 </div>
-                <div className="mt-2 w-[220px] text-neutral-800">
+                <div className="mt-3 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Name: </span>
                   {user.firstName + "  " + user.lastName}
                 </div>
-                <div className="mt-2 w-[220px] text-neutral-800">
+                <div className="mt-3 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Role: </span>
                   {user.role}
                 </div>
-                <div className="mt-2 w-[300px] text-neutral-800">
+                <div className="mt-3 w-[300px] text-neutral-800">
                   <span className="text-neutral-500">Last LoggedIn: </span>
                   {user.lastLoggedIn}
                 </div>
@@ -114,22 +115,22 @@ const Users = () => {
                   className="nav-link mr-5"
                   aria-current="page"
                 > */}
-                <div className="flex-1">
-                  <NavLink
+                <div className="flex-1 ">
+                  <button
                     to={"/users/new"}
-                    className="mt-1 w-10 ml-[150px] mr-3 bg-white rounded-full h-10"
-                  >
-                    <FiEdit className="ml-[110px] h-4 w-4 -mt-2 text-teal-500 hover:scale-110 transition-all duration-500" />
-                  </NavLink>
+                    className="mt-2 w-8 ml-[130px] mr-3 bg-white rounded-full h-8  hover:bg-teal-500"
+                  onClick={()=>setShowModal(true)}>
+                    <FiEdit className="ml-[8px] h-4 w-4 text-teal-500 hover:scale-110 transition-all hover:text-white" />
+                  </button>
                 </div>
                 {/* </Link> */}
                 <div className="mr-5">
                   <button
                     type="button"
-                    className="mt-1 w-10 mr-2 bg-white rounded-full h-10"
+                    className="mt-2 w-8 bg-white rounded-full h-8 hover:bg-teal-500"
                     onClick={() => calldeleteUserAPI(user._id)}
                   >
-                    <AiOutlineDelete className="ml-2 h-5 w-5 text-teal-500 hover:scale-110 transition-all duration-500" />
+                    <AiOutlineDelete className="ml-[6px] h-5 w-5 text-teal-500 hover:scale-110 transition-all hover:text-white" />
                   </button>
                 </div>
               </div>
@@ -142,6 +143,7 @@ const Users = () => {
         <div className="w-32 border-r h-screen border-slate-200">2</div>
       </div>
       <div className="grid grid-row-2"></div> */}
+      <EditUserForm showModal={showModal} setShowModal={setShowModal}/>
     </>
   );
 };

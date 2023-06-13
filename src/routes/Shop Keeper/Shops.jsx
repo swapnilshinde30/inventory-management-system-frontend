@@ -9,8 +9,10 @@ import React from "react";
 
 import NavBar from "../navbar";
 import { useShopStore } from "../../stores/shopStore";
+import ShopForm from "../../Forms/ShopForm";
 
 const Shops = () => {
+  const [showModal, setShowModal] = useState(false);
   const callgetAllShops = useShopStore((state) => state.getAllShopsAPI);
   const shops = useShopStore((state) => state.shops);
   const callDeleteShopAPI = useShopStore((state) => state.deleteShopAPI);
@@ -107,12 +109,13 @@ const Shops = () => {
               </div>
             </div>
             <div className="flex-1 mt-5">
-              <NavLink
+              <button
                 to={"/shops/new"}
                 className="ml-10  md:ml-96  rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
                 Add Shop
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -125,37 +128,38 @@ const Shops = () => {
         <div>
           <div className="">
             {shops.map((shop) => (
-              <div className="flex bg-neutral-50 rounded-lg h-12 mt-6 ml-11">
-                <div className="ml-2 mt-2 w-10 ...">
+              <div className="flex bg-neutral-100 rounded-lg h-12 mt-6 ml-11">
+                <div className="ml-2 mt-3 w-10 ...">
                   <BsShop className="h-5 w-5 text-neutral-500" />
                 </div>
-                <div className="mt-2 w-[250px] text-neutral-800">
+                <div className="mt-3 w-[250px] text-neutral-800">
                   <span className="text-neutral-500">Shop: </span>
                   {shop.name}
                 </div>
-                <div className="mt-2 w-[250px] text-neutral-800">
+                <div className="mt-3 w-[250px] text-neutral-800">
                   <span className="text-neutral-500">ShopId: </span>
                   {shop.shopId}
                 </div>
-                <div className="mt-2 w-[250px] text-neutral-800">
+                <div className="mt-3 w-[250px] text-neutral-800">
                   <span className="text-neutral-500">Address: </span>
                   {shop.area}
                 </div>
 
-                <NavLink
+                <button
                   to={"/shops/new"}
-                  className="mt-1 w-10 ml-[80px] mr-2 bg-white rounded-full h-10"
+                  className="mt-2 w-8 ml-[80px] mr-2 bg-white rounded-full h-8 hover:bg-teal-500"
+                  onClick={() => setShowModal(true)}
                 >
-                  <FiEdit className="mt-3 ml-3 h-4 w-4 text-teal-500" />
-                </NavLink>
+                  <FiEdit className="ml-2 h-4 w-4 text-teal-500 hover:text-white"/>
+                </button>
 
                 <div className="mr-5">
                   <button
                     type="button"
-                    className="mt-1 w-10 mr-2  bg-white rounded-full h-10"
+                    className="mt-2 w-8 mr-2  bg-white rounded-full h-8  hover:bg-teal-500"
                     onClick={() => callDeleteShopAPI(shop._id)}
                   >
-                    <AiOutlineDelete className="ml-3 h-5 w-5 text-teal-500" />
+                    <AiOutlineDelete className="ml-[6px] h-5 w-5 text-teal-500  hover:text-white" />
                   </button>
                 </div>
               </div>
@@ -163,6 +167,7 @@ const Shops = () => {
           </div>
         </div>
       </div>
+      <ShopForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

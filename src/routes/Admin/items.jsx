@@ -1,14 +1,27 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-
 import React, { useEffect } from "react";
 import NavBar from "../navbar";
-import AddItemsForm from "../../Forms/ItemsForm";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useItemStore } from "../../stores/itemStore";
 import { useItemClassStore } from "../../stores/itemClasseStore";
+import ItemsForm from "../../Forms/ItemsForm";
 
 const Items = () => {
+  const [showModal, setShowModal] = useState(false);
+  const callGetAllItems = useItemStore((state) => state.getAllItemsAPI);
+  const items = useItemStore((state) => state.items);
+
+  const callGetAllItemClasses = useItemClassStore(
+    (state) => state.getAllItemClassesAPI
+  );
+  const itemClasses = useItemClassStore((state) => state.itemClasses);
+  const callDeleteItemAPI = useItemStore((state) => state.deleteItemAPI);
+  useEffect(() => {
+    callGetAllItems();
+    callGetAllItemClasses();
+    console.log(items);
+    console.log(itemClasses);
+  }, []);
   // const items = [
   //   {
   //     _id: 1,
@@ -80,21 +93,6 @@ const Items = () => {
   //   },
   // ];
 
-  const callGetAllItems = useItemStore((state) => state.getAllItemsAPI);
-  const items = useItemStore((state) => state.items);
-
-  const callGetAllItemClasses = useItemClassStore(
-    (state) => state.getAllItemClassesAPI
-  );
-  const itemClasses = useItemClassStore((state) => state.itemClasses);
-  const callDeleteItemAPI = useItemStore((state) => state.deleteItemAPI);
-  useEffect(() => {
-    callGetAllItems();
-    callGetAllItemClasses();
-    console.log(items);
-    console.log(itemClasses);
-  }, []);
-
   let count = 0;
 
   let arrayitem = [];
@@ -149,13 +147,14 @@ const Items = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1 mt-5">
-              <NavLink
+            <div className="flex-1">
+              <button
                 to={"/items/new"}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
                 Add Item
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -245,6 +244,7 @@ const Items = () => {
           </div>
         </div>
       </div>
+      <ItemsForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

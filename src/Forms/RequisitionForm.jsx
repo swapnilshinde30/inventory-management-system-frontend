@@ -1,10 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
-const RequisitionForm = () => {
+const RequisitionForm = (props) => {
+  
+  const {showModal,setShowModal}=props
   const navigate = useNavigate();
-  const [showModal] = useState(true);
+  // const [showModal] = useState(true);
   return (
     <>
       {showModal ? (
@@ -21,17 +22,19 @@ const RequisitionForm = () => {
               <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-l transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex flex-col">
                   <div className="text-center" id="Image">
+                    <div className="flex-col border border-b-black">
                     <img
                       src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
-                      className="rounded-full mx-auto mt-5"
+                      className="border-double border-4 border-teal-500 rounded-full mx-auto mt-2"
                       style={{ height: "65px", width: "65px" }}
                       alt=""
                       loading="lazy"
                     />
-                    <div id="details" className="text-center mb-5">
+                    <div id="details" className="text-center mb-2">
                       Sachin Chavan 9929929921
                     </div>
-                    <div className="flex flex-row mb-5 pl-5 space-x-[250px] bg-neutral-100 rounded-lg h-10">
+                    </div>
+                    <div className="flex flex-row mb-2 mt-1 pt-2 pl-5 space-x-[250px] bg-neutral-100 rounded-lg h-10">
                       <div className="font-bold ml-10">Rs.460</div>
                       <div className="font-semibold">02 Items</div>
                     </div>
@@ -55,7 +58,7 @@ const RequisitionForm = () => {
                         <div className="font-semibold">Rs.160</div>
                       </div>
                     </div>
-                    <div className="flex flex-col pl-5 mb-5 rounded-lg h-[60px]">
+                    <div className="flex flex-col pl-5 mb-2 bg-neutral-50 rounded-lg h-[60px]">
                       <div className="text-start  text-teal-600 ml-10">
                         Bill Summary{" "}
                       </div>
@@ -65,7 +68,7 @@ const RequisitionForm = () => {
                       </div>
                     </div>
                     <div className="flex flex-col pl-5 bg-neutral-100 rounded-lg h-[120px]">
-                      <div className="flex flex-row mt-5 mb-5 space-x-[273px]">
+                      <div className="flex flex-row mt-1 mb-1 space-x-[273px]">
                         <div className="font-bold  text-teal-600 ml-10">
                           Total
                         </div>
@@ -75,9 +78,9 @@ const RequisitionForm = () => {
                       <div className="flex space-x-[180px]">
                         <button
                           type="button"
-                          className="ml-10 rounded-full text-white border border-neutral-500 bg-orange-400 px-6 pb-1 pt-1"
+                          className="ml-10 rounded-full text-black border border-neutral-500 bg-transperent px-6 pb-1 pt-1"
                           //   onClick={() => setvisible(true)}
-                          onClick={() => navigate("/requisitions")}
+                          onClick={() => setShowModal(false)}
                         >
                           Reject
                         </button>

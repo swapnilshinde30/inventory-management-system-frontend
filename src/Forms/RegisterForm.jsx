@@ -19,9 +19,10 @@ const schema = yup.object().shape({
   password: yup.string().min(8).required(),
   // role: yup.string().required(),
 });
-const RegisterForm = () => {
+const RegisterForm = (props) => {
+  const { showModal, setShowModal } = props;
   // const navigate = useNavigate();
-  const [showModal] = useState(true);
+  // const [showModal] = useState(true);
 
   const navigate = useNavigate();
 
@@ -38,7 +39,8 @@ const RegisterForm = () => {
   const onsubmitHandler = (data) => {
     console.log(data);
     callAddUserAPI(data);
-    navigate("/login");
+    // navigate("/login");
+    // setShowModal(false);
   };
   // const users = [
   //   {
@@ -289,9 +291,7 @@ const RegisterForm = () => {
                         <h1 className="font-bold text-3xl text-gray-900">
                           REGISTER
                         </h1>
-                        {/* <p>
-                                          Enter your information to register
-                                        </p> */}
+                        {/* <p>Enter your information to register</p> */}
                       </div>
                       <div>
                         <form onSubmit={handleSubmit(onsubmitHandler)}>

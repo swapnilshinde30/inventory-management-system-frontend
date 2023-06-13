@@ -3,8 +3,10 @@ import { SlClose } from "react-icons/sl";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ShopItemsForm = () => {
-  const [showModal] = useState(true);
+const ShopItemsForm = (props) => {
+  const {showModal,setShowModal}=props
+
+  // const [showModal] = useState(true);
   const navigate = useNavigate();
   const items = [
     {
@@ -76,13 +78,13 @@ const ShopItemsForm = () => {
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex border border-b-black">
-                  <div className="font-semibold mt-6 ml-6">
-                    <p>ADD ITEMS</p>
+                  <div className="font-semibold text-xl text-teal-500 mt-6 ml-6">
+                    <p>MANAGE SHOP ITEMS</p>
                   </div>
-                  <div className="ml-[350px] mt-6 mb-4">
+                  <div className="ml-[220px] mt-6 mb-4">
                     <SlClose
-                      className="w-7 h-7 text-neutral-500 cursor-pointer"
-                      onClick={() => navigate("/shopitems")}
+                      className="w-7 h-7 text-teal-500 cursor-pointer"
+                      onClick={() => setShowModal(false)}
                     />
                   </div>
                 </div>
@@ -166,7 +168,7 @@ const ShopItemsForm = () => {
                   <button
                     type="button"
                     className="ml-[50px] rounded-full text-neutral-500 border border-neutral-500 px-10 pb-1 pt-1"
-                    onClick={() => navigate("/shopitems")}
+                    onClick={() => setShowModal(false)}
                   >
                     Cancel
                   </button>

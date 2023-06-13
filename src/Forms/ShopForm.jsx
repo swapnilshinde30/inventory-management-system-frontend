@@ -10,23 +10,24 @@ import { useShopStore } from "../stores/shopStore";
 import { useCategoryStore } from "../stores/categoryStore";
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
-  addressLine1: yup.string().required(),
-  addressLine2: yup.string().required(),
-  area: yup.string().required(),
-  city: yup.string().required(),
-  state: yup.string().required(),
-  zipcode: yup.string().required(),
+  name: yup.string().required("Please enter Name"),
+  addressLine1: yup.string().required("Please enter address1"),
+  addressLine2: yup.string().required("Please enter address2"),
+  area: yup.string().required("Please enter area"),
+  city: yup.string().required("Please enter city"),
+  state: yup.string().required("Please enter state"),
+  zipcode: yup.string().required("Please enter zipcode"),
   // category: myJoiObjectId().required(),
   // owner: myJoiObjectId().required(),
   contactPerson: yup.object().shape({
-    name: yup.string().required(),
-    phone: yup.string().required(),
+    name: yup.string().required("Please enter name"),
+    phone: yup.string().required("Please enter phone No"),
   }),
 });
 
-const ShopForm = () => {
-  const [showModal] = useState(true);
+const ShopForm = (props) => {
+  const { showModal, setShowModal } = props;
+  // const [showModal] = useState(true);
   const navigate = useNavigate();
   const callAddShopAPI = useShopStore((state) => state.addShopAPI);
   const categories = useCategoryStore((state) => state.categories);
@@ -53,6 +54,7 @@ const ShopForm = () => {
     console.log(data);
     callAddShopAPI(data);
     navigate("/shops");
+    setShowModal(false);
   };
   useEffect(() => {
     callgetAllCategoriesAPI();
@@ -126,87 +128,137 @@ const ShopForm = () => {
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex border border-b-black">
-                  <div className="font-semibold mt-6 ml-6">
-                    <p>ADD SHOP</p>
+                  <div className="font-semibold text-xl text-teal-500 mt-6 ml-6">
+                    <p> MANAGE SHOP</p>
                   </div>
-                  <div className="ml-[350px] mt-6 mb-4">
+                  <div className="ml-[280px] mt-6 mb-4">
                     <SlClose
-                      className="w-7 h-7 text-neutral-500 cursor-pointer"
-                      onClick={() => navigate("/shops")}
+                      className="w-7 h-7 text-teal-500 cursor-pointer"
+                      onClick={() => setShowModal(false)}
                     />
                   </div>
                 </div>
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                   <div className="mx-7 space-y-2 my-5">
-                    <input
-                      type="text"
-                      placeholder="Name"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("name")}
-                    />
+                    <div className="flex flex-col">
+                      <span className="text-gray-500 text-base">Name:</span>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                        className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                        {...register("name")}
+                      />
+                      <p className="text-red-500">{errors.name?.message}</p>
+                    </div>
 
-                    <input
-                      type="text"
-                      placeholder="Address Line 1"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("addressLine1")}
-                    />
-
-                    <input
-                      type="text"
-                      placeholder="Address Line 2"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("addressLine2")}
-                    />
-
-                    <input
-                      type="text"
-                      placeholder="Area"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("area")}
-                    />
-
-                    <input
-                      type="text"
-                      placeholder="City"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("city")}
-                    />
-
-                    <input
-                      type="text"
-                      placeholder="State"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("state")}
-                    />
-
-                    <input
-                      type="text"
-                      placeholder="ZipCode"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("zipcode")}
-                    />
-                    <select
-                      id="Category"
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("category")}
-                    >
-                      {" "}
-                      <option>Select Category</option>
-                      {categories.map((category) => (
-                        <option key={category._id} value={category._id}>
-                          {category.name}
+                    <div className="flex space-x-2 my-5">
+                      <div className="flex flex-col">
+                        <span className="text-gray-500 text-base">
+                          Address Line 1:
+                        </span>
+                        <input
+                          type="text"
+                          placeholder="Address Line 1"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("addressLine1")}
+                        />
+                        <p className="text-red-500">
+                          {errors.addressLine1?.message}
+                        </p>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-gray-500 text-base">
+                          Address Line 2:
+                        </span>
+                        <input
+                          type="text"
+                          placeholder="Address Line 2"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("addressLine2")}
+                        />
+                        <p className="text-red-500">
+                          {errors.addressLine2?.message}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex space-x-2 my-5">
+                      <div className="flex flex-col">
+                        <span className="text-gray-500 text-base">Area:</span>
+                        <input
+                          type="text"
+                          placeholder="Area"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("area")}
+                        />
+                        <p className="text-red-500">{errors.area?.message}</p>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-gray-500 text-base">City:</span>
+                        <input
+                          type="text"
+                          placeholder="City"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("city")}
+                        />
+                        <p className="text-red-500">{errors.city?.message}</p>
+                      </div>
+                    </div>
+                    <div className="flex space-x-2 my-5">
+                      <div className="flex flex-col">
+                        <span className="text-gray-500 text-base">State:</span>
+                        <input
+                          type="text"
+                          placeholder="State"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("state")}
+                        />
+                        <p className="text-red-500">{errors.state?.message}</p>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-gray-500 text-base">
+                          Zipcode:
+                        </span>
+                        <input
+                          type="text"
+                          placeholder="ZipCode"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("zipcode")}
+                        />
+                        <p className="text-red-500">
+                          {errors.zipcode?.message}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-gray-500 text-base">Category:</span>
+                      <select
+                        id="Category"
+                        className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                        {...register("category")}
+                      >
+                        {" "}
+                        <option className="">
+                          Select Category
                         </option>
-                      ))}
-                    </select>
-
+                        {categories.map((category) => (
+                          <option
+                            className="text-gray-500 text-base"
+                            key={category._id}
+                            value={category._id}
+                          >
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="text-red-500">{errors.category?.message}</p>
+                    </div>
                     {/* <select
                       id="Owner"
                       className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
@@ -220,31 +272,40 @@ const ShopForm = () => {
                         </option>
                       ))}
                     </select> */}
-                  </div>
-
-                  <div className="ml-7">Contact Person</div>
-                  <div className="flex mx-7 space-x-2 my-5">
-                    <input
-                      type="text"
-                      placeholder="Name"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("contactPerson.name")}
-                    />
-                    <input
-                      type="number"
-                      placeholder="Phone"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("contactPerson.phone")}
-                    />
+                    <div className="">
+                      <span className="text-gray-500 text-base">
+                        Contact Person:
+                      </span>
+                      <div className="flex space-x-2">
+                        <input
+                          type="text"
+                          placeholder="Name"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("contactPerson.name")}
+                        />
+                        {/* <p className="text-red-500">
+                      {errors.contactPerson.name?.message}
+                    </p> */}
+                        <input
+                          type="number"
+                          placeholder="Phone"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("contactPerson.phone")}
+                        />
+                        {/* <p className="text-red-500">
+                      {errors.contactPerson.phone?.message}
+                    </p> */}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="flex p-8">
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => navigate("/shops")}
+                      onClick={() => setShowModal(false)}
                     >
                       Cancel
                     </button>

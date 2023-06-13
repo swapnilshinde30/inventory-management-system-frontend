@@ -8,13 +8,15 @@ import { useItemClassStore } from "../stores/itemClasseStore";
 import { useItemStore } from "../stores/itemStore";
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
-  description: yup.string().required(),
+  name: yup.string().required("Please enter item"),
+  itemClass: yup.string().required("Please select itemclass"),
+  description: yup.string().required("Please enter description"),
 });
 
-const ItemsForm = () => {
+const ItemsForm = (props) => {
+  const { showModal, setShowModal } = props;
   const navigate = useNavigate();
-  const [showModal] = useState(true);
+  // const [showModal] = useState(true);
   const callAddItemAPI = useItemStore((state) => state.addItemAPI);
 
   const callGetAllItemClassesAPI = useItemClassStore(
@@ -34,6 +36,7 @@ const ItemsForm = () => {
   const onSubmitHandler = (data) => {
     callAddItemAPI(data);
     navigate("/items");
+    setShowModal(false);
   };
   useEffect(() => {
     callGetAllItemClassesAPI();
@@ -54,47 +57,61 @@ const ItemsForm = () => {
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex border border-b-black">
-                  <div className="font-semibold mt-6 ml-6">
-                    <p>ADD ITEMS</p>
+                  <div className="font-semibold text-xl text-teal-500 mt-6 ml-6">
+                    <p>MANAGE ITEMS</p>
                   </div>
-                  <div className="ml-[350px] mt-6 mb-4">
+                  <div className="ml-[280px] mt-6 mb-4">
                     <SlClose
-                      className="w-7 h-7 text-neutral-500 cursor-pointer"
-                      onClick={() => navigate("/items")}
+                      className="w-7 h-7 text-teal-500 cursor-pointer"
+                      onClick={() => setShowModal(false)}
                     />
                   </div>
                 </div>
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                   <div className="flex mx-7 space-x-2 my-5">
-                    <input
-                      type="text"
-                      placeholder="Name"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("name")}
-                    />
-                    <select
-                      id="itemClasses"
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("itemClass")}
-                    >
-                      <option>Item Class</option>
-                      {itemClasses.map((itemClass) => (
-                        <option key={itemClass._id} value={itemClass._id}>
-                          {itemClass.name}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="flex flex-col">
+                      <span className="text-gray-500">Name:</span>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                        className="w-[220px] py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                        {...register("name")}
+                      />
+                      <p className="text-red-500">{errors.name?.message}</p>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-gray-500">Item Class:</span>
+                      <select
+                        id="itemClasses"
+                        className="w-[220px] py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                        {...register("itemClass")}
+                      >
+                        <option>Item Class</option>
+                        {itemClasses.map((itemClass) => (
+                          <option key={itemClass._id} value={itemClass._id}>
+                            {itemClass.name}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="text-red-500">
+                        {errors.itemClass?.message}
+                      </p>
+                    </div>
                   </div>
-                  <div className="mx-7 space-x-2 my-2">
+                  <div className="mx-5 space-x-2 my-2">
                     {" "}
+                    <span className="ml-2 text-gray-500">Description:</span>
                     <input
                       type="text"
                       placeholder="Description"
                       // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                      className="w-[450px] py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                      className="w-[450px] py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                       {...register("description")}
                     />
+                    <p className="text-red-500">
+                      {errors.description?.message}
+                    </p>
                   </div>
                   {/* <div className="w-full md:w-[450px] md:max-w-full mx-auto">
                     <div>
@@ -118,7 +135,7 @@ const ItemsForm = () => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => navigate("/items")}
+                      onClick={() => setShowModal(false)}
                     >
                       Cancel
                     </button>

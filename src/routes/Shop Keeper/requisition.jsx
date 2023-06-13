@@ -3,7 +3,9 @@ import { useState } from "react";
 import NavBar from "../navbar";
 import { useRequisitionStore } from "../../stores/requisitionStore";
 import { NavLink } from "react-router-dom";
+import RequisitionForm from "../../Forms/RequisitionForm";
 const Requisitions = () => {
+  const [showModal,setShowModal]=useState(false)
   const [shopName, setShopName] = useState("");
 
   const getAllRequisitions = useRequisitionStore(
@@ -114,13 +116,13 @@ const Requisitions = () => {
               <div>
                 <div className="flex flex-col pl-5 pt-2 space-y-2 w-auto">
                   {users.map((user) => (
-                    <NavLink to={'/requisitions/new'}>
+                    <button to={'/requisitions/new'}>
                     <div
                       id={user._id}
                       key={user._id}
                       className="border rounded-lg h-20 px-2 py-2
                  hover:border-teal-400 focus:outline-none cursor-pointer"
-                      // onClick={() => setIsModalOpen(true)}
+                       onClick={() => setShowModal(true)}
                     >
                       <div className="flex flex-row space-x-5  pt-2">
                         <div>
@@ -173,7 +175,7 @@ const Requisitions = () => {
                         </div>
                       </div>
                     </div>
-                    </NavLink>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -282,6 +284,7 @@ const Requisitions = () => {
           </div>
         </div>
       </div>
+      <RequisitionForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };
