@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -10,12 +10,12 @@ const schema = yup.object().shape({
   name: yup.string().required("please enter Category"),
 });
 
-const CategoryForm = (props) => {
-  const { showModal, setShowModal } = props;
-  console.log(showModal);
+const CategoryForm = () => {
+  const [showModal] = useState(true);
+  const params = useParams();
+  const categoryId = params.id;
   const navigate = useNavigate();
   const callAddCategoryAPI = useCategoryStore((state) => state.addCategoryAPI);
-  const categoryId = props.categoryId;
   const category = useCategoryStore((state) => state.currentCategory);
   const callGetCategoryAPI = useCategoryStore((state) => state.getCategoryAPI);
   const callPatchCategoryAPI = useCategoryStore(
@@ -39,17 +39,14 @@ const CategoryForm = (props) => {
       callAddCategoryAPI(data);
     }
     navigate("/categories");
-    setShowModal(false);
   };
   useEffect(() => {
     console.log(categoryId);
     if (!categoryId) return;
     callGetCategoryAPI(categoryId);
-    //  if (category._id !== undefined) {
+    console.log(category);
     setValue("_id", category._id);
     setValue("name", category.name);
-    console.log(category);
-    //  }
   }, [categoryId, category.name]);
 
   return (
@@ -73,7 +70,7 @@ const CategoryForm = (props) => {
                   <div className="ml-[240px] mt-6 mr-5 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     />
                   </div>
                 </div>
@@ -113,7 +110,7 @@ const CategoryForm = (props) => {
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
                       onClick={() => {
-                        setShowModal(false);
+                        navigate(-1);
                       }}
                     >
                       Cancel

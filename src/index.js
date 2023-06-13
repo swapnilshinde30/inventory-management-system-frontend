@@ -47,10 +47,9 @@ root.render(
             <Route path="register" element={<RegistrationPage />} />
             <Route path="register1" element={<Register1 />} />
             <Route path="login/new" element={<RegisterForm />} />
-
             <Route path="/categories" element={<Categories />} />
             <Route path="/categories/new" element={<CategoryForm />} />
-
+            <Route path="/categories/:id" element={<CategoryForm />} />
             <Route path="users" element={<Users />} />
             {/* <Route path="users/new" element={<EditUserForm />} /> */}
             <Route path="shops" element={<Shops />} />

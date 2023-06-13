@@ -1,13 +1,12 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Navigate, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import NavBar from "../navbar";
 import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
 import CategoryForm from "../../Forms/CategoryForm";
 const Categories = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [categoryId, setCategoryId] = useState("");
+  const navigate = useNavigate();
   const getAllCategories = useCategoryStore(
     (state) => state.getAllCategoriesAPI
   );
@@ -59,15 +58,12 @@ const Categories = () => {
               </div>
             </div>
             <div className="flex-1">
-              <button
-                // to={`/categories/new`}
+              <NavLink
+                to={`/categories/new`}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                onClick={() => {
-                  setShowModal(true);
-                }}
               >
                 Add Category
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -114,8 +110,7 @@ const Categories = () => {
                     <button
                       className="hover:font-bold"
                       onClick={() => {
-                        setCategoryId(category._id);
-                        setShowModal(true);
+                        navigate(`/categories/${category._id}`);
                       }}
                     >
                       Edit
@@ -133,11 +128,6 @@ const Categories = () => {
         <div classNameName="w-32 border-r h-screen border-slate-200">2</div>
       </div>
       <div classNameName="grid grid-row-2"></div> */}
-      <CategoryForm
-        categoryId={categoryId}
-        showModal={showModal}
-        setShowModal={setShowModal}
-      />
     </>
   );
 };
