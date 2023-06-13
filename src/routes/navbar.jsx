@@ -1,12 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
 import { useLoginStore } from "../stores/loginStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-const navLinkNames = [
+const navLinkAdmin = [
   { id: 1, name: "CATEGORIES", pageLink: "/categories", role: "admin" },
   { id: 2, name: "ITEMCLASSES", pageLink: "/itemclasses", role: "admin" },
   { id: 3, name: "ITEMS", pageLink: "/items", role: "admin" },
   { id: 4, name: "USERS", pageLink: "/users", role: "admin" },
+];
+const navLinkCustomer = [
   { id: 5, name: "CART", pageLink: "/cart", role: "customer" },
   { id: 6, name: "ORDER", pageLink: "/orders", role: "customer" },
   {
@@ -15,7 +17,8 @@ const navLinkNames = [
     pageLink: "/shopsForCustomer",
     role: "customer",
   },
-
+];
+const NavLinksShopkeeper = [
   { id: 8, name: "SHOPITEMS", pageLink: "/shopitems", role: "shopkeeper" },
   {
     id: 9,
@@ -34,8 +37,25 @@ const navLinkNames = [
 // }
 
 export default function NavBar() {
-  const user = useLoginStore((state) => state.user);
+  const [navLinkNames, setNavLinkNames] = useState([]);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  console.log(user);
   const navigate = useNavigate();
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    navigate("/");
+  };
+  useEffect(() => {
+    console.log(user);
+    if (user === null) {
+      navigate("/login");
+      return;
+    }
+    if (user.role === "admin") setNavLinkNames(navLinkAdmin);
+    if (user.role === "customer") setNavLinkNames(navLinkCustomer);
+    if (user.role === "shopkeeper") setNavLinkNames(NavLinksShopkeeper);
+  }, [user]);
 
   return (
     <>
@@ -101,26 +121,24 @@ export default function NavBar() {
                 className="list-style-none mr-auto flex flex-col pl-0 lg:flex-row "
                 data-te-navbar-nav-ref
               >
-                {navLinkNames
-                  .filter((navlink) => navlink.role === user.role)
-                  .map((x) => (
-                    <li
-                      id={x.id + Math.random()}
-                      className="mb-4 lg:mb-0 lg:pr-2"
-                      data-te-nav-item-ref
+                {navLinkNames.map((x) => (
+                  <li
+                    id={x.id + Math.random()}
+                    className="mb-4 lg:mb-0 lg:pr-2"
+                    data-te-nav-item-ref
+                  >
+                    {/* <!-- Dashboard link --> */}
+                    <NavLink
+                      to={x.pageLink}
+                      aria-current="page"
+                      className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px]  focus:border-b-2 border-teal-500 pb-2  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
+                      href="#"
+                      data-te-nav-link-ref
                     >
-                      {/* <!-- Dashboard link --> */}
-                      <NavLink
-                        to={x.pageLink}
-                        aria-current="page"
-                        className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px]  focus:border-b-2 border-teal-500 pb-2  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-                        href="#"
-                        data-te-nav-link-ref
-                      >
-                        {x.name}
-                      </NavLink>
-                    </li>
-                  ))}
+                      {x.name}
+                    </NavLink>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -135,10 +153,7 @@ export default function NavBar() {
                 role="button"
                 data-te-dropdown-toggle-ref
                 aria-expanded="false"
-                onClick={() => {
-                  sessionStorage.removeItem("token");
-                  navigate("/");
-                }}
+                onClick={handleLogout}
               >
                 {/* <!-- User avatar --> */}
                 <div className="flex flex-col items-end">

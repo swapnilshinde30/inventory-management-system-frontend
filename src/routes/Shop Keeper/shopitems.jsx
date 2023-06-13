@@ -14,8 +14,9 @@ const ShopItems = () => {
 
   const getAllShopItems = useShopitemStore((state) => state.getShopItems);
   const shopitems = useShopitemStore((state) => state.shopitems);
-
+  const user = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
+    console.log(user);
     getAllShopItems();
   }, []);
 
