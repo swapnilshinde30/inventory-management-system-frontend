@@ -1,109 +1,49 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListGroup from "../common/listgroup";
 import NavBar from "../navbar";
-
+import { useCategoryStore } from "../../stores/categoryStore";
+import { useShopStore } from "../../stores/shopStore";
+import { useShopitemStore } from "../../stores/shopitemStore";
+import { useItemStore } from "../../stores/itemStore";
 const ShopsForCustomer = () => {
-  const [shopName, setShopName] = useState("");
-  const [categoryName, setCategoryName] = useState("");
-  const items = [
-    {
-      _id: 1,
-      name: "blue lagoon",
-      itemClass: "Mocktail",
-      imagePath: "bluelagoon.jpg",
-      avlQuantity: 5,
-      price: 80,
-    },
-    {
-      _id: 2,
-      name: "fruit cake",
-      itemClass: "Cake",
-      imagePath: "fruitcake.jpg",
-      avlQuantity: 2,
-      price: 320,
-    },
-    {
-      _id: 3,
-      name: "chocolate cake",
-      itemClass: "Cake",
-      imagePath: "chocolate cake.jpg",
-      avlQuantity: 5,
-      price: 350,
-    },
-    {
-      _id: 4,
-      name: "coughsils",
-      itemClass: "Cough Syrup",
-      imagePath: "coughsils.jpg",
-      avlQuantity: 6,
-      price: 85,
-    },
-    {
-      _id: 5,
-      name: "benadryl",
-      itemClass: "Cough Syrup",
-      imagePath: "benadryl.jpg",
-      avlQuantity: 3,
-      price: 90,
-    },
-    {
-      _id: 6,
-      name: "mango burfi",
-      itemClass: "Burfi",
-      imagePath: "mangoburfi.jpg",
-      avlQuantity: 5,
-      price: 600,
-    },
-  ];
-
-  const shops = [
-    { _id: 1, name: "Sadanand Kirana Store" },
-    { _id: 2, name: "Surya Sweets" },
-  ];
-  const categories = [
-    { _id: 1, name: "fruits", imagePath: "fruits.jpg" },
-    { _id: 2, name: "vegetables", imagePath: "vege.jpg" },
-    { _id: 3, name: "bakery", imagePath: "cake.jpg" },
-    { _id: 4, name: "eggs & meat", imagePath: "egg.jpg" },
-    { _id: 5, name: "grains", imagePath: "grains.jpg" },
-    { _id: 6, name: "beverage", imagePath: "beverage.jpg" },
-    { _id: 7, name: "sweets", imagePath: "sweets.jpg" },
-    { _id: 8, name: "medicine", imagePath: "medicine.jpg" },
-  ];
-
-  const handleSelectCategory = (name) => {
-    // console.log(name);
-    setCategoryName(name);
-    console.log(name);
-    // dispatch(
-    //   getAllShops({
-    //     currentPage,
-    //     pageSize,
-    //     genreName: gName,
-    //     title,
-    //     sortColumn,
-    //   })
-    // );
+  const callGetAllShopitemsAPI = useShopitemStore(
+    (state) => state.getAllShopitemsAPI
+  );
+  const shopitems = useShopitemStore((state) => state.shopitems);
+  const handleSelectCategory = (category) => {
+    //  setCategoryName(name);
+    console.log(category);
+    callGetAllShopsAPI(category);
   };
-  const handleSelectShop = (name) => {
-    // console.log(name);
-    setShopName(name);
-    console.log(name);
-    // dispatch(
-    //   getAllShops({
-    //     currentPage,
-    //     pageSize,
-    //     genreName: gName,
-    //     title,
-    //     sortColumn,
-    //   })
-    // );
+
+  const handleSelectShop = (shop) => {
+    console.log(shop);
+    callGetAllShopitemsAPI(shop);
   };
+
+  const callGetAllCategories = useCategoryStore(
+    (state) => state.getAllCategoriesAPI
+  );
+  const categories = useCategoryStore((state) => state.categories);
+  const callGetAllShopsAPI = useShopStore((state) => state.getAllShopsAPI);
+  const shops = useShopStore((state) => state.shops);
+
+  const callGetAllItemsAPI = useItemStore((state) => state.getAllItemsAPI);
+  const items = useItemStore((state) => state.items);
+  console.log(items);
+  useEffect(() => {
+    callGetAllCategories();
+    callGetAllShopitemsAPI();
+  }, []);
+
+  useEffect(() => {
+    callGetAllShopsAPI();
+  }, []);
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
@@ -151,11 +91,11 @@ const ShopsForCustomer = () => {
             <ListGroup
               items={[...categories]}
               onSelectItem={handleSelectCategory}
-              selectedItem={categoryName}
+              // selectedItem={categoryName}
             />
           </div>
         </div>
-        <div className="border-r border-slate-200">
+        <div className="flex-none w-40 border-r border-slate-200">
           <div className="mt-4 -ml-2 ">
             <h4 className="text-center text-teal-700 mb-3 font-semibold">
               Shops
@@ -163,16 +103,20 @@ const ShopsForCustomer = () => {
             <ListGroup
               items={[...shops]}
               onSelectItem={handleSelectShop}
-              selectedItem={shopName}
+              //  selectedItem={shopName}
             />
           </div>
         </div>
         <div>
           <h4 className="text-gray-500 ml-12 mt-3">
-            You are shopping from <b> {`${shopName}`}</b>
+            {/* You are shopping from <b> {`${shopName}`}</b>  */}
           </h4>
+          {shopitems.length === 0 ? (
+            <h3 className="text-slate-600 mx-4 my-4">No items to show</h3>
+          ) : null}
+
           <div className="grid grid-cols-1 md:grid-cols-4 ">
-            {items.map((item) => (
+            {shopitems.map((item) => (
               <>
                 <div
                   key={item._id}
@@ -180,21 +124,26 @@ const ShopsForCustomer = () => {
                 >
                   <img
                     src={
-                      process.env.PUBLIC_URL + "/images/items/" + item.imagePath
+                      process.env.PUBLIC_URL +
+                      "/images/items/" +
+                      item.itemName +
+                      ".jpg"
                     }
                     alt="fruits"
                     className="mt-6 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                   />
 
-                  <div className="ml-2 mb-1 text-gray-400 ">{item.name}</div>
+                  <div className="ml-2 mb-1 text-gray-400 ">
+                    {item.itemName}
+                  </div>
 
                   <div className="flex w-auto ">
                     <div
-                      className=" badge text-gray-400 bg-slate-300 w-52 text-center p-1 hover:bg-slate-500 hover:text-white"
+                      className=" badge text-gray-400 bg-slate-300 w-52 text-left text-sm p-1 hover:bg-slate-500 hover:text-white"
                       style={{ marginTop: "-4px" }}
                     >
                       {/* <button className="hover:font-bold ">₹ {}</button> */}
-                      <span>₹ {item.price}</span>
+                      <span>₹ 50/ {item.availableQuantity.unit}</span>
                     </div>
                     <div
                       className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
@@ -205,12 +154,12 @@ const ShopsForCustomer = () => {
                   </div>
                   <span
                     className={
-                      item.avlQuantity < 5
+                      item.availableQuantity.amount < 5
                         ? "relative -top-36 p-1 badge bg-red-500 rounded-full border border-none text-sm hover:bg-red-600 hover:text-black"
                         : "relative -top-36 p-1 badge bg-emerald-200 rounded-full border border-none text-sm"
                     }
                   >
-                    Avl Quantity : {item.avlQuantity}
+                    Avl Quantity : {item.availableQuantity.amount}
                   </span>
                 </div>
               </>

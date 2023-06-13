@@ -3,13 +3,51 @@ import { AiOutlineUser } from "react-icons/ai";
 import { FiLock } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 import React from "react";
-import { useState } from "react";
+import { useLoginStore } from "../stores/loginStore";
+import { useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  email: yup.string().required(),
+  password: yup.string().required(),
+});
 
 function LoginPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const navigate = useNavigate();
+  const callloginUserAPI = useLoginStore((state) => state.loginUserAPI);
+  const user = useLoginStore((state) => state.user);
+  const token = useLoginStore((state) => state.token);
+
+  const onSubmitHandler = (data) => {
+    data.strategy = "local";
+    console.log(user);
+    callloginUserAPI(data);
+    //navigate("/login");
+  };
+  useEffect(() => {
+    console.log(user);
+    if (!sessionStorage.getItem("token")) return;
+    // if (user === {}) return;
+    //  console.log(localStorage.getItem("token"));
+    if (user.role === "admin") navigate("/categories");
+    if (user.role === "shopkeeper") navigate("/shopitems");
+    if (user.role === "customer") navigate("/shopsForCustomer");
+  }, [user.role]);
 
   return (
     <>
-  
       <section className="gradient-form bg-gradient-to-r from-emerald-400 to-teal-600 h-full">
         <div className="flex items-center justify-center ">
           <div
@@ -32,7 +70,7 @@ function LoginPage() {
             <div className="relative">
               <div className="absolute top-[325px] left-[400px]">
                 <div className="form w-[240px] h-56 bg-white">
-                  <form>
+                  <form onSubmit={handleSubmit(onSubmitHandler)}>
                     {/* <!-- Email input --> */}
                     <div className="form-outline mb-5 ">
                       <input
@@ -40,6 +78,7 @@ function LoginPage() {
                         id="form2Example1"
                         placeholder="username"
                         className="rounded-full border  w-52 h-9 mt-2 pl-8 hover:border-teal-400 focus:outline-none "
+                        {...register("email")}
                       />
                       <AiOutlineUser className="-mt-6 ml-3" />
                     </div>
@@ -51,23 +90,21 @@ function LoginPage() {
                         id="form2Example2"
                         placeholder="password"
                         className="border rounded-full w-52 h-9 pl-8  hover:border-teal-400 focus:outline-none"
+                        {...register("password")}
                       />
                       <FiLock className="-mt-6 ml-3" />
                     </div>
                     {/* <!-- Submit button --> */}
-                    <Link to="/" className="nav-link" aria-current="page">
-                      <button
-                        type="button"
-                        className="btn text-white bg-teal-500 rounded-lg mb-2 w-52 h-9"
-                      >
-                        Login
-                      </button>
-                    </Link>
-                    
+
+                    <button
+                      type="submit"
+                      className="btn text-white bg-teal-500 rounded-lg mb-2 w-52 h-9"
+                    >
+                      Login
+                    </button>
+
                     <div className="ml-14 mb-8 text-sm text-blue-600">
-                    <NavLink to={'/login/new'}>
-                        Create Account
-                        </NavLink>
+                      <NavLink to={"/login/new"}>Create Account</NavLink>
                     </div>
 
                     <div className="ml-14 text-xs  text-blue-600">

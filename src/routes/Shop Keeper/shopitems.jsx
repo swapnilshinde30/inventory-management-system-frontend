@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import ListGroup from "../common/listgroup";
 import React from "react";
 import NavBar from "../navbar";
-import { useShopItemStore } from "../../stores/shopitemStore";
+import { useShopitemStore } from "../../stores/shopitemStore";
 import { NavLink } from "react-router-dom";
 
 const ShopItems = () => {
   const [shopName, setShopName] = useState("");
 
-  const getAllShopItems = useShopItemStore((state) => state.getShopItems);
-  const shopitems = useShopItemStore((state) => state.shopitems);
+  const getAllShopItems = useShopitemStore((state) => state.getShopItems);
+  const shopitems = useShopitemStore((state) => state.shopitems);
 
   useEffect(() => {
     getAllShopItems();
@@ -130,7 +130,7 @@ const ShopItems = () => {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}

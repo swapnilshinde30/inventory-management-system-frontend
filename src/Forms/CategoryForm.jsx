@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { useCategoryStore } from "../stores/categoryStore";
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
+  name: yup.string().min(2).max(5).required(),
 });
 
 const CategoryForm = (props) => {
@@ -64,6 +64,7 @@ const CategoryForm = (props) => {
                       className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                       {...register("name")}
                     />
+                    <p>{errors.name?.message}</p>
                   </div>
                   {/* <div className="w-full md:w-96 md:max-w-full mx-auto">
                   <div>

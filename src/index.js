@@ -40,11 +40,10 @@ root.render(
       <ThemeProvider>
         <Routes>
           <Route path="/" element={<App />}>
-            {/* <Route index="true" element={<HomePage/>}/> */}
+            <Route index={true} element={<HomePage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="login/new" element={<RegisterForm />} />
-            <Route index={true} element={<Categories />} />
-            <Route path="categories" element={<Categories />} />
+            <Route path="/categories" element={<Categories />} />
             <Route path="/categories/new" element={<CategoryForm />} />
             <Route path="users" element={<Users />} />
             <Route path="users/new" element={<EditUserForm />} />
@@ -56,7 +55,7 @@ root.render(
             <Route path="items/new" element={<ItemsForm />} />
             <Route path="shopitems" element={<ShopItems />} />
             <Route path="/shopitems/new" element={<ShopItemsForm />} />
-            <Route path="shopsForCustomer" element={<ShopsForCustomer />} />
+            <Route path="/shopsForCustomer" element={<ShopsForCustomer />} />
             <Route path="cart" element={<Cart />} />
             <Route path="orders" element={<Order />} />
             <Route path="requisitions" element={<Requisitions />} />
