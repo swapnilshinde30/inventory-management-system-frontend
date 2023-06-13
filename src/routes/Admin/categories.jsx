@@ -17,14 +17,13 @@ const Categories = () => {
   );
   console.log(categories);
 
-
   useEffect(() => {
     getAllCategories();
   }, []);
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}

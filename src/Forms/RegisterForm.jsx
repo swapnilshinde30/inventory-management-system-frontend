@@ -353,6 +353,7 @@ const RegisterForm = (props) => {
                                   placeholder="Email"
                                   {...register("email")}
                                 />
+                                <p>{errors.email?.message}</p>
                               </div>
                             </div>
                           </div>
