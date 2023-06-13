@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SlClose } from "react-icons/sl";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -15,6 +15,12 @@ const CategoryForm = (props) => {
   console.log(showModal);
   const navigate = useNavigate();
   const callAddCategoryAPI = useCategoryStore((state) => state.addCategoryAPI);
+  const categoryId = props.categoryId;
+  const category = useCategoryStore((state) => state.currentCategory);
+  const callGetCategoryAPI = useCategoryStore((state) => state.getCategoryAPI);
+  const callPatchCategoryAPI = useCategoryStore(
+    (state) => state.patchCategoryAPI
+  );
 
   const {
     register,
@@ -25,11 +31,26 @@ const CategoryForm = (props) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmitHandler = (data) => {
-    callAddCategoryAPI(data);
+  const onSubmitHandler = async (data) => {
+    console.log(data);
+    if (data._id) {
+      callPatchCategoryAPI(data);
+    } else {
+      callAddCategoryAPI(data);
+    }
     navigate("/categories");
     setShowModal(false);
   };
+  useEffect(() => {
+    console.log(categoryId);
+    if (!categoryId) return;
+    callGetCategoryAPI(categoryId);
+    //  if (category._id !== undefined) {
+    setValue("_id", category._id);
+    setValue("name", category.name);
+    console.log(category);
+    //  }
+  }, [categoryId, category.name]);
 
   return (
     <>

@@ -32,6 +32,8 @@ import ShopItemsForm from "./Forms/ShopItemsForm";
 import ShopForm from "./Forms/ShopForm";
 import RegisterForm from "./Forms/RegisterForm";
 import RequisitionForm from "./Forms/RequisitionForm";
+import RegistrationPage from "./routes/RegistrationPage";
+import Register1 from "./routes/Registration1";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -42,6 +44,8 @@ root.render(
           <Route path="/" element={<App />}>
             <Route index={true} element={<HomePage />} />
             <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegistrationPage />} />
+            <Route path="register1" element={<Register1 />} />
             <Route path="login/new" element={<RegisterForm />} />
 
             <Route path="/categories" element={<Categories />} />

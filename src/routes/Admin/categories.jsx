@@ -7,6 +7,7 @@ import { useCategoryStore } from "../../stores/categoryStore";
 import CategoryForm from "../../Forms/CategoryForm";
 const Categories = () => {
   const [showModal, setShowModal] = useState(false);
+  const [categoryId, setCategoryId] = useState("");
   const getAllCategories = useCategoryStore(
     (state) => state.getAllCategoriesAPI
   );
@@ -110,7 +111,15 @@ const Categories = () => {
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button className="hover:font-bold">Edit</button>
+                    <button
+                      className="hover:font-bold"
+                      onClick={() => {
+                        setCategoryId(category._id);
+                        setShowModal(true);
+                      }}
+                    >
+                      Edit
+                    </button>
                   </div>
                 </div>
               </div>
@@ -124,7 +133,11 @@ const Categories = () => {
         <div classNameName="w-32 border-r h-screen border-slate-200">2</div>
       </div>
       <div classNameName="grid grid-row-2"></div> */}
-      <CategoryForm showModal={showModal} setShowModal={setShowModal} />
+      <CategoryForm
+        categoryId={categoryId}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </>
   );
 };

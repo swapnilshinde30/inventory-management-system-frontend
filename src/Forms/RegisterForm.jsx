@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useUserStore } from "../stores/userStore";
+import image from "../../src/images/images/register.jpg";
 
 const schema = yup.object().shape({
   firstName: yup.string().required(),
@@ -77,12 +78,20 @@ const RegisterForm = (props) => {
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
           <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex min-h-full justify-center p-4 text-center sm:items-center sm:p-0">
-              <div className="transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8">
+            <div className="flex  justify-center text-center sm:items-center sm:p-0">
+              <div className="transform w-[800px] h-[600px] overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8">
                 <div className="bg-gray-100 text-gray-500">
                   <div className="md:flex w-full">
-                    <div className="hidden md:block w-1/2 gradient-form bg-gradient-to-r from-emerald-400 to-teal-600 py-10 px-10">
-                      <svg
+                    <div className="hidden md:block w-1/2 gradient-form bg-gradient-to-r from-emerald-400 to-teal-600">
+                      
+                    <img className="w-[580px] h-[620px]"
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/images/categories/" +
+                    "register" +
+                    ".jpg"
+                  } />
+                      {/* <svg
                         id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
                         data-name="Layer 1"
                         xmlns="http://www.w3.org/2000/svg"
@@ -284,7 +293,7 @@ const RegisterForm = (props) => {
                           transform="translate(-227.576 -76.46149)"
                           fill="#2f2e41"
                         />
-                      </svg>
+                      </svg> */}
                     </div>
                     <div className="w-full md:w-1/2 py-6 px-5 md:px-10">
                       <div className="text-center mb-1">

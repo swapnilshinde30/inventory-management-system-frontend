@@ -7,9 +7,10 @@ import NavBar from "../navbar";
 import EditUserForm from "../../Forms/EditUserForm";
 import { useUserStore } from "../../stores/userStore";
 import { NavLink } from "react-router-dom";
+import RegisterForm from "../../Forms/RegisterForm";
 
 const Users = () => {
-  const [showModal,setShowModal]=useState(false);
+  const [showModal, setShowModal] = useState(false);
   const getAllUsers = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
   const calldeleteUserAPI = useUserStore((state) => state.deleteUserAPI);
@@ -119,7 +120,8 @@ const Users = () => {
                   <button
                     to={"/users/new"}
                     className="mt-2 w-8 ml-[130px] mr-3 bg-white rounded-full h-8  hover:bg-teal-500"
-                  onClick={()=>setShowModal(true)}>
+                    onClick={() => setShowModal(true)}
+                  >
                     <FiEdit className="ml-[8px] h-4 w-4 text-teal-500 hover:scale-110 transition-all hover:text-white" />
                   </button>
                 </div>
@@ -143,7 +145,7 @@ const Users = () => {
         <div className="w-32 border-r h-screen border-slate-200">2</div>
       </div>
       <div className="grid grid-row-2"></div> */}
-      <EditUserForm showModal={showModal} setShowModal={setShowModal}/>
+      <RegisterForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

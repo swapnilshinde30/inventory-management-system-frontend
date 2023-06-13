@@ -2,10 +2,9 @@ import image from "../../src/images/images/loginPage1.jpg";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiLock } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import { useLoginStore } from "../stores/loginStore";
 import { useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,6 +16,7 @@ const schema = yup.object().shape({
 });
 
 function LoginPage() {
+  // const [showModal, setShowModal] = useState(false);
   const {
     register,
     handleSubmit,
@@ -104,13 +104,16 @@ function LoginPage() {
                     </button>
 
                     <div className="ml-14 mb-8 text-sm text-blue-600">
-                      <NavLink to={"/login/new"}>Create Account</NavLink>
+                      <NavLink
+                        to={"/register1"}
+                        // onClick={() => setShowModal(true)}
+                      >
+                        Create Account
+                      </NavLink>
                     </div>
 
                     <div className="ml-14 text-xs  text-blue-600">
-                      <button>
-                        Forget Password?
-                      </button>
+                      <button>Forget Password?</button>
                     </div>
                   </form>
                 </div>
@@ -119,7 +122,7 @@ function LoginPage() {
           </div>
         </div>
       </section>
-      <RegisterForm showModal={showModal} setShowModal={setShowModal} />
+      {/* <RegisterForm showModal={showModal} setShowModal={setShowModal} /> */}
     </>
   );
 }

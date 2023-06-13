@@ -24,7 +24,7 @@ const navLinkNames = [
     role: "shopkeeper",
   },
   { id: 10, name: "SHOPS", pageLink: "/shops", role: "shopkeeper" },
-];d
+];
 
 // function roleFilter(){
 //   // if(navLinkNames.role){
