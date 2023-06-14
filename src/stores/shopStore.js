@@ -9,10 +9,12 @@ export const useShopStore = create(
   devtools(
     immer((set) => ({
       shops: [],
-      getAllShopsAPI: async (category) => {
+      getAllShopsAPI: async (owner, category) => {
+        const data = { owner, category };
         const response = await axios.get("http://localhost:3030/shops", {
-          params: { category },
+          params: data,
         });
+        console.log(data);
         set((state) => {
           state.shops = response.data.data;
         });

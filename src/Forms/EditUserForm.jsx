@@ -129,7 +129,7 @@ const EditUserForm = (props) => {
                         </p>
                       </div>
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Last Name:</span>
+                        <span className="text-gray-500">Last Name:</span>
                         <input
                           type="text"
                           placeholder="Last Name"
@@ -143,7 +143,7 @@ const EditUserForm = (props) => {
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Address:</span>
+                        <span className="text-gray-500">Address:</span>
                         <input
                           type="text"
                           placeholder="Address"
@@ -155,7 +155,7 @@ const EditUserForm = (props) => {
                         </p>
                       </div>
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Email:</span>
+                        <span className="text-gray-500">Email:</span>
                         <input
                           type="text"
                           placeholder="Email"
@@ -167,7 +167,7 @@ const EditUserForm = (props) => {
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Phone:</span>
+                        <span className="text-gray-500">Phone:</span>
                         <input
                           type="text"
                           placeholder="Phone"
@@ -177,7 +177,7 @@ const EditUserForm = (props) => {
                         <p className="text-red-500">{errors.phone?.message}</p>
                       </div>
                       <div className="flex flex-col">
-                      <span className="text-gray-500">User Name:</span>
+                        <span className="text-gray-500">User Name:</span>
                         <input
                           type="text"
                           placeholder="User Name"
@@ -191,7 +191,7 @@ const EditUserForm = (props) => {
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Password:</span>
+                        <span className="text-gray-500">Password:</span>
                         <input
                           type="password"
                           placeholder="Password"
@@ -203,7 +203,7 @@ const EditUserForm = (props) => {
                         </p>
                       </div>
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Role:</span>
+                        <span className="text-gray-500">Role:</span>
                         <select
                           id="Role"
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
@@ -248,5 +248,3 @@ const EditUserForm = (props) => {
 };
 
 export default EditUserForm;
-
-

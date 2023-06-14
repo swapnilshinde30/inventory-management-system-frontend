@@ -7,106 +7,128 @@ import NavBar from "../navbar";
 import { useShopitemStore } from "../../stores/shopitemStore";
 import { NavLink } from "react-router-dom";
 import ShopItemsForm from "../../Forms/ShopItemsForm";
+import { useItemClassStore } from "../../stores/itemClasseStore";
+import { useItemStore } from "../../stores/itemStore";
+import { useShopStore } from "../../stores/shopStore";
 
 const ShopItems = () => {
   const [showModal, setShowModal] = useState(false);
-  const [shopName, setShopName] = useState("");
-
-  const getAllShopItems = useShopitemStore((state) => state.getShopItems);
+  // const [shopName, setShopName] = useState("");
+  // const callGetAllShopItemsAPI = useShopitemStore(
+  //   (state) => state.getAllShopItemsOfOwner
+  // );
+  const callGetAllShopItemsAPI = useShopitemStore(
+    (state) => state.getAllShopitemsAPI
+  );
   const shopitems = useShopitemStore((state) => state.shopitems);
+
+  const callGetAllItemClassesAPI = useItemClassStore(
+    (state) => state.getAllItemClassesAPI
+  );
+  const itemClasses = useItemClassStore((state) => state.itemClasses);
+
+  const callGetAllItemsAPI = useItemStore((state) => state.getAllItemsAPI);
+  const items = useItemStore((state) => state.items);
+
+  const callGetAllShopsAPI = useShopStore((state) => state.getAllShopsAPI);
+  const shops = useShopStore((state) => state.shops);
+
   const user = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
     console.log(user);
-    getAllShopItems();
+    callGetAllShopItemsAPI();
+    callGetAllItemClassesAPI();
+    // callGetAllItemsAPI();
+    callGetAllShopsAPI(user._id);
   }, []);
 
-  const items = [
-    {
-      _id: 1,
-      name: "blue lagoon",
-      itemClass: "Mocktail",
-      imagePath: "bluelagoon.jpg",
-      avlQuantity: 5,
-    },
-    {
-      _id: 2,
-      name: "fruit cake",
-      itemClass: "Cake",
-      imagePath: "fruitcake.jpg",
-      avlQuantity: 2,
-    },
-    {
-      _id: 3,
-      name: "chocolate cake",
-      itemClass: "Cake",
-      imagePath: "chocolate cake.jpg",
-      avlQuantity: 5,
-    },
-    {
-      _id: 4,
-      name: "coughsils",
-      itemClass: "Cough Syrup",
-      imagePath: "coughsils.jpg",
-      avlQuantity: 6,
-    },
-    {
-      _id: 5,
-      name: "benadryl",
-      itemClass: "Cough Syrup",
-      imagePath: "benadryl.jpg",
-      avlQuantity: 3,
-    },
-    {
-      _id: 6,
-      name: "mango burfi",
-      itemClass: "Burfi",
-      imagePath: "mangoburfi.jpg",
-      avlQuantity: 5,
-    },
-  ];
+  // const items = [
+  //   {
+  //     _id: 1,
+  //     name: "blue lagoon",
+  //     itemClass: "Mocktail",
+  //     imagePath: "bluelagoon.jpg",
+  //     avlQuantity: 5,
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: "fruit cake",
+  //     itemClass: "Cake",
+  //     imagePath: "fruitcake.jpg",
+  //     avlQuantity: 2,
+  //   },
+  //   {
+  //     _id: 3,
+  //     name: "chocolate cake",
+  //     itemClass: "Cake",
+  //     imagePath: "chocolate cake.jpg",
+  //     avlQuantity: 5,
+  //   },
+  //   {
+  //     _id: 4,
+  //     name: "coughsils",
+  //     itemClass: "Cough Syrup",
+  //     imagePath: "coughsils.jpg",
+  //     avlQuantity: 6,
+  //   },
+  //   {
+  //     _id: 5,
+  //     name: "benadryl",
+  //     itemClass: "Cough Syrup",
+  //     imagePath: "benadryl.jpg",
+  //     avlQuantity: 3,
+  //   },
+  //   {
+  //     _id: 6,
+  //     name: "mango burfi",
+  //     itemClass: "Burfi",
+  //     imagePath: "mangoburfi.jpg",
+  //     avlQuantity: 5,
+  //   },
+  // ];
 
-  const itemClasses = [
-    {
-      _id: 1,
-      name: "Mocktail",
-      category: "beverage",
-      imagePath: "mocktail.jpg",
-    },
-    {
-      _id: 2,
-      name: "Colddrink",
-      category: "bevarage",
-      imagePath: "colddrink.jpg",
-    },
-    { _id: 3, name: "Khari", category: "bakery", imagePath: "khari.jpeg" },
-    { _id: 4, name: "Cake", category: "bakery", imagePath: "cake.jpg" },
-    { _id: 5, name: "Burfi", category: "sweets", imagePath: "burfi.jpg" },
-    { _id: 6, name: "Namkeen", category: "sweets", imagePath: "namkeen.jpg" },
-    { _id: 7, name: "Rice", category: "grains", imagePath: "rice.jpg" },
-    { _id: 8, name: "Wheat", category: "grains", imagePath: "wheat.jpg" },
-    {
-      _id: 9,
-      name: "Leafy greens",
-      category: "vegetables",
-      imagePath: "leafy greens.jpg",
-    },
-    {
-      _id: 10,
-      name: "Cough Syrup",
-      category: "medicine",
-      imagePath: "coughsyrup.jpg",
-    },
-  ];
+  // const itemClasses = [
+  //   {
+  //     _id: 1,
+  //     name: "Mocktail",
+  //     category: "beverage",
+  //     imagePath: "mocktail.jpg",
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: "Colddrink",
+  //     category: "bevarage",
+  //     imagePath: "colddrink.jpg",
+  //   },
+  //   { _id: 3, name: "Khari", category: "bakery", imagePath: "khari.jpeg" },
+  //   { _id: 4, name: "Cake", category: "bakery", imagePath: "cake.jpg" },
+  //   { _id: 5, name: "Burfi", category: "sweets", imagePath: "burfi.jpg" },
+  //   { _id: 6, name: "Namkeen", category: "sweets", imagePath: "namkeen.jpg" },
+  //   { _id: 7, name: "Rice", category: "grains", imagePath: "rice.jpg" },
+  //   { _id: 8, name: "Wheat", category: "grains", imagePath: "wheat.jpg" },
+  //   {
+  //     _id: 9,
+  //     name: "Leafy greens",
+  //     category: "vegetables",
+  //     imagePath: "leafy greens.jpg",
+  //   },
+  //   {
+  //     _id: 10,
+  //     name: "Cough Syrup",
+  //     category: "medicine",
+  //     imagePath: "coughsyrup.jpg",
+  //   },
+  // ];
 
-  const shops = [
-    { _id: 1, name: "Sadanand Kirana Store" },
-    { _id: 2, name: "Surya Sweets" },
-    { _id: 3, name: "Dhiraj Cafe" },
-    { _id: 4, name: "Himanshu Medical" },
-    { _id: 5, name: "Vaishnavi Fruits" },
-    { _id: 6, name: "Swapnil Bakery" },
-    { _id: 7, name: "Sachin Vegitables" },
-  ];
+  // const shops = [
+  //   { _id: 1, name: "Sadanand Kirana Store" },
+  //   { _id: 2, name: "Surya Sweets" },
+  //   { _id: 3, name: "Dhiraj Cafe" },
+  //   { _id: 4, name: "Himanshu Medical" },
+  //   { _id: 5, name: "Vaishnavi Fruits" },
+  //   { _id: 6, name: "Swapnil Bakery" },
+  //   { _id: 7, name: "Sachin Vegitables" },
+  // ];
 
   let count = 0;
 
@@ -114,20 +136,17 @@ const ShopItems = () => {
 
   itemClasses.map((itemclass) => {
     let noOfItems = items.filter(
-      (item) => item.itemClass === itemclass.name
+      (item) => item.itemClass === itemclass._id
     ).length;
-    // if (noOfItems > 0) {
     arrayitem[count] = { name: itemclass.name, quantity: noOfItems };
-    // arrayitem[count] = noOfItems;
     count++;
-    //  }
   });
-  // count = 0;
 
-  console.log(arrayitem);
+  // console.log(arrayitem);
 
   const handleSelectShop = (name) => {
-    setShopName(name);
+    //  setShopName(name);
+    callGetAllShopItemsAPI(name);
     console.log(name);
   };
 
@@ -190,26 +209,29 @@ const ShopItems = () => {
             <ListGroup
               items={[...shops]}
               onSelectItem={handleSelectShop}
-              selectedItem={shopName}
+              //  selectedItem={shopName}
             />
           </div>
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            {items.map((item) => (
+            {shopitems.map((item) => (
               <div
                 key={item._id}
                 className=" card ml-12 mt-10 text-slate-600 w-32 h-36 rounded-xl overflow-hidden border border-slate-300"
               >
                 <img
                   src={
-                    process.env.PUBLIC_URL + "/images/items/" + item.imagePath
+                    process.env.PUBLIC_URL +
+                    "/images/items/" +
+                    item.itemName +
+                    ".jpg"
                   }
                   alt="fruits"
                   className="mt-6 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
 
-                <div className="ml-2 mb-1 text-gray-400 ">{item.name}</div>
+                <div className="ml-2 mb-1 text-gray-400 ">{item.itemName}</div>
 
                 <div className="flex w-auto ">
                   <div
@@ -227,12 +249,12 @@ const ShopItems = () => {
                 </div>
                 <span
                   className={
-                    item.avlQuantity < 5
+                    item.availableQuantity.amount < 5
                       ? "relative -top-36 p-1 badge bg-red-500 rounded-full border border-none text-sm"
                       : "relative -top-36 p-1 badge bg-emerald-200 rounded-full border border-none text-sm"
                   }
                 >
-                  Quantity : {item.avlQuantity}
+                  Quantity : {item.availableQuantity.amount}
                 </span>
               </div>
             ))}
