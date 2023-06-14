@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useUserStore } from "../stores/userStore";
+import { useParams } from "react-router-dom";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("Please enter First Name"),
@@ -22,13 +23,17 @@ const schema = yup.object().shape({
   password: yup.string().min(8).required("Password is required"),
   role: yup.string().required("Please select your role"),
 });
-const EditUserForm = (props) => {
-  const { showModal, setShowModal } = props;
-  // const [showModal] = useState(true);
+const EditUserForm = () => {
+  const [showModal] = useState(true);
   const navigate = useNavigate();
+  const params = useParams();
+  const userId = params.id;
 
+  const user = useUserStore((state) => state.currentUser);
+  const callGetUserAPI = useUserStore((state) => state.getUserAPI);
   const callAddUserAPI = useUserStore((state) => state.addUserAPI);
-  const users = useUserStore((state) => state.users);
+  const callEditUserAPI = useUserStore((state) => state.editUserAPI);
+
   const {
     register,
     handleSubmit,
@@ -38,10 +43,24 @@ const EditUserForm = (props) => {
     resolver: yupResolver(schema),
   });
   const onSubmitHandler = (data) => {
-    callAddUserAPI(data);
+    if (data._id) {
+      callEditUserAPI(data);
+    } else {
+      callAddUserAPI(data);
+    }
     navigate("/users");
-    setShowModal(false);
   };
+  useEffect(() => {
+    if (!userId) return;
+    callGetUserAPI(userId);
+    setValue("firstName", user.firstName);
+    setValue("lastName", user.lastName);
+    setValue("email", user.email);
+    setValue("phone", user.phone);
+    setValue("userName", user.userName);
+    setValue("password", user.password);
+    setValue("role", user.role);
+  }, [user.firstName]);
 
   // const users = [
   //   {
@@ -108,7 +127,7 @@ const EditUserForm = (props) => {
                   <div className="ml-[300px] mt-6 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     />
                   </div>
                 </div>
@@ -122,6 +141,7 @@ const EditUserForm = (props) => {
                           placeholder="First Name"
                           // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("firstName")}
                         />
 
                         <p className="text-red-500">
@@ -129,12 +149,13 @@ const EditUserForm = (props) => {
                         </p>
                       </div>
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Last Name:</span>
+                        <span className="text-gray-500">Last Name:</span>
                         <input
                           type="text"
                           placeholder="Last Name"
                           // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("lastName")}
                         />
                         <p className="text-red-500">
                           {errors.lastName?.message}
@@ -143,78 +164,72 @@ const EditUserForm = (props) => {
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Address:</span>
-                        <input
-                          type="text"
-                          placeholder="Address"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                          className="w-[220px] py-2 px-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                        />
-                        <p className="text-red-500">
-                          {errors.address?.message}
-                        </p>
-                      </div>
-                      <div className="flex flex-col">
-                      <span className="text-gray-500">Email:</span>
+                        <span className="text-gray-500">Email:</span>
                         <input
                           type="text"
                           placeholder="Email"
                           // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("email")}
                         />
                         <p className="text-red-500">{errors.email?.message}</p>
                       </div>
-                    </div>
-                    <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Phone:</span>
+                        <span className="text-gray-500">Phone:</span>
                         <input
                           type="text"
                           placeholder="Phone"
                           // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("phone")}
                         />
                         <p className="text-red-500">{errors.phone?.message}</p>
                       </div>
+                    </div>
+                    <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                      <span className="text-gray-500">User Name:</span>
+                        <span className="text-gray-500">User Name:</span>
                         <input
                           type="text"
                           placeholder="User Name"
                           // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("userName")}
                         />
                         <p className="text-red-500">
                           {errors.userName?.message}
                         </p>
                       </div>
-                    </div>
-                    <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Password:</span>
+                        <span className="text-gray-500">Password:</span>
                         <input
                           type="password"
                           placeholder="Password"
                           // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("password")}
                         />
                         <p className="text-red-500">
                           {errors.password?.message}
                         </p>
                       </div>
+                    </div>
+                    <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                      <span className="text-gray-500">Role:</span>
+                        <span className="text-gray-500">Role:</span>
                         <select
                           id="Role"
-                          className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          className="w-[450px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("role")}
                         >
                           {" "}
                           <option selected>Role</option>
-                          {users.map((role) => (
-                            <option key={role._id} value={role._id}>
-                              {role.role}
-                            </option>
-                          ))}
+                          <option key={1} value={"shopkeeper"}>
+                            Shopkeeper
+                          </option>
+                          <option key={2} value={"customer"}>
+                            Customer
+                          </option>
                         </select>
                         <p className="text-red-500">{errors.role?.message}</p>
                       </div>
@@ -225,7 +240,7 @@ const EditUserForm = (props) => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     >
                       Cancel
                     </button>
@@ -248,5 +263,3 @@ const EditUserForm = (props) => {
 };
 
 export default EditUserForm;
-
-

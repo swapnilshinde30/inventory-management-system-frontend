@@ -9,11 +9,19 @@ export const useItemStore = create(
   devtools(
     immer((set) => ({
       items: [],
+      currentItem: {},
       getAllItemsAPI: async () => {
         const response = await axios.get("http://localhost:3030/items");
         set((state) => {
           state.items = response.data.data;
           console.log(state.items);
+        });
+      },
+      getItemAPI: async (id) => {
+        const response = await axios.get(`http://localhost:3030/items/${id}`);
+        console.log(response.data);
+        set((state) => {
+          state.currentItem = response.data;
         });
       },
 
@@ -37,6 +45,20 @@ export const useItemStore = create(
           state.items = state.items.filter(
             (item) => item._id != response.data._id
           );
+        });
+      },
+      editItemAPI: async (payload) => {
+        const id = payload._id;
+        delete payload._id;
+        const response = await axios.patch(
+          `http://localhost:3030/items/${id}`,
+          payload
+        );
+        set((state) => {
+          const index = state.items.findIndex(
+            (c) => c._id === response.data._id
+          );
+          state.items[index] = response.data;
         });
       },
     }))

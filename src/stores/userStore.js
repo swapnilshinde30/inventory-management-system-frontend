@@ -9,12 +9,22 @@ export const useUserStore = create(
   devtools(
     immer((set) => ({
       users: [],
+      currentUser: {},
       getAllUsersAPI: async (role) => {
         const response = await axios.get("http://localhost:3030/users", {
           params: { role },
         });
         set((state) => {
           state.users = response.data.data;
+        });
+      },
+      getUserAPI: async (id) => {
+        console.log(id);
+        const response = await axios.get(`http://localhost:3030/users/${id}`);
+
+        set((state) => {
+          state.currentUser = response.data;
+          console.log(state.currentUser);
         });
       },
       addUserAPI: async (payload) => {
@@ -35,6 +45,20 @@ export const useUserStore = create(
           state.users = state.users.filter(
             (user) => user._id !== response.data._id
           );
+        });
+      },
+      editUserAPI: async (payload) => {
+        const id = payload._id;
+        delete payload._id;
+        const response = await axios.patch(
+          `http://localhost:3030/users/${id}`,
+          payload
+        );
+        set((state) => {
+          const index = state.users.findIndex(
+            (c) => c._id === response.data._id
+          );
+          state.users[index] = response.data;
         });
       },
     }))

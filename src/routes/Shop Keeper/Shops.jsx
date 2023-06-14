@@ -1,5 +1,5 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link, NavLink, Navigate } from "react-router-dom";
+import { Link, NavLink, Navigate, useNavigate } from "react-router-dom";
 import { BsShop } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -12,7 +12,7 @@ import { useShopStore } from "../../stores/shopStore";
 import ShopForm from "../../Forms/ShopForm";
 
 const Shops = () => {
-  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
   const callgetAllShops = useShopStore((state) => state.getAllShopsAPI);
   const shops = useShopStore((state) => state.shops);
   const callDeleteShopAPI = useShopStore((state) => state.deleteShopAPI);
@@ -109,13 +109,12 @@ const Shops = () => {
               </div>
             </div>
             <div className="flex-1 mt-5">
-              <button
+              <NavLink
                 to={"/shops/new"}
                 className="ml-10  md:ml-96  rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                onClick={() => setShowModal(true)}
               >
                 Add Shop
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -146,11 +145,11 @@ const Shops = () => {
                 </div>
 
                 <button
-                  to={"/shops/new"}
+                  // to={"/shops/new"}
                   className="mt-2 w-8 ml-[80px] mr-2 bg-white rounded-full h-8 hover:bg-teal-500"
-                  onClick={() => setShowModal(true)}
+                  onClick={() => navigate(`/shops/${shop._id}`)}
                 >
-                  <FiEdit className="ml-2 h-4 w-4 text-teal-500 hover:text-white"/>
+                  <FiEdit className="ml-2 h-4 w-4 text-teal-500 hover:text-white" />
                 </button>
 
                 <div className="mr-5">
@@ -167,7 +166,6 @@ const Shops = () => {
           </div>
         </div>
       </div>
-      <ShopForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

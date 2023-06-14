@@ -16,11 +16,10 @@ function App() {
     if (user === null) {
       navigate("/");
     }
-    console.log(user);
+    // console.log(user);
   }, [user]);
   return (
     <div>
-      {console.log(token)}
       {token ? <NavBar /> : null}
       <Outlet />
     </div>

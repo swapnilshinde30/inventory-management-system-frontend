@@ -8,11 +8,22 @@ export const useItemClassStore = create(
   devtools(
     immer((set) => ({
       itemClasses: [],
+      currentItemclass: {},
       getAllItemClassesAPI: async () => {
         const response = await axios.get("http://localhost:3030/itemclasses");
         set((state) => {
           state.itemClasses = response.data.data;
-          console.log(state.itemClasses);
+        });
+      },
+      getItemClassAPI: async (id) => {
+        console.log(id);
+        const response = await axios.get(
+          `http://localhost:3030/itemclasses/${id}`
+        );
+
+        set((state) => {
+          state.currentItemclass = response.data;
+          console.log(state.currentItemclass);
         });
       },
 
@@ -34,6 +45,20 @@ export const useItemClassStore = create(
           state.itemClasses = state.itemClasses.filter(
             (itemClass) => itemClass._id != response.data._id
           );
+        });
+      },
+      editItemClassAPI: async (payload) => {
+        const id = payload._id;
+        delete payload._id;
+        const response = await axios.patch(
+          `http://localhost:3030/itemclasses/${id}`,
+          payload
+        );
+        set((state) => {
+          const index = state.itemClasses.findIndex(
+            (c) => c._id === response.data._id
+          );
+          state.itemClasses[index] = response.data;
         });
       },
     }))

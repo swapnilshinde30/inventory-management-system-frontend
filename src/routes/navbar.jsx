@@ -39,7 +39,7 @@ const NavLinksShopkeeper = [
 export default function NavBar() {
   const [navLinkNames, setNavLinkNames] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
-  console.log(user);
+  // console.log(user);
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.removeItem("token");
@@ -47,7 +47,7 @@ export default function NavBar() {
     navigate("/");
   };
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     if (user === null) {
       navigate("/login");
       return;

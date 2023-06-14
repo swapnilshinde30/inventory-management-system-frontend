@@ -57,10 +57,10 @@ const Categories = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 mt-5">
               <NavLink
                 to={`/categories/new`}
-                className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                className="ml-10  md:ml-96 mt-2 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
               >
                 Add Category
               </NavLink>

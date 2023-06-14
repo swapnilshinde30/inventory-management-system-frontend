@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useItemClassStore } from "../stores/itemClasseStore";
 import { useItemStore } from "../stores/itemStore";
+import { useParams } from "react-router-dom";
 
 const schema = yup.object().shape({
   name: yup.string().required("Please enter item"),
@@ -13,10 +14,14 @@ const schema = yup.object().shape({
   description: yup.string().required("Please enter description"),
 });
 
-const ItemsForm = (props) => {
-  const { showModal, setShowModal } = props;
+const ItemsForm = () => {
+ const [showModal]=useState(true);
   const navigate = useNavigate();
-  // const [showModal] = useState(true);
+  const params = useParams();
+  const itemId = params.id;
+  const item = useItemStore((state)=>state.currentItem);
+  const callGetItemAPI = useItemStore((state)=>state.getItemAPI)
+  const callEditItemAPI = useItemStore((state)=>state.editItemAPI)
   const callAddItemAPI = useItemStore((state) => state.addItemAPI);
 
   const callGetAllItemClassesAPI = useItemClassStore(
@@ -34,13 +39,23 @@ const ItemsForm = (props) => {
   });
 
   const onSubmitHandler = (data) => {
-    callAddItemAPI(data);
+   
+    if(data._id){
+      callEditItemAPI(data);
+    }else{
+      callAddItemAPI(data);
+    }
     navigate("/items");
-    setShowModal(false);
   };
   useEffect(() => {
+    if(!itemId)return;
     callGetAllItemClassesAPI();
-  }, []);
+    callGetItemAPI(itemId);
+    if(item ===undefined)return;
+    setValue("_id",item._id)
+    setValue("name",item.name)
+    setValue("description",item.description)
+  }, [item.name]);
 
   return (
     <>
@@ -63,7 +78,7 @@ const ItemsForm = (props) => {
                   <div className="ml-[280px] mt-6 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     />
                   </div>
                 </div>
@@ -135,7 +150,7 @@ const ItemsForm = (props) => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     >
                       Cancel
                     </button>

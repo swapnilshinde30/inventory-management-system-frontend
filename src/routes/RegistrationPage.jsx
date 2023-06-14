@@ -145,7 +145,7 @@ const RegistrationForm = () => {
               <select
                 id="role"
                 className="w-[415px] pl-2 py-1 rounded-lg border-2 border-gray-200 outline-none focus:border-emerald-500"
-                // {...register("role")}
+                {...register("role")}
               >
                 <option key={1} value={"Customer"}>
                   {" "}

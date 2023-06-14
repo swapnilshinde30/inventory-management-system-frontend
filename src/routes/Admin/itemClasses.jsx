@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../navbar";
 import { useItemClassStore } from "../../stores/itemClasseStore";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ItemClassesForm from "../../Forms/ItemClassesForm";
 
 const ItemClasses = () => {
-  const [showModal,setShowModal] = useState(false)
+  const navigate = useNavigate();
   const callGetAllItemClasses = useItemClassStore(
     (state) => state.getAllItemClassesAPI
   );
@@ -15,7 +15,6 @@ const ItemClasses = () => {
     (state) => state.deleteItemClassAPI
   );
 
-  console.log(itemClasses);
   useEffect(() => {
     callGetAllItemClasses();
   }, []);
@@ -56,13 +55,13 @@ const ItemClasses = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1">
-              <button
+            <div className="flex-1 mt-5">
+              <NavLink
                 to={`/itemclasses/new`}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-              onClick={()=>setShowModal(true)} >
+              >
                 Add Item class
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -107,7 +106,12 @@ const ItemClasses = () => {
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button className="hover:font-bold">Edit</button>
+                    <button
+                      className="hover:font-bold"
+                      onClick={() => navigate(`/itemclasses/${itemclass._id}`)}
+                    >
+                      Edit
+                    </button>
                   </div>
                 </div>
               </div>
@@ -115,7 +119,6 @@ const ItemClasses = () => {
           </div>
         </div>
       </div>
-      <ItemClassesForm showModal={showModal} setShowModal={setShowModal}/>
     </>
   );
 };

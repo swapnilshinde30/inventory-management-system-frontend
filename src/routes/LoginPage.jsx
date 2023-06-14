@@ -106,7 +106,7 @@ function LoginPage() {
 
                     <div className="ml-14 mb-8 text-sm text-blue-600">
                       <NavLink
-                        to={"/register1"}
+                        to={"/register"}
                         // onClick={() => setShowModal(true)}
                       >
                         Create Account

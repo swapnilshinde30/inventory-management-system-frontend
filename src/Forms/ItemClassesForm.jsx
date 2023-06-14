@@ -3,7 +3,7 @@ import { SlClose } from "react-icons/sl";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useItemClassStore } from "../stores/itemClasseStore";
 import { useCategoryStore } from "../stores/categoryStore";
 
@@ -12,17 +12,26 @@ const schema = yup.object().shape({
   // category: yup.string().required("category is required"),
 });
 
-const ItemClassesForm = (props) => {
-  const { showModal, setShowModal } = props;
+const ItemClassesForm = () => {
+  const [showModal] = useState(true);
   const navigate = useNavigate();
-  // const [showModal] = useState(true);
+  const params = useParams();
+  const itemClassId = params.id;
+  const itemClass = useItemClassStore((state) => state.currentItemclass);
+  const callGetItemClassAPI = useItemClassStore(
+    (state) => state.getItemClassAPI
+  );
+  const callEditItemClassAPI = useItemClassStore(
+    (state) => state.editItemClassAPI
+  );
+
   const callAddItemAPI = useItemClassStore((state) => state.addItemClassesAPI);
   const categories = useCategoryStore((state) => state.categories);
   const callgetAllCategoriesAPI = useCategoryStore(
     (state) => state.getAllCategoriesAPI
   );
 
-  console.log(categories);
+  // console.log(categories);
   const {
     register,
     handleSubmit,
@@ -33,13 +42,23 @@ const ItemClassesForm = (props) => {
   });
 
   const onSubmitHandler = (data) => {
-    callAddItemAPI(data);
+    if (data._id) {
+      callEditItemClassAPI(data);
+    } else {
+      callAddItemAPI(data);
+    }
     navigate("/itemclasses");
-    setShowModal(false);
   };
   useEffect(() => {
+    if (!itemClassId) return;
     callgetAllCategoriesAPI();
-  }, []);
+    callGetItemClassAPI(itemClassId);
+    console.log(itemClass);
+    if (itemClass === undefined) return;
+    setValue("_id", itemClass._id);
+    setValue("name", itemClass.name);
+    setValue("category", itemClass.category);
+  }, [itemClass.name]);
 
   return (
     <>
@@ -62,7 +81,7 @@ const ItemClassesForm = (props) => {
                   <div className="ml-[235px] mt-6 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     />
                   </div>
                 </div>
@@ -80,7 +99,7 @@ const ItemClassesForm = (props) => {
                     <span className="text-gray-500">Category:</span>
                     <select
                       id="itemClasses"
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                      className="w-full py-2 px-3 mb-3 appearance-none shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                       {...register("category")}
                     >
                       {" "}
@@ -98,7 +117,7 @@ const ItemClassesForm = (props) => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     >
                       Cancel
                     </button>

@@ -3,11 +3,13 @@ import { SlClose } from "react-icons/sl";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import * as yup from "yup";
 import { useShopStore } from "../stores/shopStore";
 import { useCategoryStore } from "../stores/categoryStore";
+import { useParams } from "react-router-dom";
+import { useUserStore } from "../stores/userStore";
 
 const schema = yup.object().shape({
   name: yup.string().required("Please enter Name"),
@@ -25,18 +27,25 @@ const schema = yup.object().shape({
   }),
 });
 
-const ShopForm = (props) => {
-  const { showModal, setShowModal } = props;
-  // const [showModal] = useState(true);
+const ShopForm = () => {
+  const [showModal] = useState(true);
+  const params = useParams();
+  const shopId = params.id;
   const navigate = useNavigate();
+
+  const callGetShopAPI = useShopStore((state) => state.getShopAPI);
   const callAddShopAPI = useShopStore((state) => state.addShopAPI);
-  const categories = useCategoryStore((state) => state.categories);
+  const callEditShopAPI = useShopStore((state) => state.editShopAPI);
+  const shop = useShopStore((state) => state.currentShop);
+
   const callgetAllCategoriesAPI = useCategoryStore(
     (state) => state.getAllCategoriesAPI
   );
+  const categories = useCategoryStore((state) => state.categories);
 
-  // const callgetAllUsersAPI = useUserStore((state) => state.getAllUsersAPI);
-  // const users = useUserStore((state) => state.users);
+  const callgetAllUsersAPI = useUserStore((state) => state.getAllUsersAPI);
+  const users = useUserStore((state) => state.users);
+
   // console.log(callgetAllUsersAPI);
   // console.log(callgetAllCategoriesAPI);
   // console.log(categories);
@@ -50,16 +59,38 @@ const ShopForm = (props) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmitHandler = (data) => {
+  const onSubmitHandler = async (data) => {
     console.log(data);
-    callAddShopAPI(data);
+    if (data._id) {
+      callEditShopAPI(data);
+    } else {
+      callAddShopAPI(data);
+    }
     navigate("/shops");
-    setShowModal(false);
   };
   useEffect(() => {
     callgetAllCategoriesAPI();
+    callgetAllUsersAPI();
+    if (!shopId) return;
+    callGetShopAPI(shopId);
     // callgetAllUsersAPI("shopkeeper");
-  }, []);
+    setValue("_id", shop._id);
+    setValue("name", shop.name);
+    setValue("shopId", shop.shopId);
+    setValue("addressLine1", shop.addressLine1);
+    setValue("addressLine2", shop.addressLine2);
+    setValue("area", shop.area);
+    setValue("city", shop.city);
+    setValue("state", shop.state);
+    setValue("zipcode", shop.zipcode);
+    setValue("category", shop.category);
+    setValue("owner", shop.owner);
+    setValue("contactPerson.name", shop.contactPerson["name"]);
+    setValue("contactPerson.phone", shop.contactPerson["phone"]);
+  }, [shop.name]);
+  // useEffect(()=>{
+
+  // })
 
   // const shops = [
   //   {
@@ -134,7 +165,7 @@ const ShopForm = (props) => {
                   <div className="ml-[280px] mt-6 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     />
                   </div>
                 </div>
@@ -244,9 +275,7 @@ const ShopForm = (props) => {
                         {...register("category")}
                       >
                         {" "}
-                        <option className="">
-                          Select Category
-                        </option>
+                        <option className="">Select Category</option>
                         {categories.map((category) => (
                           <option
                             className="text-gray-500 text-base"
@@ -305,7 +334,7 @@ const ShopForm = (props) => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => navigate(-1)}
                     >
                       Cancel
                     </button>

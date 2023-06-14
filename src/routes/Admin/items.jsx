@@ -5,12 +5,12 @@ import { useState } from "react";
 import { useItemStore } from "../../stores/itemStore";
 import { useItemClassStore } from "../../stores/itemClasseStore";
 import ItemsForm from "../../Forms/ItemsForm";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 
 const Items = () => {
-  const [showModal, setShowModal] = useState(false);
   const callGetAllItems = useItemStore((state) => state.getAllItemsAPI);
   const items = useItemStore((state) => state.items);
-
+  const navigate = useNavigate();
   const callGetAllItemClasses = useItemClassStore(
     (state) => state.getAllItemClassesAPI
   );
@@ -147,14 +147,13 @@ const Items = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1">
-              <button
-                to={"/items/new"}
+            <div className="flex-1 mt-5">
+              <NavLink
+                to={`/items/new`}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                onClick={() => setShowModal(true)}
               >
                 Add Item
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -226,7 +225,12 @@ const Items = () => {
                                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                                     style={{ marginTop: "-4px" }}
                                   >
-                                    <button className="hover:font-bold">
+                                    <button
+                                      className="hover:font-bold"
+                                      onClick={() =>
+                                        navigate(`/items/${item._id}`)
+                                      }
+                                    >
                                       Edit
                                     </button>
                                   </div>
@@ -244,7 +248,6 @@ const Items = () => {
           </div>
         </div>
       </div>
-      <ItemsForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

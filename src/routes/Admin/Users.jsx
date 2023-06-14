@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import NavBar from "../navbar";
 import EditUserForm from "../../Forms/EditUserForm";
 import { useUserStore } from "../../stores/userStore";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import RegisterForm from "../../Forms/RegisterForm";
 
 const Users = () => {
-  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
   const getAllUsers = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
   const calldeleteUserAPI = useUserStore((state) => state.deleteUserAPI);
@@ -116,13 +116,15 @@ const Users = () => {
                   className="nav-link mr-5"
                   aria-current="page"
                 > */}
-                <div className="flex-1 ">
+                <div className="flex-1">
                   <button
-                    to={"/users/new"}
-                    className="mt-2 w-8 ml-[130px] mr-3 bg-white rounded-full h-8  hover:bg-teal-500"
-                    onClick={() => setShowModal(true)}
+                    // to={`/users/:${user._id}`}
+                    className="w-8 ml-[130px] mr-3 bg-white rounded-full h-8  hover:bg-teal-500"
+                    onClick={() => {
+                      navigate(`/users/${user._id}`);
+                    }}
                   >
-                    <FiEdit className="ml-[8px] h-4 w-4 text-teal-500 hover:scale-110 transition-all hover:text-white" />
+                    <FiEdit className="ml-[100px] -mt-2 h-4 w-4 text-teal-500 hover:scale-110 transition-all hover:text-white" />
                   </button>
                 </div>
                 {/* </Link> */}
@@ -145,7 +147,6 @@ const Users = () => {
         <div className="w-32 border-r h-screen border-slate-200">2</div>
       </div>
       <div className="grid grid-row-2"></div> */}
-      <RegisterForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };
