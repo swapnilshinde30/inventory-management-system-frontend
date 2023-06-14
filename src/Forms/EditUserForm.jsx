@@ -164,6 +164,18 @@ const EditUserForm = () => {
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
+                        <span className="text-gray-500">Address:</span>
+                        <input
+                          type="text"
+                          placeholder="Address"
+                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
+                          className="w-[220px] py-2 px-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                        />
+                        <p className="text-red-500">
+                          {errors.address?.message}
+                        </p>
+                      </div>
+                      <div className="flex flex-col">
                         <span className="text-gray-500">Email:</span>
                         <input
                           type="text"

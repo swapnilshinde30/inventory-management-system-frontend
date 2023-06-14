@@ -14,7 +14,7 @@ const ShopsForCustomer = () => {
   const handleSelectCategory = (category) => {
     //  setCategoryName(name);
     console.log(category);
-    callGetAllShopsAPI(category);
+    callGetAllShopsAPI(undefined, category);
   };
 
   const handleSelectShop = (shop) => {
