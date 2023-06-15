@@ -15,13 +15,13 @@ const schema = yup.object().shape({
 });
 
 const ItemsForm = () => {
- const [showModal]=useState(true);
+  const [showModal] = useState(true);
   const navigate = useNavigate();
   const params = useParams();
   const itemId = params.id;
-  const item = useItemStore((state)=>state.currentItem);
-  const callGetItemAPI = useItemStore((state)=>state.getItemAPI)
-  const callEditItemAPI = useItemStore((state)=>state.editItemAPI)
+  const item = useItemStore((state) => state.currentItem);
+  const callGetItemAPI = useItemStore((state) => state.getItemAPI);
+  const callEditItemAPI = useItemStore((state) => state.editItemAPI);
   const callAddItemAPI = useItemStore((state) => state.addItemAPI);
 
   const callGetAllItemClassesAPI = useItemClassStore(
@@ -39,22 +39,21 @@ const ItemsForm = () => {
   });
 
   const onSubmitHandler = (data) => {
-   
-    if(data._id){
+    if (data._id) {
       callEditItemAPI(data);
-    }else{
+    } else {
       callAddItemAPI(data);
     }
     navigate("/items");
   };
   useEffect(() => {
-    if(!itemId)return;
+    if (!itemId) return;
     callGetAllItemClassesAPI();
     callGetItemAPI(itemId);
-    if(item ===undefined)return;
-    setValue("_id",item._id)
-    setValue("name",item.name)
-    setValue("description",item.description)
+    if (item === undefined) return;
+    setValue("_id", item._id);
+    setValue("name", item.name);
+    setValue("description", item.description);
   }, [item.name]);
 
   return (
@@ -99,10 +98,12 @@ const ItemsForm = () => {
                       <span className="text-gray-500">Item Class:</span>
                       <select
                         id="itemClasses"
-                        className="w-[220px] py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                        className="w-[220px] py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md appearance-none"
                         {...register("itemClass")}
                       >
-                        <option>Item Class</option>
+                        <option value={""} hidden>
+                          Item Class
+                        </option>
                         {itemClasses.map((itemClass) => (
                           <option key={itemClass._id} value={itemClass._id}>
                             {itemClass.name}

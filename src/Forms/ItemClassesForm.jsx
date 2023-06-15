@@ -9,7 +9,7 @@ import { useCategoryStore } from "../stores/categoryStore";
 
 const schema = yup.object().shape({
   name: yup.string().required("Please enter Item Class Name"),
-  // category: yup.string().required("category is required"),
+  category: yup.string().required("category is required"),
 });
 
 const ItemClassesForm = () => {
@@ -103,7 +103,9 @@ const ItemClassesForm = () => {
                       {...register("category")}
                     >
                       {" "}
-                      <option>Category</option>
+                      <option value={""} hidden>
+                        Category
+                      </option>
                       {categories.map((category) => (
                         <option key={category._id} value={category._id}>
                           {category.name}

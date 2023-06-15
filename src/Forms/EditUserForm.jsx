@@ -18,9 +18,16 @@ const schema = yup.object().shape({
     .min(8)
     .max(30)
     .required("Please enter correct Email"),
-  phone: yup.string().min(10).max(10).required("Enter valid Phone No"),
+  phone: yup
+    .string()
+    .min(10)
+    .max(10)
+    .required("Phone number must at least 10 digits"),
   userName: yup.string().required("User Name is required"),
-  password: yup.string().min(8).required("Password is required"),
+  password: yup
+    .string()
+    .min(8)
+    .required("Password must be at least 8 character"),
   role: yup.string().required("Please select your role"),
 });
 const EditUserForm = () => {
@@ -164,18 +171,6 @@ const EditUserForm = () => {
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                        <span className="text-gray-500">Address:</span>
-                        <input
-                          type="text"
-                          placeholder="Address"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                          className="w-[220px] py-2 px-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                        />
-                        <p className="text-red-500">
-                          {errors.address?.message}
-                        </p>
-                      </div>
-                      <div className="flex flex-col">
                         <span className="text-gray-500">Email:</span>
                         <input
                           type="text"
@@ -231,11 +226,13 @@ const EditUserForm = () => {
                         <span className="text-gray-500">Role:</span>
                         <select
                           id="Role"
-                          className="w-[450px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          className="w-[450px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md appearance-none"
                           {...register("role")}
                         >
                           {" "}
-                          <option selected>Role</option>
+                          <option value={""} hidden>
+                            Role
+                          </option>
                           <option key={1} value={"shopkeeper"}>
                             Shopkeeper
                           </option>

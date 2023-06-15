@@ -119,12 +119,12 @@ const Users = () => {
                 <div className="flex-1">
                   <button
                     // to={`/users/:${user._id}`}
-                    className="w-8 ml-[130px] mr-3 bg-white rounded-full h-8  hover:bg-teal-500"
+                    className="w-8 ml-[130px] mr-3 mt-2 bg-white rounded-full h-8  hover:bg-teal-500"
                     onClick={() => {
                       navigate(`/users/${user._id}`);
                     }}
                   >
-                    <FiEdit className="ml-[100px] -mt-2 h-4 w-4 text-teal-500 hover:scale-110 transition-all hover:text-white" />
+                    <FiEdit className="ml-[8px] h-4 w-4 text-teal-500 hover:scale-110 transition-all hover:text-white" />
                   </button>
                 </div>
                 {/* </Link> */}

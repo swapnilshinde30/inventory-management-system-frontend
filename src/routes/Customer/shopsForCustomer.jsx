@@ -6,7 +6,9 @@ import { useCategoryStore } from "../../stores/categoryStore";
 import { useShopStore } from "../../stores/shopStore";
 import { useShopitemStore } from "../../stores/shopitemStore";
 import { useItemStore } from "../../stores/itemStore";
+import CartForm from "../../Forms/CartForm";
 const ShopsForCustomer = () => {
+  const [showModal, setShowModal] = useState(false);
   const callGetAllShopitemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
@@ -149,7 +151,12 @@ const ShopsForCustomer = () => {
                       className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                       style={{ marginTop: "-4px" }}
                     >
-                      <button className="hover:font-bold">Add</button>
+                      <button
+                        className="hover:font-bold"
+                        onClick={() => setShowModal(true)}
+                      >
+                        Add
+                      </button>
                     </div>
                   </div>
                   <span
@@ -167,6 +174,7 @@ const ShopsForCustomer = () => {
           </div>
         </div>
       </div>
+      <CartForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

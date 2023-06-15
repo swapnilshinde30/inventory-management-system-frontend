@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useLoginStore } from "../stores/loginStore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiEdit } from "react-icons/fi";
 const navLinkAdmin = [
   { id: 1, name: "CATEGORIES", pageLink: "/categories", role: "admin" },
   { id: 2, name: "ITEMCLASSES", pageLink: "/itemclasses", role: "admin" },
@@ -37,15 +38,19 @@ const NavLinksShopkeeper = [
 // }
 
 export default function NavBar() {
+  const [showModal, setShowModal] = useState(false);
   const [navLinkNames, setNavLinkNames] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
   // console.log(user);
   const navigate = useNavigate();
+
   const handleLogout = () => {
+    console.log("logout");
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
     navigate("/");
   };
+
   useEffect(() => {
     // console.log(user);
     if (user === null) {
@@ -57,13 +62,20 @@ export default function NavBar() {
     if (user.role === "shopkeeper") setNavLinkNames(NavLinksShopkeeper);
   }, [user]);
 
+  const focusHandler = () => {
+    setShowModal(true);
+  };
+  const blurHandler = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       {/* <p>Navbar</p> */}
       {/* <!-- Main navigation container --> */}
       {sessionStorage.getItem("token") ? (
         <nav
-          className="flex-1 h-18 w-full items-center justify-between py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4"
+          className="flex-1 h-14 w-full items-center justify-between py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4"
           data-te-navbar-ref
         >
           <div className="flex w-full flex-wrap items-center justify-between px-3">
@@ -153,7 +165,10 @@ export default function NavBar() {
                 role="button"
                 data-te-dropdown-toggle-ref
                 aria-expanded="false"
-                onClick={handleLogout}
+                // onClick={handleLogout}
+                // onClick={() => setShowModal(true)}
+                onFocus={focusHandler}
+                // onBlur={blurHandler}
               >
                 {/* <!-- User avatar --> */}
                 <div className="flex flex-col items-end">
@@ -172,6 +187,91 @@ export default function NavBar() {
                 />
               </a>
             </div>
+            {showModal ? (
+              <>
+                <div class="relative inline-block text-left">
+                  <div
+                    class="absolute right-0 top-3 z-10 mt-2 w-[300px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabindex="-1"
+                  >
+                    <div class="py-1" role="none">
+                      {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
+
+                      <div className="flex-col">
+                        <div className="flex flex-row">
+                          {" "}
+                          <img
+                            src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
+                            className="border-double border-4 border-teal-500 rounded-full mx-auto mt-2"
+                            style={{ height: "65px", width: "65px" }}
+                            alt=""
+                            loading="lazy"
+                          />
+                          <NavLink to={`/users/${user._id}`}>
+                            <FiEdit
+                              className="absolute right-5 top-5 text-lg cursor-pointer"
+                              onClick={() => setShowModal(false)}
+                            />
+                          </NavLink>
+                        </div>
+
+                        <div
+                          id="details"
+                          className="text-center mb-2 flex flex-col"
+                        >
+                          <div className="font-bold p-2">
+                            {user.firstName + " " + user.lastName}
+                          </div>
+                          <div className="text-teal-500">(+91{user.phone})</div>
+                          <div>{user.email}</div>
+                          <div className=" p-5">
+                            <div className="flex flex-row ml-[60px]">
+                              <span className="pr-2">User Name:</span>
+                              <div>{user.userName}</div>
+                            </div>
+                            <div className="flex flex-row ml-[60px]">
+                              <span className="pr-2">Password:</span>
+                              <div>xxxxxxxxxx</div>
+                            </div>
+                          </div>
+                          <div className="flex p-2 mb-5">
+                            <button
+                              type="button"
+                              className="ml-[35px] rounded-lg text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
+                              onClick={() => setShowModal(false)}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="button"
+                              className="ml-3 rounded-lg bg-teal-500 px-6 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white hover:bg-teal-600"
+                              onClick={() => handleLogout()}
+                            >
+                              Sign Out
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* <form method="POST" action="#" role="none">
+                        <button
+                          type="submit"
+                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
+                          role="menuitem"
+                          tabindex="-1"
+                          id="menu-item-3"
+                        >
+                          Sign out
+                        </button>
+                      </form> */}
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : null}
           </div>
         </nav>
       ) : null}

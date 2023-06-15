@@ -29,6 +29,7 @@ import CategoryForm from "./Forms/CategoryForm";
 import ItemsForm from "./Forms/ItemsForm";
 import EditUserForm from "./Forms/EditUserForm";
 import ShopItemsForm from "./Forms/ShopItemsForm";
+import CartForm from "./Forms/CartForm";
 import ShopForm from "./Forms/ShopForm";
 import RegisterForm from "./Forms/RegisterForm";
 import RequisitionForm from "./Forms/RequisitionForm";
@@ -69,7 +70,7 @@ root.render(
             <Route path="requisitions" element={<Requisitions />} />
             {/* <Route path="requisitions/new" element={<RequisitionForm />} /> */}
             <Route path="home" element={<HomePage />} />
-            <Route path="error404" element={<Error404 />} />
+            <Route path="*" element={<Error404 />} />
             <Route path="error403" element={<Error403 />} />
             <Route path="error401" element={<Error401 />} />
             <Route path="error500" element={<Error500 />} />
