@@ -62,8 +62,8 @@ root.render(
             <Route path="items/new" element={<ItemsForm />} />
             <Route path="items/:id" element={<ItemsForm />} />
             <Route path="shopitems" element={<ShopItems />} />
-            <Route path="/shopitems/new" element={<ShopItemsForm />} />
-            <Route path="/shopitems/:id" element={<ShopItemsForm />} />
+            {/* <Route path="/shopitems/new" element={<ShopItemsForm />} /> */}
+            <Route path="shopitems/:id" element={<ShopItems />} />
             <Route path="/shopsForCustomer" element={<ShopsForCustomer />} />
             <Route path="cart" element={<Cart />} />
             <Route path="orders" element={<Order />} />
