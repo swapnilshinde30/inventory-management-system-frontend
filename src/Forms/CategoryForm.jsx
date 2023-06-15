@@ -45,6 +45,7 @@ const CategoryForm = () => {
     if (!categoryId) return;
     callGetCategoryAPI(categoryId);
     console.log(category);
+    if (category === {}) return;
     setValue("_id", category._id);
     setValue("name", category.name);
   }, [categoryId, category.name]);

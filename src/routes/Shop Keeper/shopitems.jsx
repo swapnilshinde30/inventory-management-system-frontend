@@ -5,7 +5,7 @@ import ListGroup from "../common/listgroup";
 import React from "react";
 import NavBar from "../navbar";
 import { useShopitemStore } from "../../stores/shopitemStore";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ShopItemsForm from "../../Forms/ShopItemsForm";
 import { useItemClassStore } from "../../stores/itemClasseStore";
 import { useItemStore } from "../../stores/itemStore";
@@ -17,6 +17,7 @@ const ShopItems = () => {
   // const callGetAllShopItemsAPI = useShopitemStore(
   //   (state) => state.getAllShopItemsOfOwner
   // );
+
   const callGetAllShopItemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
@@ -33,14 +34,18 @@ const ShopItems = () => {
   const callGetAllShopsAPI = useShopStore((state) => state.getAllShopsAPI);
   const shops = useShopStore((state) => state.shops);
 
+  const callDeleteAshopitemAPI = useShopitemStore(
+    (state) => state.deleteShopitemAPI
+  );
+
   const user = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
-    console.log(user);
     callGetAllShopItemsAPI();
     callGetAllItemClassesAPI();
     // callGetAllItemsAPI();
     callGetAllShopsAPI(user._id);
-  }, []);
+    console.log(shopitems.length);
+  }, [callGetAllShopItemsAPI, shopitems]);
 
   // const items = [
   //   {
@@ -153,6 +158,7 @@ const ShopItems = () => {
   return (
     <>
       {/* <NavBar /> */}
+
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
@@ -188,7 +194,6 @@ const ShopItems = () => {
             </div>
             <div className="flex-1">
               <button
-                to={"/shopitems/new"}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
                 onClick={() => setShowModal(true)}
               >
@@ -238,13 +243,24 @@ const ShopItems = () => {
                     className=" badge text-gray-400 bg-slate-300 w-52 text-center p-1 hover:bg-slate-500 hover:text-white"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button className="hover:font-bold ">Delete</button>
+                    <button
+                      className="hover:font-bold "
+                      onClick={() => callDeleteAshopitemAPI(item._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                   <div
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button className="hover:font-bold">Edit</button>
+                    <Link
+                      to={`/shopitems/${item._id}`}
+                      className="hover:font-bold"
+                      onClick={() => setShowModal(true)}
+                    >
+                      Edit
+                    </Link>
                   </div>
                 </div>
                 <span

@@ -88,61 +88,6 @@ const ShopForm = () => {
     setValue("contactPerson.name", shop.contactPerson["name"]);
     setValue("contactPerson.phone", shop.contactPerson["phone"]);
   }, [shop.name]);
-  // useEffect(()=>{
-
-  // })
-
-  // const shops = [
-  //   {
-  //     _id: 1,
-  //     shop: "Sadanand Kirana Store",
-  //     category: "Grocery",
-  //     owner: "Sadanand",
-  //     shopId: "SADA01",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Surya Sweets",
-  //     category: "Sweets",
-  //     owner: "Surya",
-  //     shopId: "SURYA02",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Dhiraj Cafe",
-  //     category: "Beverage",
-  //     owner: "Dhiraj",
-  //     shopId: "DHI03",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Himanshu Medical",
-  //     category: "Medical",
-  //     owner: "Himanshu",
-  //     shopId: "HIM04",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Vaishnavi Fruits",
-  //     category: "Fruits",
-  //     owner: "Vaishnavi",
-  //     shopId: "VAIS05",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Swapnil Bakery",
-  //     category: "Bakery",
-  //     owner: "Swapnil",
-  //     shopId: "SWAP06",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Sachin Vegitables",
-  //     category: "Vegitables",
-  //     owner: "Sachin",
-  //     shopId: "SAC07",
-  //   },
-  // ];
 
   return (
     <>
