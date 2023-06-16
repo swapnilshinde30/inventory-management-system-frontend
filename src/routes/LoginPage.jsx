@@ -46,7 +46,7 @@ function LoginPage() {
     if (user.role === "shopkeeper") navigate("/shopitems");
     if (user.role === "customer") {
       let cartItems = [];
-      sessionStorage.setItem("cartItems", cartItems);
+      sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
       navigate("/shopsForCustomer");
     }
   }, [user]);

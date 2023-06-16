@@ -1,13 +1,28 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import NavBar from "../navbar";
+import { useRequisitionStore } from "../../stores/requisitionStore";
+import { useEffect } from "react";
 
 const Order = () => {
   const shopName = "Om Sweets";
   const date = "06/05/2023";
+
+  const user = JSON.parse(sessionStorage.getItem("user"));
+
+  const callGetRequisitionAPI = useRequisitionStore(
+    (state) => state.getAllRequisitionsAPI
+  );
+  const requisitions = useRequisitionStore((state) => state.requisitions);
+  console.log(requisitions);
+
+  console.log(r);
+  useEffect(() => {
+    callGetRequisitionAPI(user._id);
+  }, []);
   return (
     <>
-    {/* <NavBar /> */}
+      {/* <NavBar /> */}
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
