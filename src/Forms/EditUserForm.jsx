@@ -9,29 +9,20 @@ import { useUserStore } from "../stores/userStore";
 import { useParams } from "react-router-dom";
 
 const schema = yup.object().shape({
-  firstName: yup.string().required("Please enter First Name"),
-  lastName: yup.string().required("Please enter Last Name"),
-  address: yup.string().required("Please enter address"),
-  email: yup
-    .string()
-    .email()
-    .min(8)
-    .max(30)
-    .required("Please enter correct Email"),
-  phone: yup
-    .string()
-    .min(10)
-    .max(10)
-    .required("Phone number must at least 10 digits"),
-  userName: yup.string().required("User Name is required"),
-  password: yup
-    .string()
-    .min(8)
-    .required("Password must be at least 8 character"),
-  role: yup.string().required("Please select your role"),
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  // address: yup.string().required("Please enter address"),
+  email: yup.string().email().min(8).max(30).required(),
+  phone: yup.string().min(10).max(10).required(),
+  userName: yup.string().required(),
+  // password: yup
+  //   .string()
+  //   .min(8)
+  //   .required("Password must be at least 8 character"),
+  role: yup.string().required(),
 });
-const EditUserForm = () => {
-  const [showModal] = useState(true);
+const EditUserForm = (props) => {
+  const { showModal, setShowModal } = props;
   const navigate = useNavigate();
   const params = useParams();
   const userId = params.id;
@@ -46,73 +37,40 @@ const EditUserForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
   const onSubmitHandler = (data) => {
+    console.log("hi");
     if (data._id) {
+      console.log(data);
       callEditUserAPI(data);
     } else {
+      console.log("in add");
       callAddUserAPI(data);
     }
     navigate("/users");
+    setShowModal(false);
+  };
+  const closeAndReset = () => {
+    setShowModal(false);
+    navigate("/users");
+    reset();
   };
   useEffect(() => {
     if (!userId) return;
     callGetUserAPI(userId);
     setValue("firstName", user.firstName);
     setValue("lastName", user.lastName);
+    setValue("_id", user._id);
     setValue("email", user.email);
     setValue("phone", user.phone);
     setValue("userName", user.userName);
-    setValue("password", user.password);
+    // setValue("password", user.password);
     setValue("role", user.role);
-  }, [user.firstName]);
+  }, [userId, user.firstName]);
 
-  // const users = [
-  //   {
-  //     _id: 1,
-  //     firstName: "Sachin",
-  //     lastName: "Chavan",
-  //     Role: "ShopKeeper",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 2,
-  //     firstName: "Swapnil",
-  //     lastName: "Shinde",
-  //     Role: "ShopKeeper",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 3,
-  //     firstName: "Sadanand",
-  //     lastName: "Fulari",
-  //     Role: "Customer",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 4,
-  //     firstName: "Dhiraj",
-  //     lastName: "Shinde",
-  //     Role: "Customer",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 5,
-  //     firstName: "Surya",
-  //     lastName: "Lad",
-  //     Role: "Customer",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  //   {
-  //     _id: 6,
-  //     firstName: "Himanshu",
-  //     lastName: "Patil",
-  //     Role: "Customer",
-  //     LastLoggedIn: "08-06-2023",
-  //   },
-  // ];
   return (
     <>
       {showModal ? (
@@ -134,7 +92,9 @@ const EditUserForm = () => {
                   <div className="ml-[300px] mt-6 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => navigate(-1)}
+                      onClick={() => {
+                        closeAndReset();
+                      }}
                     />
                   </div>
                 </div>
@@ -151,9 +111,9 @@ const EditUserForm = () => {
                           {...register("firstName")}
                         />
 
-                        <p className="text-red-500">
+                        {/* <p className="text-red-500">
                           {errors.firstName?.message}
-                        </p>
+                        </p> */}
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500">Last Name:</span>
@@ -164,9 +124,9 @@ const EditUserForm = () => {
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("lastName")}
                         />
-                        <p className="text-red-500">
+                        {/* <p className="text-red-500">
                           {errors.lastName?.message}
-                        </p>
+                        </p> */}
                       </div>
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
@@ -179,7 +139,7 @@ const EditUserForm = () => {
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("email")}
                         />
-                        <p className="text-red-500">{errors.email?.message}</p>
+                        {/* <p className="text-red-500">{errors.email?.message}</p> */}
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500">Phone:</span>
@@ -190,7 +150,7 @@ const EditUserForm = () => {
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("phone")}
                         />
-                        <p className="text-red-500">{errors.phone?.message}</p>
+                        {/* <p className="text-red-500">{errors.phone?.message}</p> */}
                       </div>
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
@@ -203,30 +163,15 @@ const EditUserForm = () => {
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("userName")}
                         />
-                        <p className="text-red-500">
+                        {/* <p className="text-red-500">
                           {errors.userName?.message}
-                        </p>
+                        </p> */}
                       </div>
-                      <div className="flex flex-col">
-                        <span className="text-gray-500">Password:</span>
-                        <input
-                          type="password"
-                          placeholder="Password"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
-                          className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("password")}
-                        />
-                        <p className="text-red-500">
-                          {errors.password?.message}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
                         <span className="text-gray-500">Role:</span>
                         <select
                           id="Role"
-                          className="w-[450px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md appearance-none"
+                          className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md appearance-none"
                           {...register("role")}
                         >
                           {" "}
@@ -240,7 +185,7 @@ const EditUserForm = () => {
                             Customer
                           </option>
                         </select>
-                        <p className="text-red-500">{errors.role?.message}</p>
+                        {/* <p className="text-red-500">{errors.role?.message}</p> */}
                       </div>
                     </div>
                   </div>
@@ -249,7 +194,7 @@ const EditUserForm = () => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => navigate(-1)}
+                      onClick={() => closeAndReset()}
                     >
                       Cancel
                     </button>

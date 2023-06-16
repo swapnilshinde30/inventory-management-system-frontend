@@ -13,6 +13,7 @@ import { useShopStore } from "../../stores/shopStore";
 
 const ShopItems = () => {
   const [showModal, setShowModal] = useState(false);
+  const [searchField, setSearchField] = useState("");
   // const [shopName, setShopName] = useState("");
   // const callGetAllShopItemsAPI = useShopitemStore(
   //   (state) => state.getAllShopItemsOfOwner
@@ -38,6 +39,15 @@ const ShopItems = () => {
     (state) => state.deleteShopitemAPI
   );
 
+  const filteredShopItems = shopitems.filter((shopitem) => {
+    if (searchField === "") {
+      return shopitem;
+    } else if (
+      shopitem.itemName.toLowerCase().includes(searchField.toLowerCase())
+    ) {
+      return shopitem;
+    }
+  });
   const user = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
     callGetAllShopItemsAPI();
@@ -46,94 +56,6 @@ const ShopItems = () => {
     callGetAllShopsAPI(user._id);
     //console.log(shopitems.length);
   }, [callGetAllShopItemsAPI, shopitems]);
-
-  // const items = [
-  //   {
-  //     _id: 1,
-  //     name: "blue lagoon",
-  //     itemClass: "Mocktail",
-  //     imagePath: "bluelagoon.jpg",
-  //     avlQuantity: 5,
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "fruit cake",
-  //     itemClass: "Cake",
-  //     imagePath: "fruitcake.jpg",
-  //     avlQuantity: 2,
-  //   },
-  //   {
-  //     _id: 3,
-  //     name: "chocolate cake",
-  //     itemClass: "Cake",
-  //     imagePath: "chocolate cake.jpg",
-  //     avlQuantity: 5,
-  //   },
-  //   {
-  //     _id: 4,
-  //     name: "coughsils",
-  //     itemClass: "Cough Syrup",
-  //     imagePath: "coughsils.jpg",
-  //     avlQuantity: 6,
-  //   },
-  //   {
-  //     _id: 5,
-  //     name: "benadryl",
-  //     itemClass: "Cough Syrup",
-  //     imagePath: "benadryl.jpg",
-  //     avlQuantity: 3,
-  //   },
-  //   {
-  //     _id: 6,
-  //     name: "mango burfi",
-  //     itemClass: "Burfi",
-  //     imagePath: "mangoburfi.jpg",
-  //     avlQuantity: 5,
-  //   },
-  // ];
-
-  // const itemClasses = [
-  //   {
-  //     _id: 1,
-  //     name: "Mocktail",
-  //     category: "beverage",
-  //     imagePath: "mocktail.jpg",
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "Colddrink",
-  //     category: "bevarage",
-  //     imagePath: "colddrink.jpg",
-  //   },
-  //   { _id: 3, name: "Khari", category: "bakery", imagePath: "khari.jpeg" },
-  //   { _id: 4, name: "Cake", category: "bakery", imagePath: "cake.jpg" },
-  //   { _id: 5, name: "Burfi", category: "sweets", imagePath: "burfi.jpg" },
-  //   { _id: 6, name: "Namkeen", category: "sweets", imagePath: "namkeen.jpg" },
-  //   { _id: 7, name: "Rice", category: "grains", imagePath: "rice.jpg" },
-  //   { _id: 8, name: "Wheat", category: "grains", imagePath: "wheat.jpg" },
-  //   {
-  //     _id: 9,
-  //     name: "Leafy greens",
-  //     category: "vegetables",
-  //     imagePath: "leafy greens.jpg",
-  //   },
-  //   {
-  //     _id: 10,
-  //     name: "Cough Syrup",
-  //     category: "medicine",
-  //     imagePath: "coughsyrup.jpg",
-  //   },
-  // ];
-
-  // const shops = [
-  //   { _id: 1, name: "Sadanand Kirana Store" },
-  //   { _id: 2, name: "Surya Sweets" },
-  //   { _id: 3, name: "Dhiraj Cafe" },
-  //   { _id: 4, name: "Himanshu Medical" },
-  //   { _id: 5, name: "Vaishnavi Fruits" },
-  //   { _id: 6, name: "Swapnil Bakery" },
-  //   { _id: 7, name: "Sachin Vegitables" },
-  // ];
 
   let count = 0;
 
@@ -170,6 +92,7 @@ const ShopItems = () => {
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
                 <input
+                  onChange={(event) => setSearchField(event.target.value)}
                   className="w-30 h-5 ml-12  md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
                   type="search"
                   name="search"
@@ -220,7 +143,7 @@ const ShopItems = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            {shopitems.map((item) => (
+            {filteredShopItems.map((item) => (
               <div
                 key={item._id}
                 className=" card ml-12 mt-10 text-slate-600 w-32 h-36 rounded-xl overflow-hidden border border-slate-300"

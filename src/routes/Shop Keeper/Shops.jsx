@@ -12,6 +12,8 @@ import { useShopStore } from "../../stores/shopStore";
 import ShopForm from "../../Forms/ShopForm";
 
 const Shops = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [searchField, setSearchField] = useState("");
   const navigate = useNavigate();
   const callgetAllShops = useShopStore((state) => state.getAllShopsAPI);
   const shops = useShopStore((state) => state.shops);
@@ -20,57 +22,14 @@ const Shops = () => {
   useEffect(() => {
     callgetAllShops();
   }, []);
-  // const shops = [
-  //   {
-  //     _id: 1,
-  //     shop: "Sadanand Kirana Store",
-  //     category: "Grocery",
-  //     owner: "Sadanand",
-  //     shopId: "SADA01",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Surya Sweets",
-  //     category: "Sweets",
-  //     owner: "Surya",
-  //     shopId: "SURYA02",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Dhiraj Cafe",
-  //     category: "Beverage",
-  //     owner: "Dhiraj",
-  //     shopId: "DHI03",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Himanshu Medical",
-  //     category: "Medical",
-  //     owner: "Himanshu",
-  //     shopId: "HIM04",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Vaishnavi Fruits",
-  //     category: "Fruits",
-  //     owner: "Vaishnavi",
-  //     shopId: "VAIS05",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Swapnil Bakery",
-  //     category: "Bakery",
-  //     owner: "Swapnil",
-  //     shopId: "SWAP06",
-  //   },
-  //   {
-  //     _id: 1,
-  //     shop: "Sachin Vegitables",
-  //     category: "Vegitables",
-  //     owner: "Sachin",
-  //     shopId: "SAC07",
-  //   },
-  // ];
+
+  const filteredShops = shops.filter((shop) => {
+    if (searchField === "") {
+      return shop;
+    } else if (shop.name.toLowerCase().includes(searchField.toLowerCase())) {
+      return shop;
+    }
+  });
 
   return (
     <>
@@ -86,6 +45,7 @@ const Shops = () => {
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
                 <input
+                  onChange={(event) => setSearchField(event.target.value)}
                   className="w-30 h-5 ml-12  md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
                   type="search"
                   name="search"
@@ -109,12 +69,13 @@ const Shops = () => {
               </div>
             </div>
             <div className="flex-1 mt-5">
-              <NavLink
-                to={"/shops/new"}
+              <button
+                // to={"/shops/new"}
                 className="ml-10  md:ml-96  rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
                 Add Shop
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -126,8 +87,11 @@ const Shops = () => {
         </div>
         <div>
           <div className="">
-            {shops.map((shop) => (
-              <div className="flex bg-neutral-100 rounded-lg h-12 mt-6 ml-11">
+            {filteredShops.map((shop) => (
+              <div
+                key={shop._id}
+                className="flex bg-neutral-100 rounded-lg h-12 mt-6 ml-11"
+              >
                 <div className="ml-2 mt-3 w-10 ...">
                   <BsShop className="h-5 w-5 text-neutral-500" />
                 </div>
@@ -147,7 +111,10 @@ const Shops = () => {
                 <button
                   // to={"/shops/new"}
                   className="mt-2 w-8 ml-[80px] mr-2 bg-white rounded-full h-8 hover:bg-teal-500"
-                  onClick={() => navigate(`/shops/${shop._id}`)}
+                  onClick={() => {
+                    setShowModal(true);
+                    navigate(`/shops/${shop._id}`);
+                  }}
                 >
                   <FiEdit className="ml-2 h-4 w-4 text-teal-500 hover:text-white" />
                 </button>
@@ -166,6 +133,7 @@ const Shops = () => {
           </div>
         </div>
       </div>
+      <ShopForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

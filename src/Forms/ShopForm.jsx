@@ -20,15 +20,15 @@ const schema = yup.object().shape({
   state: yup.string().required("Please enter state"),
   zipcode: yup.string().required("Please enter zipcode"),
   category: yup.string().required("Please select Category"),
-  owner: yup.string().required("Please select Owner"),
+  // owner: yup.string().required("Please select Owner"),
   contactPerson: yup.object().shape({
     name: yup.string().required("Please enter name"),
     phone: yup.string().required("Please enter phone No"),
   }),
 });
 
-const ShopForm = () => {
-  const [showModal] = useState(true);
+const ShopForm = (props) => {
+  const { showModal, setShowModal } = props;
   const params = useParams();
   const shopId = params.id;
   const navigate = useNavigate();
@@ -45,7 +45,8 @@ const ShopForm = () => {
 
   const callgetAllUsersAPI = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
-
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  console.log(user);
   // console.log(callgetAllUsersAPI);
   // console.log(callgetAllCategoriesAPI);
   // console.log(categories);
@@ -56,17 +57,26 @@ const ShopForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmitHandler = async (data) => {
+  const onSubmitHandler = (data) => {
     console.log(data);
     if (data._id) {
       callEditShopAPI(data);
     } else {
+      data.owner = user._id;
+      console.log(data);
       callAddShopAPI(data);
     }
     navigate("/shops");
+    setShowModal(false);
+  };
+  const closeAndReset = () => {
+    setShowModal(false);
+    navigate("/shops");
+    reset();
   };
   useEffect(() => {
     callgetAllCategoriesAPI();
@@ -84,10 +94,10 @@ const ShopForm = () => {
     setValue("state", shop.state);
     setValue("zipcode", shop.zipcode);
     setValue("category", shop.category);
-    setValue("owner", shop.owner);
-    setValue("contactPerson.name", shop.contactPerson.name);
-    setValue("contactPerson.phone", shop.contactPerson.phone);
-  }, [shop.name]);
+    // setValue("owner", shop.owner);
+    setValue("contactPerson.name", shop.contactPerson["name"]);
+    setValue("contactPerson.phone", shop.contactPerson["phone"]);
+  }, [shopId, shop.name]);
 
   return (
     <>
@@ -110,7 +120,7 @@ const ShopForm = () => {
                   <div className="ml-[280px] mt-6 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => navigate(-1)}
+                      onClick={() => closeAndReset()}
                     />
                   </div>
                 </div>
@@ -264,7 +274,7 @@ const ShopForm = () => {
                           {errors.contactPerson["name"]?.message}
                         </p> */}
                         <input
-                          type="number"
+                          type="text"
                           placeholder="Phone"
                           // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
@@ -281,7 +291,7 @@ const ShopForm = () => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => navigate(-1)}
+                      onClick={() => closeAndReset()}
                     >
                       Cancel
                     </button>

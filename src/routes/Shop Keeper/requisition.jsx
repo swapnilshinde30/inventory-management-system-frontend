@@ -7,6 +7,7 @@ import RequisitionForm from "../../Forms/RequisitionForm";
 const Requisitions = () => {
   const [showModal,setShowModal]=useState(false)
   const [shopName, setShopName] = useState("");
+  const [searchField, setSearchField] = useState("");
 
   const getAllRequisitions = useRequisitionStore(
     (state) => state.getRequisition

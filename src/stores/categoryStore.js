@@ -12,6 +12,7 @@ export const useCategoryStore = create(
       currentCategory: {},
       getAllCategoriesAPI: async () => {
         const response = await axios.get("http://localhost:3030/categories");
+        console.log(response);
         set((state) => {
           state.categories = response.data.data;
         });

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 const ShopsForCustomer = () => {
   const [showModal, setShowModal] = useState(false);
   const [product, setProduct] = useState({});
-
+  const [searchField, setSearchField] = useState("");
   const callGetAllShopitemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
@@ -65,6 +65,15 @@ const ShopsForCustomer = () => {
     //  }
   };
 
+  const filteredShopFCust = shopitems.filter((item) => {
+    if (searchField === "") {
+      return item;
+    } else if (
+      item.itemName.toLowerCase().includes(searchField.toLowerCase())
+    ) {
+      return item;
+    }
+  });
   return (
     <>
       {/* <NavBar /> */}
@@ -79,6 +88,7 @@ const ShopsForCustomer = () => {
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
                 <input
+                  onChange={(event) => setSearchField(event.target.value)}
                   className="w-30 h-5 ml-12  md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
                   type="search"
                   name="search"
@@ -140,7 +150,7 @@ const ShopsForCustomer = () => {
           ) : null}
 
           <div className="grid grid-cols-1 md:grid-cols-4 ">
-            {shopitems.map((item) => (
+            {filteredShopFCust.map((item) => (
               <>
                 <div
                   key={item._id}

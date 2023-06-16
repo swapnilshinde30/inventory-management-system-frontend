@@ -33,6 +33,7 @@ export const useUserStore = create(
           "http://localhost:3030/users",
           payload
         );
+
         set((state) => {
           state.users = [...state.users, response.data];
         });
@@ -51,6 +52,7 @@ export const useUserStore = create(
       editUserAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
+        console.log(payload);
         const response = await axios.patch(
           `http://localhost:3030/users/${id}`,
           payload

@@ -10,8 +10,8 @@ const schema = yup.object().shape({
   name: yup.string().required("please enter Category"),
 });
 
-const CategoryForm = () => {
-  const [showModal] = useState(true);
+const CategoryForm = (props) => {
+  const { showModal, setShowModal } = props;
   const params = useParams();
   const categoryId = params.id;
   const navigate = useNavigate();
@@ -27,6 +27,7 @@ const CategoryForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -39,6 +40,13 @@ const CategoryForm = () => {
       callAddCategoryAPI(data);
     }
     navigate("/categories");
+    setShowModal(false);
+  };
+
+  const closeAndReset = () => {
+    setShowModal(false);
+    navigate("/categories");
+    reset();
   };
   useEffect(() => {
     console.log(categoryId);
@@ -71,7 +79,9 @@ const CategoryForm = () => {
                   <div className="ml-[240px] mt-6 mr-5 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => navigate(-1)}
+                      onClick={() => {
+                        closeAndReset();
+                      }}
                     />
                   </div>
                 </div>
@@ -111,7 +121,7 @@ const CategoryForm = () => {
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
                       onClick={() => {
-                        navigate(-1);
+                        closeAndReset();
                       }}
                     >
                       Cancel
