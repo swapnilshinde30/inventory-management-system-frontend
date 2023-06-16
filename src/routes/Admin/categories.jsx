@@ -1,17 +1,16 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link, NavLink, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import NavBar from "../navbar";
 import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
 import CategoryForm from "../../Forms/CategoryForm";
 const Categories = () => {
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [searchField, setSearchField] = useState("");
   const getAllCategories = useCategoryStore(
     (state) => state.getAllCategoriesAPI
   );
   const categories = useCategoryStore((state) => state.categories);
-
   const callDeleteCategoryAPI = useCategoryStore(
     (state) => state.deleteCategoryAPI
   );
@@ -20,6 +19,16 @@ const Categories = () => {
   useEffect(() => {
     getAllCategories();
   }, []);
+
+  const filteredCategories = categories.filter((categorie) => {
+    if (searchField === "") {
+      return categorie;
+    } else if (
+      categorie.name.toLowerCase().includes(searchField.toLowerCase())
+    ) {
+      return categorie;
+    }
+  });
 
   return (
     <>
@@ -35,12 +44,16 @@ const Categories = () => {
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
                 <input
+                  onChange={(event) => {
+                    setSearchField(event.target.value);
+                  }}
                   className="w-30 h-5 ml-12  md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
                   type="search"
                   name="search"
                   placeholder="Search"
+                  // onChange={handleChange}
                 />
-
+                {/* {searchList()}; */}
                 <svg
                   className=" absolute text-slate-300 h-2 w-2  md:h-4 md:w-4 fillCurrent ml-14 "
                   xmlns="http://www.w3.org/2000/svg"
@@ -57,13 +70,14 @@ const Categories = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1 mt-5">
-              <NavLink
-                to={`/categories/new`}
+            <div className="flex-1 mt-2">
+              <button
+                // to={`/categories/new`}
                 className="ml-10  md:ml-96 mt-2 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
                 Add Category
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -74,9 +88,10 @@ const Categories = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            {categories.map((category) => (
+            {filteredCategories.map((category) => (
               <div
                 key={category._id}
+                value={category._id}
                 className=" card ml-12 mt-10 text-slate-600 w-32 h-32 rounded-xl overflow-hidden border border-slate-300"
               >
                 {" "}
@@ -107,14 +122,13 @@ const Categories = () => {
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button
+                    <Link
+                      to={`/categories/${category._id}`}
                       className="hover:font-bold"
-                      onClick={() => {
-                        navigate(`/categories/${category._id}`);
-                      }}
+                      onClick={() => setShowModal(true)}
                     >
                       Edit
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -123,6 +137,7 @@ const Categories = () => {
           {/* <!-- Button trigger modal --> */}
         </div>
       </div>
+      <CategoryForm showModal={showModal} setShowModal={setShowModal} />
       {/* <div classNameName="grid grid-row-2 gride-col-2">
         <div classNameName="w-32 h-16  border-b border-r border-slate-200">1</div>
         <div classNameName="w-32 border-r h-screen border-slate-200">2</div>

@@ -14,8 +14,8 @@ const schema = yup.object().shape({
   description: yup.string().required("Please enter description"),
 });
 
-const ItemsForm = () => {
-  const [showModal] = useState(true);
+const ItemsForm = (props) => {
+  const { showModal, setShowModal } = props;
   const navigate = useNavigate();
   const params = useParams();
   const itemId = params.id;
@@ -34,6 +34,7 @@ const ItemsForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -45,6 +46,13 @@ const ItemsForm = () => {
       callAddItemAPI(data);
     }
     navigate("/items");
+    setShowModal(false);
+  };
+
+  const closeAndReset = () => {
+    setShowModal(false);
+    navigate("/items");
+    reset();
   };
   useEffect(() => {
     if (!itemId) return;
@@ -53,8 +61,9 @@ const ItemsForm = () => {
     if (item === undefined) return;
     setValue("_id", item._id);
     setValue("name", item.name);
+    setValue("itemClass", item.itemClass);
     setValue("description", item.description);
-  }, [item.name]);
+  }, [itemId, item.name]);
 
   return (
     <>
@@ -77,7 +86,9 @@ const ItemsForm = () => {
                   <div className="ml-[280px] mt-6 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => navigate(-1)}
+                      onClick={() => {
+                        closeAndReset();
+                      }}
                     />
                   </div>
                 </div>
@@ -151,7 +162,9 @@ const ItemsForm = () => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => navigate(-1)}
+                      onClick={() => {
+                        closeAndReset();
+                      }}
                     >
                       Cancel
                     </button>

@@ -1,16 +1,16 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
 import React, { useEffect } from "react";
-import NavBar from "../navbar";
 import { useState } from "react";
 import { useItemStore } from "../../stores/itemStore";
 import { useItemClassStore } from "../../stores/itemClasseStore";
 import ItemsForm from "../../Forms/ItemsForm";
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Items = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [searchField, setSearchField] = useState("");
   const callGetAllItems = useItemStore((state) => state.getAllItemsAPI);
   const items = useItemStore((state) => state.items);
-  const navigate = useNavigate();
   const callGetAllItemClasses = useItemClassStore(
     (state) => state.getAllItemClassesAPI
   );
@@ -22,76 +22,16 @@ const Items = () => {
     console.log(items);
     console.log(itemClasses);
   }, []);
-  // const items = [
-  //   {
-  //     _id: 1,
-  //     name: "blue lagoon",
-  //     itemClass: "Mocktail",
-  //     imagePath: "bluelagoon.jpg",
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "fruit cake",
-  //     itemClass: "Cake",
-  //     imagePath: "fruitcake.jpg",
-  //   },
-  //   {
-  //     _id: 3,
-  //     name: "chocolate cake",
-  //     itemClass: "Cake",
-  //     imagePath: "chocolate cake.jpg",
-  //   },
-  //   {
-  //     _id: 4,
-  //     name: "coughsils",
-  //     itemClass: "Cough Syrup",
-  //     imagePath: "coughsils.jpg",
-  //   },
-  //   {
-  //     _id: 5,
-  //     name: "benadryl",
-  //     itemClass: "Cough Syrup",
-  //     imagePath: "benadryl.jpg",
-  //   },
-  //   {
-  //     _id: 6,
-  //     name: "mango burfi",
-  //     itemClass: "Burfi",
-  //     imagePath: "mangoburfi.jpg",
-  //   },
-  // ];
-  // const itemClasses = [
-  //   {
-  //     _id: 1,
-  //     name: "Mocktail",
-  //     category: "beverage",
-  //     imagePath: "mocktail.jpg",
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: "Colddrink",
-  //     category: "bevarage",
-  //     imagePath: "colddrink.jpg",
-  //   },
-  //   { _id: 3, name: "Khari", category: "bakery", imagePath: "khari.jpeg" },
-  //   { _id: 4, name: "Cake", category: "bakery", imagePath: "cake.jpg" },
-  //   { _id: 5, name: "Burfi", category: "sweets", imagePath: "burfi.jpg" },
-  //   { _id: 6, name: "Namkeen", category: "sweets", imagePath: "namkeen.jpg" },
-  //   { _id: 7, name: "Rice", category: "grains", imagePath: "rice.jpg" },
-  //   { _id: 8, name: "Wheat", category: "grains", imagePath: "wheat.jpg" },
-  //   {
-  //     _id: 9,
-  //     name: "Leafy greens",
-  //     category: "vegetables",
-  //     imagePath: "leafy greens.jpg",
-  //   },
-  //   {
-  //     _id: 10,
-  //     name: "Cough Syrup",
-  //     category: "medicine",
-  //     imagePath: "coughsyrup.jpg",
-  //   },
-  // ];
+
+  const filteredItems = items.filter((itemclass) => {
+    if (searchField === "") {
+      return itemclass;
+    } else if (
+      itemclass.name.toLowerCase().includes(searchField.toLowerCase())
+    ) {
+      return itemclass;
+    }
+  });
 
   let count = 0;
 
@@ -125,6 +65,9 @@ const Items = () => {
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
                 <input
+                  onChange={(event) => {
+                    setSearchField(event.target.value);
+                  }}
                   className="w-30 h-5 ml-12 md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
                   type="search"
                   name="search"
@@ -147,13 +90,14 @@ const Items = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1 mt-5">
-              <NavLink
-                to={`/items/new`}
+            <div className="flex-1">
+              <button
+                // to={`/items/new`}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
                 Add Item
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -170,7 +114,10 @@ const Items = () => {
               {itemClasses.map((itemClass, index) => (
                 <>
                   {arrayitem[index].quantity > 0 && (
-                    <p className="text-gray-500 ml-12 mt-4 text-xl">
+                    <p
+                      key={itemClass._id}
+                      className="text-gray-500 ml-12 mt-4 text-xl"
+                    >
                       {arrayitem[index].name +
                         " ( " +
                         arrayitem[index].quantity +
@@ -179,16 +126,11 @@ const Items = () => {
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-6">
-                    {items.map((item) => {
+                    {filteredItems.map((item) => {
                       if (itemClass._id === item.itemClass) {
                         return (
                           <>
-                            {/* <p>{arrayitem.find((a) => a.name === i.name)}</p> */}
                             <div className="grid">
-                              {/* <p className="text-teal-500 ml-12 mt-4">
-                                {/* {b.itemClass} */}
-                              {/* </p>  */}
-
                               <div
                                 key={item._id}
                                 className=" card ml-12 mb-8 mt-5 text-slate-600 w-32 h-32 rounded-xl overflow-hidden border border-slate-300"
@@ -225,14 +167,13 @@ const Items = () => {
                                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                                     style={{ marginTop: "-4px" }}
                                   >
-                                    <button
+                                    <Link
+                                      to={`/items/${item._id}`}
                                       className="hover:font-bold"
-                                      onClick={() =>
-                                        navigate(`/items/${item._id}`)
-                                      }
+                                      onClick={() => setShowModal(true)}
                                     >
                                       Edit
-                                    </button>
+                                    </Link>
                                   </div>
                                 </div>
                               </div>
@@ -248,6 +189,7 @@ const Items = () => {
           </div>
         </div>
       </div>
+      <ItemsForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

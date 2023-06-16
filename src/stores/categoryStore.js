@@ -12,6 +12,7 @@ export const useCategoryStore = create(
       currentCategory: {},
       getAllCategoriesAPI: async () => {
         const response = await axios.get("http://localhost:3030/categories");
+        console.log(response);
         set((state) => {
           state.categories = response.data.data;
         });
@@ -28,13 +29,19 @@ export const useCategoryStore = create(
       },
 
       addCategoryAPI: async (payload) => {
-        const response = await axios.post(
-          "http://localhost:3030/categories",
-          payload
-        );
-        set((state) => {
-          state.categories = [...state.categories, response.data];
-        });
+        try{
+          const response = await axios.post(
+            "http://localhost:3030/categories",
+            payload
+          );
+      
+          set((state) => {
+            state.categories = [...state.categories, response.data];
+          });
+        }catch(err){
+          window.location.href=`error/${err.response.request.status}`
+        }
+        
       },
 
       deleteCategoryAPI: async (id) => {

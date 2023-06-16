@@ -18,6 +18,8 @@ export const useShopitemStore = create(
         const shopItemDetails = shopItems.data.data.map((si) => {
           let shop = shops.data.data.find((s) => s._id === si.shop);
           let item = items.data.data.find((i) => i._id === si.item);
+          if (!shop) return;
+          if (!item) return;
           si.shopName = shop.name;
           si.itemName = item.name;
           return si;
@@ -46,6 +48,7 @@ export const useShopitemStore = create(
           "http://localhost:3030/shopitems",
           payload
         );
+
         console.log(response.data);
         let shop = response.data.shop;
         set((state) => {

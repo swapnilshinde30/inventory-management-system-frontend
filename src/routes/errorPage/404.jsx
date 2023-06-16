@@ -12,22 +12,27 @@ const Error404 = () => {
                   className="four_zero_four_bg"
                   style={{
                     backgroundImage:
-                      "url('https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif')",
+                      "url('https://media1.giphy.com/media/e6lyxcRngMS1jbTyXS/giphy.gif?cid=ecf05e47mm7rmn0p8rc777njx91ss53ijtzqyv21shuwi9lj&ep=v1_gifs_search&rid=giphy.gif&ct=g')",
                     height: "400px",
+
                     backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
                   }}
                 >
-                  <h1 className="text-center text-[80px]">404</h1>
+                  <h1 className="text-center text-[80px]"></h1>
                 </div>
 
                 <div className="contant_box_404 -mt-[50px]">
-                  <h3 className="h1 text-5xl mb-5">Look like you're lost</h3>
+                  <h3 className="h1 text-5xl mb-5">
+                    {/* Look like you're lost */}
+                    Your Cart is Empty
+                  </h3>
 
                   <p className="text-xl">
-                    The page you are looking for not avaible!
+                    {/* The page you are looking for not avaible! */}
                   </p>
 
-                  <Link
+                  {/* <Link
                     to={"/home"}
                     href=""
                     className="link_404"
@@ -40,7 +45,7 @@ const Error404 = () => {
                     }}
                   >
                     Go to Home
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import NavBar from "../navbar";
 import EditUserForm from "../../Forms/EditUserForm";
 import { useUserStore } from "../../stores/userStore";
-import { NavLink, useNavigate } from "react-router-dom";
-import RegisterForm from "../../Forms/RegisterForm";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const Users = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [searchField, setSearchField] = useState("");
   const navigate = useNavigate();
   const getAllUsers = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
@@ -22,6 +23,15 @@ const Users = () => {
   const handleSelect = (role) => {
     getAllUsers(role);
   };
+  const filteredUsers = users.filter((user) => {
+    if (searchField === "") {
+      return user;
+    } else if (
+      user.firstName.toLowerCase().includes(searchField.toLowerCase())
+    ) {
+      return user;
+    }
+  });
 
   const userFilter = [
     { id: 1, name: "All Users" },
@@ -43,6 +53,9 @@ const Users = () => {
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
                 <input
+                  onChange={(event) => {
+                    setSearchField(event.target.value);
+                  }}
                   className="w-30 h-5 ml-12  md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
                   type="search"
                   name="search"
@@ -90,7 +103,7 @@ const Users = () => {
         </div>
         <div>
           <div className="">
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <div
                 className="flex bg-neutral-100 rounded-lg h-12 mt-6 ml-5"
                 key={user._id}
@@ -118,15 +131,17 @@ const Users = () => {
                 > */}
                 <div className="flex-1">
                   <button
-                    // to={`/users/:${user._id}`}
+                    // to={`/users/${user._id}`}
                     className="w-8 ml-[130px] mr-3 mt-2 bg-white rounded-full h-8  hover:bg-teal-500"
                     onClick={() => {
+                      setShowModal(true);
                       navigate(`/users/${user._id}`);
                     }}
                   >
                     <FiEdit className="ml-[8px] h-4 w-4 text-teal-500 hover:scale-110 transition-all hover:text-white" />
                   </button>
                 </div>
+
                 {/* </Link> */}
                 <div className="mr-5">
                   <button
@@ -142,6 +157,7 @@ const Users = () => {
           </div>
         </div>
       </div>
+      <EditUserForm showModal={showModal} setShowModal={setShowModal} />
       {/* <div className="grid grid-row-2 gride-col-2">
         <div className="w-32 h-16  border-b border-r border-slate-200">1</div>
         <div className="w-32 border-r h-screen border-slate-200">2</div>

@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../navbar";
 import { useItemClassStore } from "../../stores/itemClasseStore";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import ItemClassesForm from "../../Forms/ItemClassesForm";
 
 const ItemClasses = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [searchField, setSearchField] = useState("");
   const navigate = useNavigate();
   const callGetAllItemClasses = useItemClassStore(
     (state) => state.getAllItemClassesAPI
@@ -18,6 +20,16 @@ const ItemClasses = () => {
   useEffect(() => {
     callGetAllItemClasses();
   }, []);
+
+  const filteredItemClasses = itemClasses.filter((itemclass) => {
+    if (searchField === "") {
+      return itemclass;
+    } else if (
+      itemclass.name.toLowerCase().includes(searchField.toLowerCase())
+    ) {
+      return itemclass;
+    }
+  });
 
   return (
     <>
@@ -33,6 +45,9 @@ const ItemClasses = () => {
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
                 <input
+                  onChange={(event) => {
+                    setSearchField(event.target.value);
+                  }}
                   className="w-30 h-5 ml-12  md:ml-12 md:w-80 md:h-7  mt-3 rounded-full border border-solid border-slate-400 bg-transparent  text-sm focus:outline-none placeholder:text-gray-500 pl-8"
                   type="search"
                   name="search"
@@ -55,13 +70,14 @@ const ItemClasses = () => {
                 </svg>
               </div>
             </div>
-            <div className="flex-1 mt-5">
-              <NavLink
-                to={`/itemclasses/new`}
+            <div className="flex-1">
+              <button
+                // to={`/itemclasses/new`}
                 className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                onClick={() => setShowModal(true)}
               >
                 Add Item class
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -73,9 +89,10 @@ const ItemClasses = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            {itemClasses.map((itemclass) => (
+            {filteredItemClasses.map((itemclass) => (
               <div
                 key={itemclass._id}
+                value={itemclass._id}
                 className=" card ml-12 mt-10 text-slate-600 w-32 h-32 rounded-xl overflow-hidden border border-slate-300"
               >
                 {" "}
@@ -106,12 +123,13 @@ const ItemClasses = () => {
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                     style={{ marginTop: "-4px" }}
                   >
-                    <button
+                    <Link
+                      to={`/itemclasses/${itemclass._id}`}
                       className="hover:font-bold"
-                      onClick={() => navigate(`/itemclasses/${itemclass._id}`)}
+                      onClick={() => setShowModal(true)}
                     >
                       Edit
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -119,6 +137,7 @@ const ItemClasses = () => {
           </div>
         </div>
       </div>
+      <ItemClassesForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

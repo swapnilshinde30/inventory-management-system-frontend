@@ -136,6 +136,7 @@ export default function NavBar() {
                 {navLinkNames.map((x) => (
                   <li
                     id={x.id + Math.random()}
+                    key={x.id}
                     className="mb-4 lg:mb-0 lg:pr-2"
                     data-te-nav-item-ref
                   >

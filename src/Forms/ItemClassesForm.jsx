@@ -12,8 +12,8 @@ const schema = yup.object().shape({
   category: yup.string().required("category is required"),
 });
 
-const ItemClassesForm = () => {
-  const [showModal] = useState(true);
+const ItemClassesForm = (props) => {
+  const { showModal, setShowModal } = props;
   const navigate = useNavigate();
   const params = useParams();
   const itemClassId = params.id;
@@ -37,6 +37,7 @@ const ItemClassesForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -48,6 +49,12 @@ const ItemClassesForm = () => {
       callAddItemAPI(data);
     }
     navigate("/itemclasses");
+    setShowModal(false);
+  };
+  const closeAndReset = () => {
+    setShowModal(false);
+    navigate("/itemclasses");
+    reset();
   };
   useEffect(() => {
     if (!itemClassId) return;
@@ -58,7 +65,7 @@ const ItemClassesForm = () => {
     setValue("_id", itemClass._id);
     setValue("name", itemClass.name);
     setValue("category", itemClass.category);
-  }, [itemClass.name]);
+  }, [itemClassId, itemClass.name]);
 
   return (
     <>
@@ -81,7 +88,9 @@ const ItemClassesForm = () => {
                   <div className="ml-[235px] mt-6 mb-4">
                     <SlClose
                       className="w-7 h-7 text-teal-500 cursor-pointer"
-                      onClick={() => navigate(-1)}
+                      onClick={() => {
+                        closeAndReset();
+                      }}
                     />
                   </div>
                 </div>
@@ -119,7 +128,9 @@ const ItemClassesForm = () => {
                     <button
                       type="button"
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                      onClick={() => navigate(-1)}
+                      onClick={() => {
+                        closeAndReset();
+                      }}
                     >
                       Cancel
                     </button>
