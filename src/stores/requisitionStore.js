@@ -2,21 +2,18 @@ import axios from "axios";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-//const http = axios.create({ baseURL: "http://localhost:3030/" });
+
 export const useRequisitionStore = create(
   devtools(
     immer((set) => ({
       requisitions: [],
-      getAllRequisitionsAPI: async function () {
-        try {
-          const response = await axios.get(
-            "http://localhost:3030/requisitions"
-          );
-          set(() => ({ requisitions: response.data.data }));
-        } catch (err) {
-          console.log(err);
-        }
+      getAllRequisitionsAPI: async (user) => {
+        const response = await axios.get("http://localhost:3030/requisitions", {
+          params: { user },
+        });
+        set(() => ({ requisitions: response.data.data }));
       },
+
       addRequisitionsAPI: async (payload) => {
         console.log("in store");
         console.log(payload);

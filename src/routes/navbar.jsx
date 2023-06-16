@@ -10,14 +10,14 @@ const navLinkAdmin = [
   { id: 4, name: "USERS", pageLink: "/users", role: "admin" },
 ];
 const navLinkCustomer = [
-  { id: 5, name: "CART", pageLink: "/cart", role: "customer" },
-  { id: 6, name: "ORDER", pageLink: "/orders", role: "customer" },
   {
-    id: 7,
+    id: 5,
     name: "SHOPS FOR CUSTOMER",
     pageLink: "/shopsForCustomer",
     role: "customer",
   },
+  { id: 6, name: "CART", pageLink: "/cart", role: "customer" },
+  { id: 7, name: "ORDER", pageLink: "/orders", role: "customer" },
 ];
 const NavLinksShopkeeper = [
   { id: 8, name: "SHOPITEMS", pageLink: "/shopitems", role: "shopkeeper" },
@@ -29,13 +29,6 @@ const NavLinksShopkeeper = [
   },
   { id: 10, name: "SHOPS", pageLink: "/shops", role: "shopkeeper" },
 ];
-
-// function roleFilter(){
-//   // if(navLinkNames.role){
-//   //  return navLinkNames.name
-//   // }
-//   return navLinkNames.role==="admin"
-// }
 
 export default function NavBar() {
   const [showModal, setShowModal] = useState(false);
