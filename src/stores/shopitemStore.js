@@ -19,6 +19,7 @@ export const useShopitemStore = create(
           let shop = shops.data.data.find((s) => s._id === si.shop);
           let item = items.data.data.find((i) => i._id === si.item);
           si.shopName = shop.name;
+          si.shopId = shop.shopId;
           si.itemName = item.name;
           return si;
         });
@@ -32,13 +33,26 @@ export const useShopitemStore = create(
       },
 
       getShopitemAPI: async (id) => {
-        const response = await axios.get(
+        // const response = await axios.get(
+        //   `http://localhost:3030/shopitems/${id}`
+        // );
+        const shopItem = await axios.get(
           `http://localhost:3030/shopitems/${id}`
         );
-        console.log(response.data);
+        const shops = await axios.get("http://localhost:3030/shops");
+        const items = await axios.get("http://localhost:3030/items");
+        let item = items.find((i) => i._id === shopItem.item);
+        let shop = shops.find((s) => s._id === shopItem.shop);
+        shopItem.shopId = shop.shopId;
+        shopItem.itemName = item.name;
+        shopItem.shopName = shop.name;
         set((state) => {
-          state.currentShopitem = response.data;
+          state.currentShopitem = shopItem;
         });
+
+        // set((state) => {
+        //   state.currentShopitem = response.data;
+        // });
       },
 
       addShopitemAPI: async (payload) => {
@@ -63,6 +77,8 @@ export const useShopitemStore = create(
           let item = items.data.data.find((i) => i._id === si.item);
           si.shopName = shop.name;
           si.itemName = item.name;
+          si.shopId = shop.shopId;
+
           return si;
         });
         const user = JSON.parse(sessionStorage.getItem("user"));
@@ -91,11 +107,31 @@ export const useShopitemStore = create(
           `http://localhost:3030/shopitems/${id}`,
           payload
         );
+        let shop = response.data.shop;
         set((state) => {
           const index = state.shopitems.findIndex(
             (c) => c._id === response.data._id
           );
           state.shopitems[index] = response.data;
+        });
+        const shopItems = await axios.get("http://localhost:3030/shopitems", {
+          params: { shop },
+        });
+        const shops = await axios.get("http://localhost:3030/shops");
+        const items = await axios.get("http://localhost:3030/items");
+        console.log(shopItems);
+        const shopItemDetails = shopItems.data.data.map((si) => {
+          let shop = shops.data.data.find((s) => s._id === si.shop);
+          let item = items.data.data.find((i) => i._id === si.item);
+          si.shopName = shop.name;
+          si.itemName = item.name;
+          return si;
+        });
+        const user = JSON.parse(sessionStorage.getItem("user"));
+
+        set((state) => {
+          state.shopitems = shopItemDetails;
+          console.log(state.shopitems);
         });
       },
     }))

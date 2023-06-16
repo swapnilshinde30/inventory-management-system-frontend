@@ -7,20 +7,25 @@ import { useShopStore } from "../../stores/shopStore";
 import { useShopitemStore } from "../../stores/shopitemStore";
 import { useItemStore } from "../../stores/itemStore";
 import CartForm from "../../Forms/CartForm";
+import { useCartStore } from "../../stores/cartStore";
+import { Link } from "react-router-dom";
+
 const ShopsForCustomer = () => {
   const [showModal, setShowModal] = useState(false);
+  const [product, setProduct] = useState({});
+
   const callGetAllShopitemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
   const shopitems = useShopitemStore((state) => state.shopitems);
   const handleSelectCategory = (category) => {
     //  setCategoryName(name);
-    console.log(category);
+    //  console.log(category);
     callGetAllShopsAPI(undefined, category);
   };
 
   const handleSelectShop = (shop) => {
-    console.log(shop);
+    // console.log(shop);
     callGetAllShopitemsAPI(shop);
   };
 
@@ -33,7 +38,6 @@ const ShopsForCustomer = () => {
 
   const callGetAllItemsAPI = useItemStore((state) => state.getAllItemsAPI);
   const items = useItemStore((state) => state.items);
-  console.log(items);
   useEffect(() => {
     callGetAllCategories();
     callGetAllShopitemsAPI();
@@ -42,6 +46,24 @@ const ShopsForCustomer = () => {
   useEffect(() => {
     callGetAllShopsAPI();
   }, []);
+
+  const callAddToCartAPI = useCartStore((state) => state.addToCartAPI);
+  // const cartItems = useCartStore((state) => state.cartItems);
+  const cartItems = sessionStorage.getItem("cartItems");
+  console.log(cartItems);
+
+  const onAddToCart = (item) => {
+    //  const exist = cartItems.find((i) => i._id === item._id);
+    // if (exist) alert(`${item.itemName} is already added in cart`);
+    // else {
+    // callAddToCartAPI(item);
+    // alert(`${item.itemName} is added in cart`);
+    // console.log(cartItems);
+    setProduct(item);
+    console.log(product);
+    setShowModal(true);
+    //  }
+  };
 
   return (
     <>
@@ -151,12 +173,17 @@ const ShopsForCustomer = () => {
                       className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                       style={{ marginTop: "-4px" }}
                     >
-                      <button
+                      <Link
+                        to={`/shopsForCustomer/${item._id}`}
                         className="hover:font-bold"
-                        onClick={() => setShowModal(true)}
+                        // onClick={() => setShowModal(true)}
+                        onClick={() => {
+                          //  callAddToCartAPI(item);
+                          onAddToCart(item);
+                        }}
                       >
                         Add
-                      </button>
+                      </Link>
                     </div>
                   </div>
                   <span
@@ -174,7 +201,11 @@ const ShopsForCustomer = () => {
           </div>
         </div>
       </div>
-      <CartForm showModal={showModal} setShowModal={setShowModal} />
+      <CartForm
+        showModal={showModal}
+        setShowModal={setShowModal}
+        product={product}
+      />
     </>
   );
 };

@@ -28,6 +28,7 @@ export const useCategoryStore = create(
       },
 
       addCategoryAPI: async (payload) => {
+        console.log(payload);
         const response = await axios.post(
           "http://localhost:3030/categories",
           payload

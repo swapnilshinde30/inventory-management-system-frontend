@@ -44,7 +44,11 @@ function LoginPage() {
     }
     if (user.role === "admin") navigate("/categories");
     if (user.role === "shopkeeper") navigate("/shopitems");
-    if (user.role === "customer") navigate("/shopsForCustomer");
+    if (user.role === "customer") {
+      let cartItems = [];
+      sessionStorage.setItem("cartItems", cartItems);
+      navigate("/shopsForCustomer");
+    }
   }, [user]);
 
   return (

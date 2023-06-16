@@ -44,7 +44,7 @@ const ShopItems = () => {
     callGetAllItemClassesAPI();
     // callGetAllItemsAPI();
     callGetAllShopsAPI(user._id);
-    console.log(shopitems.length);
+    //console.log(shopitems.length);
   }, [callGetAllShopItemsAPI, shopitems]);
 
   // const items = [
