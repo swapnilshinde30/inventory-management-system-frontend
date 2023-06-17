@@ -98,7 +98,7 @@ export const useShopitemStore = create(
         );
         set((state) => {
           state.shopitems = state.shopitems.filter(
-            (shopitem) => shopitem._id != response.data._id
+            (shopitem) => shopitem._id !== response.data._id
           );
         });
       },
