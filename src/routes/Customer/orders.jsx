@@ -1,12 +1,55 @@
 // import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
-import NavBar from "../navbar";
+
 import { useRequisitionStore } from "../../stores/requisitionStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Order = () => {
-  const shopName = "Om Sweets";
-  const date = "06/05/2023";
+  // const user = JSON.parse(sessionStorage.getItem("user"));
+
+  // const callGetRequisitionAPI = useRequisitionStore(
+  //   (state) => state.getAllRequisitionsAPI
+  // );
+  // const requisitions = useRequisitionStore((state) => state.requisitions);
+
+  // console.log(requisitions);
+
+  // const groupedRequisitions = requisitions.reduce((acc, requisition) => {
+  //   const requisitionNumber = requisition.requisitionNumber;
+  //   if (!acc[requisitionNumber]) {
+  //     acc[requisitionNumber] = [];
+  //   }
+  //   acc[requisitionNumber].push(requisition);
+  //   return acc;
+  // }, {});
+
+  // let groupedRequisitionsArray = Object.values(groupedRequisitions);
+
+  // console.log(groupedRequisitionsArray);
+
+  // const calculateTotalPrice = (group) => {
+  //   return group.reduce((total, requisition) => {
+  //     return total + requisition.requiredQuantity.amount * 50;
+  //   }, 0);
+  // };
+
+  // const filterRequisitionPrice = (sort) => {
+  //   console.log(sort);
+  //   const filteredRequisitionArray = groupedRequisitionsArray.sort(
+  //     (groupA, groupB) => {
+  //       const totalPriceA = calculateTotalPrice(groupA);
+  //       const totalPriceB = calculateTotalPrice(groupB);
+  //       if (sort === 1) return totalPriceA - totalPriceB;
+  //       if (sort === -1) return totalPriceB - totalPriceA;
+  //     }
+  //   );
+  //   groupedRequisitionsArray = filteredRequisitionArray;
+  // };
+
+  // useEffect(() => {
+  //   callGetRequisitionAPI(user._id);
+  // }, []);
+
+  // useEffect(() => {}, []);
 
   const user = JSON.parse(sessionStorage.getItem("user"));
 
@@ -14,12 +57,45 @@ const Order = () => {
     (state) => state.getAllRequisitionsAPI
   );
   const requisitions = useRequisitionStore((state) => state.requisitions);
-  console.log(requisitions);
 
-  console.log(r);
+  const [groupedRequisitionsArray, setGroupedRequisitionsArray] = useState([]);
+
   useEffect(() => {
     callGetRequisitionAPI(user._id);
   }, []);
+
+  useEffect(() => {
+    const groupedRequisitions = requisitions.reduce((acc, requisition) => {
+      const requisitionNumber = requisition.requisitionNumber;
+      if (!acc[requisitionNumber]) {
+        acc[requisitionNumber] = [];
+      }
+      acc[requisitionNumber].push(requisition);
+      return acc;
+    }, {});
+
+    const requisitionArray = Object.values(groupedRequisitions);
+
+    setGroupedRequisitionsArray(requisitionArray);
+  }, [requisitions]);
+
+  const calculateTotalPrice = (group) => {
+    return group.reduce((total, requisition) => {
+      return total + requisition.requiredQuantity.amount * 50;
+    }, 0);
+  };
+
+  const filterRequisitionPrice = (sort) => {
+    const sortedArray = groupedRequisitionsArray
+      .slice()
+      .sort((groupA, groupB) => {
+        const totalPriceA = calculateTotalPrice(groupA);
+        const totalPriceB = calculateTotalPrice(groupB);
+        if (sort === 1) return totalPriceA - totalPriceB;
+        if (sort === -1) return totalPriceB - totalPriceA;
+      });
+    setGroupedRequisitionsArray(sortedArray);
+  };
   return (
     <>
       {/* <NavBar /> */}
@@ -72,6 +148,7 @@ const Order = () => {
                 className="rounded-lg  text-left mb-2 text-neutral-500 transition duration-500 hover:bg-teal-100 hover:text-teal-700 focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 dark:focus:bg-neutral-600 dark:focus:text-neutral-200"
                 key="1"
                 style={{ cursor: "pointer" }}
+                onClick={() => filterRequisitionPrice(1)}
               >
                 Lowest Price First
               </li>
@@ -83,6 +160,7 @@ const Order = () => {
                 dark:focus:bg-neutral-600 dark:focus:text-neutral-200"
                 key="-1"
                 style={{ cursor: "pointer" }}
+                onClick={() => filterRequisitionPrice(-1)}
               >
                 Highest Price First
               </li>
@@ -91,106 +169,78 @@ const Order = () => {
         </div>
         <div className="flex flex-col">
           {/* One Order */}
-          <div className="bg-neutral-100 w-[900px] h-10 mx-14 mt-12 pb-4 flex-1">
-            <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100">
-              <div className="pt-4 pl-6 pr-1 text-neutral-400 col-span-10 text-xl bg-neutral-100">
-                You are shopping from <b>{`${shopName}`}</b>
-              </div>
-              <div className="pt-4 ml-4 text-neutral-400 col-span-2 ">
-                {date}
-              </div>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100 pb-4 pt-4">
-              <div className="col-span-3 pt-4 pl-6 text-teal-400">
-                {" "}
-                Fruit Cake
-              </div>
-              <div className=" col-span-4 pt-4">
-                ----------------------------------------------
-              </div>
-              <div className="col-span-1 pt-4 pl-6 text-black font-light">
-                300
+
+          {groupedRequisitionsArray.map((requisitionGroup) => (
+            <div className="bg-neutral-100 w-[900px] h-10 mx-14 mt-12 pb-4 flex-1">
+              <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100">
+                <div className="pt-4 pl-6 pr-1 text-neutral-400 col-span-10 text-xl bg-neutral-100">
+                  You are shopping from <b>{requisitionGroup[0].shopName}</b>
+                </div>
+                <div className="pt-4 ml-4 text-neutral-400 col-span-2 ">
+                  {requisitionGroup[0].orderDate}
+                </div>
               </div>
 
-              <div className="col-span-2 pt-4 pl-6 text-neutral-400">
-                Quantity: <span className="text-black font-light">5 Kg </span>
-              </div>
-              <div className="col-span-2 pt-4 pl-6  text-neutral-400">
-                Price: <span className="text-black font-light">₹ 1500 </span>
-              </div>
-            </div>
-            <div className=" bg-neutral-100">
-              <hr className="ml-6 mr-8 bg-neutral-500 h-[2px]" />
-            </div>
-            <div className="grid grid-col-8">
-              <div className="col-start-7 ml-4 mt-4 h-12  bg-neutral-100 text-neutral-400 text-lg">
-                Total :<span className="text-black font-bold">₹ 1500</span>
-              </div>
-            </div>
-            <div className=" bg-neutral-100">
-              <hr className="ml-6 mr-8  bg-neutral-500 h-[2px]" />
-            </div>
-            <div className=" bg-neutral-100 grid grid-cols-12 pt-4 pb-4 ">
-              <div className="col-start-10 col-span-1  bg-neutral-100 ml-2">
-                <span className="text-neutral-400 text-lg">Status</span>
-              </div>
-              <div className="col-span-2">
-                <span className="text-teal-400 text-lg font-bold">PLACED</span>
-              </div>
-            </div>
-          </div>
+              {requisitionGroup.map((requisition) => (
+                <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100 pb-4 pt-4">
+                  <div className="col-span-3 pt-4 pl-6 text-teal-400">
+                    {requisition.itemName}
+                  </div>
+                  <div className=" col-span-3 pt-4">
+                    -----------------------------------
+                  </div>
+                  <div className="col-span-2 pt-4 pl-6 text-black font-light">
+                    ₹ 50 / {requisition.requiredQuantity.unit}
+                  </div>
 
-          {/* Second Order */}
-          <div className="bg-neutral-100 w-[900px] h-10 mx-16 mt-12 pb-4 flex-1">
-            <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100">
-              <div className="pt-4 pl-6 pr-1 text-neutral-400 col-span-10 text-xl bg-neutral-100">
-                You are shopping from <b>{`${shopName}`}</b>
+                  <div className="col-span-2 pt-4 pl-6 text-neutral-400">
+                    Quantity:
+                    <span className="text-black font-light ml-1">
+                      {requisition.requiredQuantity.amount +
+                        " " +
+                        requisition.requiredQuantity.unit}{" "}
+                    </span>
+                  </div>
+                  <div className="col-span-2 pt-4 pl-6  text-neutral-400">
+                    Price:
+                    <span className="text-black font-light">
+                      ₹ {50 * requisition.requiredQuantity.amount}{" "}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              <div className=" bg-neutral-100">
+                <hr className="ml-6 mr-8 bg-neutral-500 h-[2px]" />
               </div>
-              <div className="pt-4 ml-4 text-neutral-400 col-span-2 ">
-                {date}
+              <div className="grid grid-col-8">
+                <div className="col-start-7 ml-4 mt-4 h-12  bg-neutral-100 text-neutral-400 text-lg">
+                  Total :
+                  <span className="text-black font-bold">
+                    ₹
+                    {requisitionGroup
+                      .map(
+                        (requisition) =>
+                          requisition.requiredQuantity.amount * 50
+                      )
+                      .reduce((prev, next) => prev + next)}
+                  </span>
+                </div>
               </div>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100 pb-4 pt-4">
-              <div className="col-span-3 pt-4 pl-6 text-teal-400">
-                {" "}
-                Fruit Cake
+              <div className=" bg-neutral-100">
+                <hr className="ml-6 mr-8  bg-neutral-500 h-[2px]" />
               </div>
-              <div className=" col-span-4 pt-4">
-                ----------------------------------------------
-              </div>
-              <div className="col-span-1 pt-4 pl-6 text-black font-light">
-                300
-              </div>
-
-              <div className="col-span-2 pt-4 pl-6 text-neutral-400">
-                Quantity: <span className="text-black font-light">5 Kg </span>
-              </div>
-              <div className="col-span-2 pt-4 pl-6  text-neutral-400">
-                Price: <span className="text-black font-light">₹ 1500 </span>
-              </div>
-            </div>
-            <div className=" bg-neutral-100">
-              <hr className="ml-6 mr-8 bg-neutral-500 h-[2px]" />
-            </div>
-            <div className="grid grid-col-8">
-              <div className="col-start-7 ml-4 mt-4 h-12  bg-neutral-100 text-neutral-400 text-lg">
-                Total :<span className="text-black font-bold">₹ 1500</span>
-              </div>
-            </div>
-            <div className=" bg-neutral-100">
-              <hr className="ml-6 mr-8  bg-neutral-500 h-[2px]" />
-            </div>
-            <div className=" bg-neutral-100 grid grid-cols-12 pt-4 pb-4 ">
-              <div className="col-start-10 col-span-1  bg-neutral-100 ml-2">
-                <span className="text-neutral-400 text-lg ">Status</span>
-              </div>
-              <div className="col-span-2 ">
-                <span className="text-green-400 text-lg font-bold">
-                  DISPATCHED
-                </span>
+              <div className=" bg-neutral-100 grid grid-cols-12 pt-4 pb-4 ">
+                <div className="col-start-10 col-span-1  bg-neutral-100 ml-2">
+                  <span className="text-neutral-400 text-lg">Status</span>
+                </div>
+                <div className="col-span-2">
+                  <span className="text-teal-400 text-lg font-bold">
+                    {requisitionGroup[0].status}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </>
