@@ -8,10 +8,31 @@ export const useRequisitionStore = create(
     immer((set) => ({
       requisitions: [],
       getAllRequisitionsAPI: async (user) => {
-        const response = await axios.get("http://localhost:3030/requisitions", {
-          params: { user },
-        });
-        set(() => ({ requisitions: response.data.data }));
+        const requisitions = await axios.get(
+          "http://localhost:3030/requisitions",
+          {
+            params: { user },
+          }
+        );
+        const shops = await axios.get("http://localhost:3030/shops");
+        const shopItems = await axios.get("http://localhost:3030/shopitems");
+
+        const requisitionsDetails = requisitions.data.data.map(
+          (requisition) => {
+            let shopItem = shopItems.data.data.find(
+              (shopItem) => shopItem._id === requisition.shopItem
+            );
+            let shop = shops.data.data.find(
+              (shop) => shop._id === shopItem.shop
+            );
+            requisition.shopName = shop.name;
+            console.log(shop.name);
+            console.log(requisition.shopName);
+            return requisition;
+          }
+        );
+
+        set(() => ({ requisitions: requisitionsDetails }));
       },
 
       addRequisitionsAPI: async (payload) => {

@@ -5,7 +5,62 @@ import { useCartStore } from "../../stores/cartStore";
 import { useEffect, useState } from "react";
 import { useRequisitionStore } from "../../stores/requisitionStore";
 
+//new code ...
 const Cart = () => {
+  // const [cartItems, setCartItems] = useState([]);
+  // const [btnText, setBtnText] = useState("Place Order");
+  // const [disable, setDisable] = useState(false);
+
+  // const callDeleteCartItemAPI = useCartStore(
+  //   (state) => state.deleteCartItemAPI
+  // );
+  // const callAddRequisitionsAPI = useRequisitionStore(
+  //   (state) => state.addRequisitionsAPI
+  // );
+  // useEffect(
+  //   () => {
+  //     let cartItem = JSON.parse(sessionStorage.getItem("cartItems"));
+  //     setCartItems(cartItem);
+  //   },
+  //   [cartItems.length],
+  //   btnText
+  // );
+
+  // const handleDelete = (itemName) => {
+  //   console.log(cartItems);
+  //   let cartItem = cartItems.filter((item) => item.itemName != itemName);
+  //   console.log(cartItem);
+  //   setCartItems(cartItem);
+  //   sessionStorage.setItem("cartItems", JSON.stringify(cartItem));
+  // };
+
+  // let today = new Date();
+  // let dd = String(today.getDate()).padStart(2, "0");
+  // let mm = String(today.getMonth() + 1).padStart(2, "0");
+  // let yyyy = today.getFullYear();
+  // today = dd + "/" + mm + "/" + yyyy;
+
+  // const addRequisition = () => {
+  //   const randomString = Math.random().toString(36).substring(2, 6);
+  //   console.log(cartItems);
+  //   const requisitionNumber = cartItems[0].shopId + randomString;
+  //   console.log(requisitionNumber);
+  //   cartItems.forEach((item) => {
+  //     item.requisitionNumber = requisitionNumber;
+  //     item.orderDate = today;
+  //     delete item.shopId;
+  //     delete item.shop;
+  //     delete item.shopName;
+  //     console.log(item);
+  //     callAddRequisitionsAPI(item);
+  //     setBtnText("Order Placed");
+  //     setDisable(true);
+  //     sessionStorage.removeItem("cartItems");
+  //     let cartItems = [];
+  //     sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
+  //   });
+  // };
+
   const [cartItems, setCartItems] = useState([]);
   const [btnText, setBtnText] = useState("Place Order");
   const [disable, setDisable] = useState(false);
@@ -16,20 +71,14 @@ const Cart = () => {
   const callAddRequisitionsAPI = useRequisitionStore(
     (state) => state.addRequisitionsAPI
   );
-  useEffect(
-    () => {
-      let cartItem = JSON.parse(sessionStorage.getItem("cartItems"));
-      setCartItems(cartItem);
-      console.log(cartItems);
-    },
-    [cartItems.length],
-    btnText
-  );
+
+  useEffect(() => {
+    let cartItem = JSON.parse(sessionStorage.getItem("cartItems"));
+    setCartItems(cartItem || []);
+  }, []);
 
   const handleDelete = (itemName) => {
-    console.log(cartItems);
-    let cartItem = cartItems.filter((item) => item.itemName != itemName);
-    console.log(cartItem);
+    let cartItem = cartItems.filter((item) => item.itemName !== itemName);
     setCartItems(cartItem);
     sessionStorage.setItem("cartItems", JSON.stringify(cartItem));
   };
@@ -42,21 +91,22 @@ const Cart = () => {
 
   const addRequisition = () => {
     const randomString = Math.random().toString(36).substring(2, 6);
-    console.log(cartItems);
     const requisitionNumber = cartItems[0].shopId + randomString;
-    console.log(requisitionNumber);
+
     cartItems.forEach((item) => {
       item.requisitionNumber = requisitionNumber;
       item.orderDate = today;
       delete item.shopId;
       delete item.shop;
       delete item.shopName;
-      console.log(item);
       callAddRequisitionsAPI(item);
-      setBtnText("Order Placed");
-      setDisable(true);
-      sessionStorage.removeItem("cartItems");
     });
+
+    setBtnText("Order Placed");
+    setDisable(true);
+    sessionStorage.removeItem("cartItems");
+    setCartItems([]);
+    // sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
 
   return (
@@ -128,6 +178,7 @@ const Cart = () => {
                   </div>
                 </>
               ))}
+
               <div className=" bg-neutral-100">
                 <hr className="ml-6 mr-8 bg-neutral-500 h-[2px] mt-4" />
               </div>
