@@ -16,7 +16,6 @@ const Order = () => {
   const requisitions = useRequisitionStore((state) => state.requisitions);
   console.log(requisitions);
 
-  console.log(r);
   useEffect(() => {
     callGetRequisitionAPI(user._id);
   }, []);
@@ -91,7 +90,7 @@ const Order = () => {
         </div>
         <div className="flex flex-col">
           {/* One Order */}
-          <div className="bg-neutral-100 w-[900px] h-10 mx-14 mt-12 pb-4 flex-1">
+          <div className="bg-neutral-100 w-[900px] h-10 mx-14 mt-12 pb-4 flex-1 border rounded-lg">
             <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100">
               <div className="pt-4 pl-6 pr-1 text-neutral-400 col-span-10 text-xl bg-neutral-100">
                 You are shopping from <b>{`${shopName}`}</b>
@@ -141,7 +140,7 @@ const Order = () => {
           </div>
 
           {/* Second Order */}
-          <div className="bg-neutral-100 w-[900px] h-10 mx-16 mt-12 pb-4 flex-1">
+          <div className="bg-neutral-100 w-[900px] h-10 mx-16 mt-12 pb-4 flex-1  border rounded-lg">
             <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100">
               <div className="pt-4 pl-6 pr-1 text-neutral-400 col-span-10 text-xl bg-neutral-100">
                 You are shopping from <b>{`${shopName}`}</b>

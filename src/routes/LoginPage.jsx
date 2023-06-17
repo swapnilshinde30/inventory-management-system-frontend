@@ -23,6 +23,7 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -31,6 +32,7 @@ function LoginPage() {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   const token = sessionStorage.getItem("token");
+  const errorMessage = useLoginStore((state) => state.error);
 
   const onSubmitHandler = (data) => {
     data.strategy = "local";
@@ -50,7 +52,7 @@ function LoginPage() {
       sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
       navigate("/shopsForCustomer");
     }
-  }, [user]);
+  }, [user, errorMessage]);
 
   return (
     <>
@@ -77,6 +79,11 @@ function LoginPage() {
               <div className="relative">
                 <div className="absolute top-[325px] left-[400px]">
                   <div className="form w-[240px] h-56 bg-white">
+                    {/* {errorMessage && (
+                      <p className="mr-10 text-center text-red-500">
+                        {errorMessage}
+                      </p>
+                    )} */}
                     <form onSubmit={handleSubmit(onSubmitHandler)}>
                       {/* <!-- Email input --> */}
                       <div className="form-outline mb-5 ">
@@ -124,6 +131,11 @@ function LoginPage() {
                           Forget Password?
                         </button>
                       </div>
+                      {errorMessage && (
+                        <p className="mr-10 text-center text-red-500">
+                          {errorMessage}
+                        </p>
+                      )}
                     </form>
                   </div>
                 </div>

@@ -55,6 +55,7 @@ const Cart = () => {
       callAddRequisitionsAPI(item);
       setBtnText("Order Placed");
       setDisable(true);
+      sessionStorage.removeItem("cartItems");
     });
   };
 
@@ -160,7 +161,22 @@ const Cart = () => {
               </div>
             </div>
           ) : (
-            <p>Cart is empty</p>
+            <div className="ml-10 p-[10px] bg-white font-serif">
+              <section className="page_empty cart w-full">
+                <div
+                  className="four_zero_four_bg"
+                  style={{
+                    backgroundImage:
+                      "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBQnOBryIA1fAWHwq_h_W-cZRgtxU039zG7w&usqp=CAU')",
+                    height: "500px",
+                    width: "800px",
+
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                  }}
+                ></div>
+              </section>
+            </div>
           )}
         </div>
       </div>
