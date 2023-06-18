@@ -129,9 +129,9 @@ const Cart = () => {
         <div className="flex-none w-56 h-[530px] border-r border-slate-200">
           {/* 3 */}
         </div>
-        <div>
+        <div className="">
           {cartItems.length > 0 ? (
-            <div className="grid grid-col mt-16 ml-16">
+            <div className="grid grid-col mt-16 ml-16 border rounded-md shadow-md hover:shadow-teal-600">
               <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100">
                 <div className="pt-4 pl-6 pr-1 text-neutral-400 col-span-10 text-xl bg-neutral-100 pb-4">
                   You are shopping from <b>{cartItems[0].shopName}</b>

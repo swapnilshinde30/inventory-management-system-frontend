@@ -137,7 +137,7 @@ const Order = () => {
       </div>
 
       <div className="flex flex-column">
-        <div className="flex-none w-56 h-[530px] border-r border-slate-200">
+        <div className="flex-none w-56 h-[1500px] border-r border-gray-200">
           {/* 3 */}
           <div className="my-4">
             <h4 className="text-center text-teal-700 mb-3 font-semibold">
@@ -171,7 +171,7 @@ const Order = () => {
           {/* One Order */}
 
           {groupedRequisitionsArray.map((requisitionGroup) => (
-            <div className="bg-neutral-100 w-[900px] h-10 mx-14 mt-12 pb-4 flex-1">
+            <div className="bg-neutral-100 w-[900px] h-10 mx-14 mt-12 pb-4 flex-1 border rounded-md shadow-md hover:shadow-teal-600">
               <div className="grid grid-cols-2 md:grid-cols-12 bg-neutral-100">
                 <div className="pt-4 pl-6 pr-1 text-neutral-400 col-span-10 text-xl bg-neutral-100">
                   You are shopping from <b>{requisitionGroup[0].shopName}</b>
