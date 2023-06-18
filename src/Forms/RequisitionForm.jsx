@@ -69,6 +69,35 @@ const RequisitionForm = (props) => {
     setShowModal(false);
   };
 
+  const handleRejectRequisition = (data) => {
+    if (!data) return;
+    console.log(data);
+    const updatedRequisitions = data.map((requisition, index) => ({
+      ...requisition,
+      status: "cancelled",
+    }));
+
+    try {
+      console.log(updatedRequisitions);
+      updatedRequisitions.map((requisition) => {
+        // const requisitionId = requisition.id; // Assuming the ID property is named 'id'
+        console.log("in map");
+        console.log(requisition);
+        callPatchRequisitionsAPI(requisition);
+      });
+    } catch (error) {
+      // Handle error if needed
+      console.log(error);
+    }
+
+    const updatedStatus = "cancelled";
+    requisitionDetails.status = updatedStatus;
+
+    setTextReject("Cancelled");
+
+    setShowModal(false);
+  };
+
   if (!requisitionDetails) return null;
 
   const totalAmount = requisitionDetails.shopItems
@@ -152,16 +181,23 @@ const RequisitionForm = (props) => {
                           type="button"
                           className="ml-10 rounded-full text-black border border-neutral-500 bg-transperent px-6 pb-1 pt-1"
                           //   onClick={() => setvisible(true)}
-                          disabled={requisitionDetails.status === "accepted"}
-                          onClick={() => setShowModal(false)}
+                          disabled={
+                            requisitionDetails.status === "accepted" ||
+                            "dispatched" ||
+                            "cancelled"
+                          }
+                          onClick={() =>
+                            handleRejectRequisition(
+                              requisitionDetails.requisitionIds
+                            )
+                          }
                         >
                           {textReject}
                         </button>
                         <button
                           type="button"
                           className="ml rounded-full text-white border border-neutral-500 bg-teal-600 px-6 pb-1 pt-1"
-                          //   onClick={() => setShowModal(false)}
-                          // onClick={() => handleModalClose()}
+                          disabled={requisitionDetails.status === "cancelled"}
                           onClick={() =>
                             handleAcceptRequisition(
                               requisitionDetails.requisitionIds,
