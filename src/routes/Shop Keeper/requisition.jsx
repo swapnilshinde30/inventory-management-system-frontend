@@ -4,54 +4,89 @@ import NavBar from "../navbar";
 import { useRequisitionStore } from "../../stores/requisitionStore";
 import { NavLink } from "react-router-dom";
 import RequisitionForm from "../../Forms/RequisitionForm";
+import { useShopStore } from "../../stores/shopStore";
+import { useUserStore } from "../../stores/userStore";
 const Requisitions = () => {
-  const [showModal,setShowModal]=useState(false)
-  const [shopName, setShopName] = useState("");
-  const [searchField, setSearchField] = useState("");
-
+  const [showModal, setShowModal] = useState(false);
+  const [selectedShop, setSelectedShop] = useState("");
+  //  const [searchField, setSearchField] = useState("");
+  const [usersData, setUsersData] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const getAllRequisitions = useRequisitionStore(
-    (state) => state.getRequisition
+    (state) => state.getAllRequisitionsAPI
   );
   const requisitions = useRequisitionStore((state) => state.requisitions);
+  console.log(requisitions);
+  const callGetAllShopsAPI = useShopStore((state) => state.getAllShopsAPI);
+  const shops = useShopStore((state) => state.shops);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const callGetAllUsersAPI = useUserStore((state) => state.getAllUsersAPI);
+  const users = useUserStore((state) => state.users);
+
+  useEffect(() => {
+    callGetAllShopsAPI(user._id);
+    //console.log(shopitems.length);
+  }, []);
 
   useEffect(() => {
     getAllRequisitions();
+    callGetAllUsersAPI();
   }, []);
 
-  const shops = [
-    { _id: 1, name: "Sadanand Kirana Store", category: "Grocery" },
-    { _id: 2, name: "Surya Sweets", category: "Sweets" },
-    { _id: 3, name: "Dhiraj Cafe", category: "Beverage" },
-    { _id: 4, name: "Himanshu Medical", category: "Medical" },
-  ];
-  const users = [
-    {
-      _id: 1,
-      firstName: "Sachin",
-      lastName: "Chavan",
-      Role: "Shopkeeper",
-      mobile: "9922992210",
-      date: "05/06/2023",
-      Address: "Pashan",
-      Status: "PLACED",
-    },
-    {
-      _id: 2,
-      firstName: "Swapnil",
-      lastName: "Shinde",
-      Role: "Customer",
-      mobile: "9922992211",
-      date: "06/06/2023",
-      Address: "Bavdhan",
-      Status: "DISPATCHED",
-    },
-  ];
+  const handleSelectShop = (shopName) => {
+    setSelectedShop(shopName);
+    let selectedRequisitions = [];
+    if (requisitions) {
+      selectedRequisitions = requisitions.filter(
+        (requisition) => requisition.shopName === shopName
+      );
+      console.log(selectedRequisitions);
+    }
 
-  const handleSelectShop = (name) => {
-    console.log(name);
-    setShopName(name);
+    const groupedRequisitions = {};
+    selectedRequisitions.forEach((requisition) => {
+      console.log(requisition.user);
+      const user = users.find((u) => u._id === requisition.user);
+      const requisitionNumber = requisition.requisitionNumber;
+      if (!groupedRequisitions[requisitionNumber]) {
+        groupedRequisitions[requisitionNumber] = {
+          user,
+          shopItems: [],
+          orderDate: requisition.orderDate,
+          status: requisition.status,
+          requisitionIds: [],
+        };
+      }
+      groupedRequisitions[requisitionNumber].shopItems.push({
+        shopItem: requisition.shopItem,
+        itemName: requisition.itemName,
+
+        requiredQuantity: {
+          amount: requisition.requiredQuantity.amount,
+          unit: requisition.requiredQuantity.unit,
+        },
+      });
+      groupedRequisitions[requisitionNumber].requisitionIds.push({
+        id: requisition._id,
+      });
+    });
+
+    const usersData = Object.entries(groupedRequisitions).map(
+      ([requisitionNumber, data]) => ({
+        requisitionNumber,
+        ...data,
+      })
+    );
+    setUsersData(usersData);
+
+    console.log(usersData);
   };
 
+  const handleUserClick = (requisition) => {
+    setSelectedUser(requisition);
+    console.log(requisition);
+    setShowModal(true);
+  };
   return (
     <>
       {/* <NavBar /> */}
@@ -109,21 +144,20 @@ const Requisitions = () => {
                 </div>
               </div>
               <div className="pl-5 pt-2 text-gray-400 dark:text-gray-500">
-                <p>
+                {/* <p>
                   You Have new Order in{" "}
-                  <span className="font-semibold">{`${shopName}`}</span>
-                </p>
+                  <span className="font-semibold">{`${selectedShop}`}</span>
+                </p> */}
               </div>
               <div>
                 <div className="flex flex-col pl-5 pt-2 space-y-2 w-auto">
-                  {users.map((user) => (
-                    <button to={'/requisitions/new'}>
+                  {usersData.map((requisition) => (
                     <div
-                      id={user._id}
-                      key={user._id}
+                      //id={user._id}
+                      key={requisition.user._id + Math.random()}
                       className="border rounded-lg h-20 px-2 py-2
                  hover:border-teal-400 focus:outline-none cursor-pointer"
-                       onClick={() => setShowModal(true)}
+                      onClick={() => handleUserClick(requisition)}
                     >
                       <div className="flex flex-row space-x-5  pt-2">
                         <div>
@@ -140,26 +174,30 @@ const Requisitions = () => {
                           <p className=" text-gray-400 dark:text-gray-500">
                             Name
                           </p>
-                          <div>{user.firstName + " " + user.lastName}</div>
+                          <div>
+                            {requisition.user.firstName +
+                              " " +
+                              requisition.user.lastName}
+                          </div>
                         </div>
                         <div>
                           <p className=" text-gray-400 dark:text-gray-500">
                             Mobile
                           </p>
-                          <div>{user.mobile}</div>
+                          <div>{requisition.user.phone}</div>
                         </div>
                         <div>
                           <p className=" text-gray-400 dark:text-gray-500">
                             Date
                           </p>
-                          <div>{user.date}</div>
+                          <div>{requisition.orderDate}</div>
                         </div>
-                        <div>
-                          <p className=" text-gray-400 dark:text-gray-500">
-                            Address
-                          </p>
-                          <div>{user.Address}</div>
-                        </div>
+                        {/* <div>
+                            <p className=" text-gray-400 dark:text-gray-500">
+                              Address
+                            </p>
+                            <div>{user.Address}</div>
+                          </div> */}
                         <div>
                           <p className=" text-gray-400 dark:text-gray-500">
                             Status
@@ -171,12 +209,11 @@ const Requisitions = () => {
                                 : "text-green-500 font-semibold"
                             }
                           >
-                            {user.Status}
+                            {requisition.status}
                           </div>
                         </div>
                       </div>
                     </div>
-                    </button>
                   ))}
                 </div>
               </div>
@@ -285,7 +322,11 @@ const Requisitions = () => {
           </div>
         </div>
       </div>
-      <RequisitionForm showModal={showModal} setShowModal={setShowModal} />
+      <RequisitionForm
+        showModal={showModal}
+        setShowModal={setShowModal}
+        requisitionDetails={selectedUser}
+      />
     </>
   );
 };
