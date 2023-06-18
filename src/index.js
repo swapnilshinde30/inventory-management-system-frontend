@@ -74,6 +74,8 @@ root.render(
             <Route path="cart" element={<Cart />} />
             <Route path="orders" element={<Order />} />
             <Route path="requisitions" element={<Requisitions />} />
+            <Route path="requisitions/:id" element={<Requisitions />} />
+
             {/* <Route path="requisitions/new" element={<RequisitionForm />} /> */}
             <Route path="home" element={<HomePage />} />
             <Route path="error/404" element={<Error404 />} />

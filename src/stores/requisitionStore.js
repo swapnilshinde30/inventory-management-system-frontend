@@ -26,6 +26,7 @@ export const useRequisitionStore = create(
               (shop) => shop._id === shopItem.shop
             );
             requisition.shopName = shop.name;
+
             console.log(shop.name);
             console.log(requisition.shopName);
             return requisition;
@@ -45,6 +46,23 @@ export const useRequisitionStore = create(
         console.log(response.data);
         set((state) => {
           state.requisitions = [...state.requisitions, response.data];
+        });
+      },
+
+      patchRequisitionsAPI: async (payload) => {
+        console.log(payload);
+        const id = payload.id;
+        console.log(id);
+        delete payload.id;
+        const response = await axios.patch(
+          `http://localhost:3030/requisitions/${id}`,
+          payload
+        );
+        set((state) => {
+          const index = state.requisitions.findIndex(
+            (r) => r._id === response.data._id
+          );
+          state.requisitions[index] = response.data;
         });
       },
     }))
