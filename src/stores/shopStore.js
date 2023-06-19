@@ -29,6 +29,7 @@ export const useShopStore = create(
         console.log(response.data);
         set((state) => {
           state.currentShop = response.data;
+          console.log(state.currentShop);
         });
       },
       addShopAPI: async (payload) => {

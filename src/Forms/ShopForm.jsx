@@ -83,6 +83,8 @@ const ShopForm = (props) => {
     callgetAllUsersAPI();
     if (!shopId) return;
     callGetShopAPI(shopId);
+    console.log(shop);
+    if (Object.keys(shop).length === 0) return;
     // callgetAllUsersAPI("shopkeeper");
     setValue("_id", shop._id);
     setValue("name", shop.name);

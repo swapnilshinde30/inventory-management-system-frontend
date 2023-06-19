@@ -10,58 +10,105 @@ export const useCategoryStore = create(
     immer((set) => ({
       categories: [],
       currentCategory: {},
+      error: "",
       getAllCategoriesAPI: async () => {
-        const response = await axios.get("http://localhost:3030/categories");
-        console.log(response);
-        set((state) => {
-          state.categories = response.data.data;
-        });
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await axios.get(
+            "http://localhost:3030/categories",
+            config
+          );
+          console.log(response);
+          set((state) => {
+            state.categories = response.data.data;
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
+
       getCategoryAPI: async (id) => {
         console.log(id);
-        const response = await axios.get(
-          `http://localhost:3030/categories/${id}`
-        );
-        console.log(response.data);
-        set((state) => {
-          state.currentCategory = response.data;
-        });
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await axios.get(
+            `http://localhost:3030/categories/${id}`,
+            config
+          );
+          console.log(response.data);
+          set((state) => {
+            state.currentCategory = response.data;
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
 
       addCategoryAPI: async (payload) => {
         console.log(payload);
-        const response = await axios.post(
-          "http://localhost:3030/categories",
-          payload
-        );
-        set((state) => {
-          state.categories = [...state.categories, response.data];
-        });
+        try {
+          const response = await axios.post(
+            "http://localhost:3030/categories",
+            payload
+          );
+          set((state) => {
+            state.categories = [...state.categories, response.data];
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
 
       deleteCategoryAPI: async (id) => {
-        const response = await axios.delete(
-          `http://localhost:3030/categories/${id}`
-        );
-        set((state) => {
-          state.categories = state.categories.filter(
-            (category) => category._id != response.data._id
+        try {
+          const response = await axios.delete(
+            `http://localhost:3030/categories/${id}`
           );
-        });
+          set((state) => {
+            state.categories = state.categories.filter(
+              (category) => category._id != response.data._id
+            );
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
+
       patchCategoryAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
-        const response = await axios.patch(
-          `http://localhost:3030/categories/${id}`,
-          payload
-        );
-        set((state) => {
-          const index = state.categories.findIndex(
-            (c) => c._id === response.data._id
+        try {
+          const response = await axios.patch(
+            `http://localhost:3030/categories/${id}`,
+            payload
           );
-          state.categories[index] = response.data;
-        });
+          set((state) => {
+            const index = state.categories.findIndex(
+              (c) => c._id === response.data._id
+            );
+            state.categories[index] = response.data;
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
     }))
   )

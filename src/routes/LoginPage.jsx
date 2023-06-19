@@ -12,7 +12,7 @@ import * as yup from "yup";
 import SendOTPForm from "../Forms/ForgotPassword";
 
 const schema = yup.object().shape({
-  email: yup.string().required(),
+  userName: yup.string().required(),
   password: yup.string().required(),
 });
 
@@ -32,14 +32,15 @@ function LoginPage() {
 
   const token = sessionStorage.getItem("token");
 
-  const onSubmitHandler = (data) => {
+  const onSubmitHandler = async (data) => {
     data.strategy = "local";
-    console.log(user);
-    callloginUserAPI(data);
+    console.log(data);
+    await callloginUserAPI(data);
     //navigate("/login");
   };
   useEffect(() => {
     console.log(user);
+    if (user === {}) return;
     if (user === null) {
       return;
     }
@@ -50,7 +51,7 @@ function LoginPage() {
       sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
       navigate("/shopsForCustomer");
     }
-  }, [user]);
+  }, [user?.role]);
 
   return (
     <>
@@ -81,11 +82,11 @@ function LoginPage() {
                       {/* <!-- Email input --> */}
                       <div className="form-outline mb-5 ">
                         <input
-                          type="email"
-                          id="form2Example1"
+                          type="text"
+                          id="username"
                           placeholder="username"
                           className="rounded-full border  w-52 h-9 mt-2 pl-8 hover:border-teal-400 focus:outline-none "
-                          {...register("email")}
+                          {...register("userName")}
                         />
                         <AiOutlineUser className="-mt-6 ml-3" />
                       </div>
@@ -94,7 +95,7 @@ function LoginPage() {
                       <div className="form-outline mb-5">
                         <input
                           type="password"
-                          id="form2Example2"
+                          id="password"
                           placeholder="password"
                           className="border rounded-full w-52 h-9 pl-8  hover:border-teal-400 focus:outline-none"
                           {...register("password")}

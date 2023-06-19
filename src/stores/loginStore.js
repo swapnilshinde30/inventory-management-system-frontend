@@ -10,6 +10,7 @@ export const useLoginStore = create(
       token: "",
 
       loginUserAPI: async (payload) => {
+        console.log(payload);
         const response = await axios.post(
           "http://localhost:3030/authentication",
           payload
