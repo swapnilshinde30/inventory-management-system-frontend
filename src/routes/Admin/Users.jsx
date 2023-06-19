@@ -1,9 +1,8 @@
-// import { SearchIcon } from "@heroicons/react/24/outline";
 import { AiOutlineUser } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import NavBar from "../navbar";
+
 import EditUserForm from "../../Forms/EditUserForm";
 import { useUserStore } from "../../stores/userStore";
 import { useNavigate } from "react-router-dom";
@@ -134,15 +133,9 @@ const Users = () => {
                   <span className="text-neutral-500">Last LoggedIn: </span>
                   {user.lastLoggedIn}
                 </div>
-                {/* 
-                <Link
-                  to="/categories/new"
-                  className="nav-link mr-5"
-                  aria-current="page"
-                > */}
+
                 <div className="flex-1">
                   <button
-                    // to={`/users/${user._id}`}
                     className="w-8 ml-[130px] mr-3 mt-2 bg-white rounded-full h-8  hover:bg-teal-500"
                     onClick={() => {
                       setShowModal(true);
@@ -173,11 +166,6 @@ const Users = () => {
         </div>
       </div>
       <EditUserForm showModal={showModal} setShowModal={setShowModal} />
-      {/* <div className="grid grid-row-2 gride-col-2">
-        <div className="w-32 h-16  border-b border-r border-slate-200">1</div>
-        <div className="w-32 border-r h-screen border-slate-200">2</div>
-      </div>
-      <div className="grid grid-row-2"></div> */}
     </>
   );
 };

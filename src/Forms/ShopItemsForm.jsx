@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { SlClose } from "react-icons/sl";
-import { useState } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -42,7 +41,7 @@ const ShopItemsForm = (props) => {
   const callGetShopitemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
-  // const [showModal] = useState(true);
+
   const navigate = useNavigate();
 
   const {
@@ -95,7 +94,6 @@ const ShopItemsForm = (props) => {
   return (
     <>
       {showModal ? (
-        // <div className=" absolute bottom-1 right-1 h-auto w-full transition-all ease-in-out max-w-[500px]">
         <div
           className="relative z-10"
           aria-labelledby="modal-title"
@@ -117,7 +115,6 @@ const ShopItemsForm = (props) => {
                         setShowModal(false);
                         reset();
                         navigate("/shopitems");
-
                       }}
                     />
                   </div>
@@ -219,7 +216,6 @@ const ShopItemsForm = (props) => {
                     <button
                       type="submit"
                       className="ml-[120px] rounded-full bg-teal-500 px-11 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                      //   onClick={() => setShowModal(false)}
                     >
                       Add
                     </button>

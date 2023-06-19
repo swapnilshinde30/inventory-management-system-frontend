@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -91,31 +91,13 @@ const CategoryForm = (props) => {
                     <input
                       type="text"
                       placeholder="Category Name"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                       className="w-full py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                       {...register("name")}
                     />
 
                     <p className="text-red-500">{errors.name?.message}</p>
                   </div>
-                  {/* <div className="w-full md:w-96 md:max-w-full mx-auto">
-                  <div>
-                    <form
-                      method="POST"
-                      // action="https://herotofu.com/start"
-                      // enctype="multipart/form-data"
-                    >
-                      <label className="">
-                        <input
-                          required
-                          name="photo"
-                          type="file"
-                          className=" w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        />
-                      </label>
-                    </form>
-                  </div>
-                </div> */}
+
                   <div className="flex p-8">
                     <button
                       type="button"

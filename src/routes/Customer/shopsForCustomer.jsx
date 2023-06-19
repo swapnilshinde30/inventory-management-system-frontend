@@ -1,7 +1,5 @@
-// import { SearchIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import ListGroup from "../common/listgroup";
-import NavBar from "../navbar";
 import { useCategoryStore } from "../../stores/categoryStore";
 import { useShopStore } from "../../stores/shopStore";
 import { useShopitemStore } from "../../stores/shopitemStore";
@@ -19,13 +17,10 @@ const ShopsForCustomer = () => {
   );
   const shopitems = useShopitemStore((state) => state.shopitems);
   const handleSelectCategory = (category) => {
-    //  setCategoryName(name);
-    //  console.log(category);
     callGetAllShopsAPI(undefined, category);
   };
 
   const handleSelectShop = (shop) => {
-    // console.log(shop);
     callGetAllShopitemsAPI(shop);
   };
 
@@ -48,17 +43,11 @@ const ShopsForCustomer = () => {
   }, []);
 
   const callAddToCartAPI = useCartStore((state) => state.addToCartAPI);
-  // const cartItems = useCartStore((state) => state.cartItems);
+
   const cartItems = sessionStorage.getItem("cartItems");
   console.log(cartItems);
 
   const onAddToCart = (item) => {
-    //  const exist = cartItems.find((i) => i._id === item._id);
-    // if (exist) alert(`${item.itemName} is already added in cart`);
-    // else {
-    // callAddToCartAPI(item);
-    // alert(`${item.itemName} is added in cart`);
-    // console.log(cartItems);
     setProduct(item);
     console.log(product);
     setShowModal(true);
@@ -125,7 +114,6 @@ const ShopsForCustomer = () => {
             <ListGroup
               items={[...categories]}
               onSelectItem={handleSelectCategory}
-              // selectedItem={categoryName}
             />
           </div>
         </div>
@@ -134,17 +122,11 @@ const ShopsForCustomer = () => {
             <h4 className="text-center text-teal-700 mb-3 font-semibold">
               Shops
             </h4>
-            <ListGroup
-              items={[...shops]}
-              onSelectItem={handleSelectShop}
-              //  selectedItem={shopName}
-            />
+            <ListGroup items={[...shops]} onSelectItem={handleSelectShop} />
           </div>
         </div>
         <div>
-          <h4 className="text-gray-500 ml-12 mt-3">
-            {/* You are shopping from <b> {`${shopName}`}</b>  */}
-          </h4>
+          <h4 className="text-gray-500 ml-12 mt-3"></h4>
           {shopitems.length === 0 ? (
             <h3 className="text-slate-600 mx-4 my-4">
               <div className="ml-10 p-[10px] bg-white font-serif">
@@ -180,7 +162,6 @@ const ShopsForCustomer = () => {
                       className=" badge text-gray-400 bg-slate-300 w-52 text-left text-sm p-1 hover:bg-slate-500 hover:text-white"
                       style={{ marginTop: "-4px" }}
                     >
-                      {/* <button className="hover:font-bold ">₹ {}</button> */}
                       <span>₹ 50/ {item.availableQuantity.unit}</span>
                     </div>
                     <div
@@ -190,9 +171,7 @@ const ShopsForCustomer = () => {
                       <Link
                         to={`/shopsForCustomer/${item._id}`}
                         className="hover:font-bold"
-                        // onClick={() => setShowModal(true)}
                         onClick={() => {
-                          //  callAddToCartAPI(item);
                           onAddToCart(item);
                         }}
                       >

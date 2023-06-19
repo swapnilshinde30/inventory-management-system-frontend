@@ -1,8 +1,8 @@
 // import React from "react";
 import React, { useEffect, useState } from "react";
-import NavBar from "../navbar";
+
 import { useItemClassStore } from "../../stores/itemClasseStore";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ItemClassesForm from "../../Forms/ItemClassesForm";
 
 const ItemClasses = () => {
@@ -73,7 +73,6 @@ const ItemClasses = () => {
             </div>
             <div className="flex-1">
               <button
-                // to={`/itemclasses/new`}
                 className="ml-10  md:ml-96 mt-4 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
                 onClick={() => setShowModal(true)}
               >

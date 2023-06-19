@@ -1,9 +1,9 @@
 import React from "react";
 import { SlClose } from "react-icons/sl";
-import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import * as yup from "yup";
 import { useShopStore } from "../stores/shopStore";
@@ -20,7 +20,7 @@ const schema = yup.object().shape({
   state: yup.string().required("Please enter state"),
   zipcode: yup.string().required("Please enter zipcode"),
   category: yup.string().required("Please select Category"),
-  // owner: yup.string().required("Please select Owner"),
+
   contactPerson: yup.object().shape({
     name: yup.string().required("Please enter name"),
     phone: yup.string().required("Please enter phone No"),
@@ -48,10 +48,6 @@ const ShopForm = (props) => {
   const users = useUserStore((state) => state.users);
   const user = JSON.parse(sessionStorage.getItem("user"));
   console.log(user);
-  // console.log(callgetAllUsersAPI);
-  // console.log(callgetAllCategoriesAPI);
-  // console.log(categories);
-  // console.log(users);
 
   const {
     register,
@@ -86,7 +82,7 @@ const ShopForm = (props) => {
     callGetShopAPI(shopId);
     console.log(shop);
     if (Object.keys(shop).length === 0) return;
-    // callgetAllUsersAPI("shopkeeper");
+
     setValue("_id", shop._id);
     setValue("name", shop.name);
     setValue("shopId", shop.shopId);
@@ -97,7 +93,7 @@ const ShopForm = (props) => {
     setValue("state", shop.state);
     setValue("zipcode", shop.zipcode);
     setValue("category", shop.category);
-    // setValue("owner", shop.owner);
+
     setValue("contactPerson.name", shop.contactPerson["name"]);
     setValue("contactPerson.phone", shop.contactPerson["phone"]);
   }, [shopId, shop?.name]);
@@ -134,7 +130,6 @@ const ShopForm = (props) => {
                       <input
                         type="text"
                         placeholder="Name"
-                        // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                         className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                         {...register("name")}
                       />
@@ -149,7 +144,6 @@ const ShopForm = (props) => {
                         <input
                           type="text"
                           placeholder="Address Line 1"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("addressLine1")}
                         />
@@ -164,7 +158,6 @@ const ShopForm = (props) => {
                         <input
                           type="text"
                           placeholder="Address Line 2"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("addressLine2")}
                         />
@@ -179,7 +172,6 @@ const ShopForm = (props) => {
                         <input
                           type="text"
                           placeholder="Area"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("area")}
                         />
@@ -190,7 +182,6 @@ const ShopForm = (props) => {
                         <input
                           type="text"
                           placeholder="City"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("city")}
                         />
@@ -203,7 +194,6 @@ const ShopForm = (props) => {
                         <input
                           type="text"
                           placeholder="State"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("state")}
                         />
@@ -216,7 +206,6 @@ const ShopForm = (props) => {
                         <input
                           type="text"
                           placeholder="ZipCode"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("zipcode")}
                         />
@@ -248,19 +237,7 @@ const ShopForm = (props) => {
                       </select>
                       <p className="text-red-500">{errors.category?.message}</p>
                     </div>
-                    {/* <select
-                      id="Owner"
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                      {...register("owner")}
-                    >
-                      {" "}
-                      <option selected>Owner</option>
-                      {users.map((owners) => (
-                        <option key={owners._id} value={owners._id}>
-                          {owners.firstName}
-                        </option>
-                      ))}
-                    </select> */}
+
                     <div className="">
                       <span className="text-gray-500 text-base">
                         Contact Person:
@@ -269,23 +246,16 @@ const ShopForm = (props) => {
                         <input
                           type="text"
                           placeholder="Name"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("contactPerson.name")}
                         />
-                        {/* <p className="text-red-500">
-                          {errors.contactPerson["name"]?.message}
-                        </p> */}
+
                         <input
                           type="text"
                           placeholder="Phone"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("contactPerson.phone")}
                         />
-                        {/* <p className="text-red-500">
-                          {errors.contactPerson["phone"]?.message}
-                        </p> */}
                       </div>
                     </div>
                   </div>
@@ -301,15 +271,9 @@ const ShopForm = (props) => {
                     <button
                       type="submit"
                       className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                      //   onClick={() => setShowModal(false)}
                     >
                       Add
                     </button>
-                    {/* {errorMessage && (
-                      <p className="mr-10 text-center text-red-500">
-                        {errorMessage}
-                      </p>
-                    )} */}
                   </div>
                 </form>
               </div>

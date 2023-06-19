@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+
 import * as yup from "yup";
 import { useCartStore } from "../stores/cartStore";
 import { useShopitemStore } from "../stores/shopitemStore";
@@ -17,7 +17,7 @@ const schema = yup.object().shape({
 
 const CartForm = (props) => {
   const { showModal, setShowModal, product } = props;
-  // console.log(product);
+
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   const navigate = useNavigate();
@@ -29,12 +29,10 @@ const CartForm = (props) => {
     formState: { errors },
     setValue,
     reset,
-  } = useForm({
-    // resolver: yupResolver(),
-  });
+  } = useForm({});
 
   const callAddToCartAPI = useCartStore((state) => state.addToCartAPI);
-  // const product = useShopitemStore((state) => state.currentShopitem);
+
   console.log(product);
   const callGetShopitemAPI = useShopitemStore((state) => state.getShopitemAPI);
   const callAddRequisitionsAPI = useRequisitionStore(
@@ -52,7 +50,7 @@ const CartForm = (props) => {
   const onSubmitHandler = async (data) => {
     data.requiredQuantity.amount = parseInt(data.requiredQuantity.amount);
     data.user = user._id;
-    //----------------- for adding in cart
+
     data.shop = product.shop;
     data.shopName = product.shopName;
     data.itemName = product.itemName;
@@ -70,31 +68,17 @@ const CartForm = (props) => {
         cartItems.push(data);
         sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
       }
-
-      //callAddToCartAPI(data);
     }
     reset();
     navigate("/shopsForCustomer");
     setShowModal(false);
-    //-------------------------
-    //for direct requisition
-    //delete data.itemName;
-    // console.log(data);
-    // callAddRequisitionsAPI(data);
   };
 
   useEffect(() => {
-    // if (!itemId) return;
-    // callGetShopitemAPI(itemId);
     if (!product) return;
     setValue("itemName", product.itemName);
     console.log(product.itemName);
     setValue("shopItem", product._id);
-    // setValue("price", 50);
-    // setValue("shop", product.shop);
-    // setValue("shopName", product.shopName);
-    //  setValue("requiredQuntity.unit", product.requiredQuntity.unit);
-    //setValue("requiredQuntity.unit", product.availableQuantity["unit"]);
   }, [product.itemName]);
 
   return (

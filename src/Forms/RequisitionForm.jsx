@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SlClose } from "react-icons/sl";
-import { useNavigate } from "react-router-dom";
+
 import { useRequisitionStore } from "../stores/requisitionStore";
 
 const RequisitionForm = (props) => {
@@ -13,9 +12,6 @@ const RequisitionForm = (props) => {
 
   const [textAccept, setTextAccept] = useState("Accept");
   const [textReject, setTextReject] = useState("Reject");
-
-  //  const navigate = useNavigate();
-  // const [showModal] = useState(true);
 
   useEffect(() => {
     if (requisitionDetails && requisitionDetails.status === "created") {
@@ -185,7 +181,6 @@ const RequisitionForm = (props) => {
                           <button
                             type="button"
                             className="ml-10 rounded-full text-black border border-neutral-500 bg-transperent px-6 pb-1 pt-1"
-                            //   onClick={() => setvisible(true)}
                             disabled={requisitionDetails.status != "created"}
                             onClick={() =>
                               handleRejectRequisition(

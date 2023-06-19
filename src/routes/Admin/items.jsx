@@ -1,4 +1,3 @@
-// import { SearchIcon } from "@heroicons/react/24/outline";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useItemStore } from "../../stores/itemStore";
@@ -42,15 +41,11 @@ const Items = () => {
     let noOfItems = items.filter(
       (item) => item.itemClass === itemclass._id
     ).length;
-    // if (noOfItems > 0) {
-    arrayitem[count] = { name: itemclass.name, quantity: noOfItems };
-    // arrayitem[count] = noOfItems;
-    count++;
-    //  }
-  });
-  // count = 0;
 
-  // console.log(arrayitem);
+    arrayitem[count] = { name: itemclass.name, quantity: noOfItems };
+
+    count++;
+  });
 
   return (
     <>
@@ -93,7 +88,6 @@ const Items = () => {
             </div>
             <div className="flex-1">
               <button
-                // to={`/items/new`}
                 className="ml-10  md:ml-96 mt-4 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
                 onClick={() => setShowModal(true)}
               >

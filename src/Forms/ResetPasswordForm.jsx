@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -169,10 +168,3 @@ const ResetPasswordForm = (props) => {
   );
 };
 export default ResetPasswordForm;
-
-// <!-- component -->
-// <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
-//   <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-
-//   </div>
-// </div>

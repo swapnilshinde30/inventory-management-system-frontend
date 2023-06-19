@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -12,14 +11,11 @@ import "react-toastify/dist/ReactToastify.css";
 const schema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
-  // address: yup.string().required("Please enter address"),
+
   email: yup.string().email().min(8).max(30).required(),
   phone: yup.string().min(10).max(10).required(),
   userName: yup.string().required(),
-  // password: yup
-  //   .string()
-  //   .min(8)
-  //   .required("Password must be at least 8 character"),
+
   role: yup.string().required(),
 });
 const EditUserForm = (props) => {
@@ -70,7 +66,7 @@ const EditUserForm = (props) => {
     setValue("email", user.email);
     setValue("phone", user.phone);
     setValue("userName", user.userName);
-    // setValue("password", user.password);
+
     setValue("role", user.role);
   }, [userId, user.firstName]);
 
@@ -110,27 +106,18 @@ const EditUserForm = (props) => {
                         <input
                           type="text"
                           placeholder="First Name"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("firstName")}
                         />
-
-                        {/* <p className="text-red-500">
-                          {errors.firstName?.message}
-                        </p> */}
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500">Last Name:</span>
                         <input
                           type="text"
                           placeholder="Last Name"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("lastName")}
                         />
-                        {/* <p className="text-red-500">
-                          {errors.lastName?.message}
-                        </p> */}
                       </div>
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
@@ -139,22 +126,18 @@ const EditUserForm = (props) => {
                         <input
                           type="text"
                           placeholder="Email"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("email")}
                         />
-                        {/* <p className="text-red-500">{errors.email?.message}</p> */}
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500">Phone:</span>
                         <input
                           type="text"
                           placeholder="Phone"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("phone")}
                         />
-                        {/* <p className="text-red-500">{errors.phone?.message}</p> */}
                       </div>
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
@@ -163,13 +146,9 @@ const EditUserForm = (props) => {
                         <input
                           type="text"
                           placeholder="User Name"
-                          // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("userName")}
                         />
-                        {/* <p className="text-red-500">
-                          {errors.userName?.message}
-                        </p> */}
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500">Role:</span>
@@ -189,7 +168,6 @@ const EditUserForm = (props) => {
                             Customer
                           </option>
                         </select>
-                        {/* <p className="text-red-500">{errors.role?.message}</p> */}
                       </div>
                     </div>
                   </div>
@@ -205,7 +183,6 @@ const EditUserForm = (props) => {
                     <button
                       type="submit"
                       className="ml-3 rounded-full bg-teal-500 px-7 pb-1 pt-1 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
-                      //   onClick={() => setShowModal(false)}
                     >
                       Add
                     </button>

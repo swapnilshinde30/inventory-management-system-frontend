@@ -99,7 +99,6 @@ const ItemsForm = (props) => {
                       <input
                         type="text"
                         placeholder="Name"
-                        // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                         className="w-[220px] py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                         {...register("name")}
                       />
@@ -132,7 +131,6 @@ const ItemsForm = (props) => {
                     <input
                       type="text"
                       placeholder="Description"
-                      // className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none "
                       className="w-[450px] py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                       {...register("description")}
                     />
@@ -140,24 +138,7 @@ const ItemsForm = (props) => {
                       {errors.description?.message}
                     </p>
                   </div>
-                  {/* <div className="w-full md:w-[450px] md:max-w-full mx-auto">
-                    <div>
-                      <form
-                        method="POST"
-                        // action="https://herotofu.com/start"
-                        // enctype="multipart/form-data"
-                      >
-                        <label className="">
-                          <input
-                            required
-                            name="photo"
-                            type="file"
-                            className=" w-full mt-1 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                          />
-                        </label>
-                      </form>
-                    </div>
-                  </div> */}
+
                   <div className="flex p-8">
                     <button
                       type="button"

@@ -1,56 +1,9 @@
-// import { SearchIcon } from "@heroicons/react/24/outline";
+
 
 import { useRequisitionStore } from "../../stores/requisitionStore";
 import { useEffect, useState } from "react";
 
 const Order = () => {
-  // const user = JSON.parse(sessionStorage.getItem("user"));
-
-  // const callGetRequisitionAPI = useRequisitionStore(
-  //   (state) => state.getAllRequisitionsAPI
-  // );
-  // const requisitions = useRequisitionStore((state) => state.requisitions);
-
-  // console.log(requisitions);
-
-  // const groupedRequisitions = requisitions.reduce((acc, requisition) => {
-  //   const requisitionNumber = requisition.requisitionNumber;
-  //   if (!acc[requisitionNumber]) {
-  //     acc[requisitionNumber] = [];
-  //   }
-  //   acc[requisitionNumber].push(requisition);
-  //   return acc;
-  // }, {});
-
-  // let groupedRequisitionsArray = Object.values(groupedRequisitions);
-
-  // console.log(groupedRequisitionsArray);
-
-  // const calculateTotalPrice = (group) => {
-  //   return group.reduce((total, requisition) => {
-  //     return total + requisition.requiredQuantity.amount * 50;
-  //   }, 0);
-  // };
-
-  // const filterRequisitionPrice = (sort) => {
-  //   console.log(sort);
-  //   const filteredRequisitionArray = groupedRequisitionsArray.sort(
-  //     (groupA, groupB) => {
-  //       const totalPriceA = calculateTotalPrice(groupA);
-  //       const totalPriceB = calculateTotalPrice(groupB);
-  //       if (sort === 1) return totalPriceA - totalPriceB;
-  //       if (sort === -1) return totalPriceB - totalPriceA;
-  //     }
-  //   );
-  //   groupedRequisitionsArray = filteredRequisitionArray;
-  // };
-
-  // useEffect(() => {
-  //   callGetRequisitionAPI(user._id);
-  // }, []);
-
-  // useEffect(() => {}, []);
-
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   const callGetRequisitionAPI = useRequisitionStore(
