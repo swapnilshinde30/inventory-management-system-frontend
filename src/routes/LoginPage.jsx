@@ -38,17 +38,11 @@ function LoginPage() {
   const onSubmitHandler = async (data) => {
     data.strategy = "local";
     console.log(user);
-    callloginUserAPI(data)
-      .then((res) => {
-        toast.success("Logged In Success...");
-      })
-      .catch((err) => {
-        console.log(err.response.data.message);
-        toast.error("Invalid Login..");
-      });
-    console.log(data);
-    //  await callloginUserAPI(data);
-    //navigate("/login");
+    try {
+      await callloginUserAPI(data);
+    } catch (err) {
+      toast.error("Invalid Login..");
+    }
   };
   useEffect(() => {
     console.log(user);

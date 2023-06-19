@@ -3,7 +3,6 @@ import axios from "axios";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-//const http = axios.create({ baseURL: "http://localhost:3030/" });
 const apiEndPoint = process.env.REACT_APP_API_URL + "categories";
 export const useCategoryStore = create(
   devtools(
@@ -12,9 +11,12 @@ export const useCategoryStore = create(
       currentCategory: {},
       error: "",
       getAllCategoriesAPI: async () => {
-        // const response = await axios.get("http://localhost:3030/categories");
-        console.log(apiEndPoint);
-        const response = await axios.get(`${apiEndPoint}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(`${apiEndPoint}`, config);
         console.log(response);
         set((state) => {
           state.categories = response.data.data;
@@ -22,11 +24,12 @@ export const useCategoryStore = create(
       },
 
       getCategoryAPI: async (id) => {
-        console.log(id);
-        // const response = await axios.get(
-        //   `http://localhost:3030/categories/${id}`
-        // );
-        const response = await axios.get(`${apiEndPoint}/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(`${apiEndPoint}/${id}`, config);
         console.log(response.data);
         set((state) => {
           state.currentCategory = response.data;
@@ -35,21 +38,24 @@ export const useCategoryStore = create(
 
       addCategoryAPI: async (payload) => {
         console.log(payload);
-        // const response = await axios.post(
-        //   "http://localhost:3030/categories",
-        //   payload
-        // );
-        const response = await axios.post(apiEndPoint, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.post(apiEndPoint, payload, config);
         set((state) => {
           state.categories = [...state.categories, response.data];
         });
       },
 
       deleteCategoryAPI: async (id) => {
-        // const response = await axios.delete(
-        //   `http://localhost:3030/categories/${id}`
-        // );
-        const response = await axios.delete(`${apiEndPoint}/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.delete(`${apiEndPoint}/${id}`, config);
         set((state) => {
           state.categories = state.categories.filter(
             (category) => category._id != response.data._id
@@ -60,11 +66,16 @@ export const useCategoryStore = create(
       patchCategoryAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
-        // const response = await axios.patch(
-        //   `http://localhost:3030/categories/${id}`,
-        //   payload
-        // );
-        const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.patch(
+          `${apiEndPoint}/${id}`,
+          payload,
+          config
+        );
         set((state) => {
           const index = state.categories.findIndex(
             (c) => c._id === response.data._id
