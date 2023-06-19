@@ -24,8 +24,10 @@ const Shops = () => {
   const errorMessageFromShop = useShopStore((state) => state.error);
   const errorMessageFromUser = useUserStore((state) => state.error);
   console.log(shops);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+
   useEffect(() => {
-    callgetAllShops();
+    callgetAllShops(user._id);
   }, []);
 
   const filteredShops = shops.filter((shop) => {
@@ -35,7 +37,6 @@ const Shops = () => {
       return shop;
     }
   });
-
 
   return (
     <>

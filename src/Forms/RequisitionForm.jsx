@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { useRequisitionStore } from "../stores/requisitionStore";
-import { SlClose } from "react-icons/sl";
 
 const RequisitionForm = (props) => {
   const { showModal, setShowModal, requisitionDetails } = props;

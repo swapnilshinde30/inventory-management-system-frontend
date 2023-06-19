@@ -34,16 +34,16 @@ const ResetPasswordForm = (props) => {
                               for="email"
                               className="block font-base -ml-[245px] mb-2 dark:text-white"
                             >
-                              Email address
+                              OTP
                             </label>
                             <div className="relative">
                               <input
-                                type="email"
-                                id="email"
-                                name="email"
+                                type="number"
+                                id="otp"
+                                name="otp"
                                 className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                 required
-                                aria-describedby="email-error"
+                                aria-describedby="otp-error"
                               />
                             </div>
                             <label

@@ -15,7 +15,7 @@ const Users = () => {
   const getAllUsers = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
   const calldeleteUserAPI = useUserStore((state) => state.deleteUserAPI);
-
+  const callEditUserAPI = useUserStore((state) => state.editUserAPI);
   useEffect(() => {
     getAllUsers();
   }, [users.firstName]);
@@ -39,6 +39,7 @@ const Users = () => {
     { id: 3, name: "Customer", role: "customer" },
   ];
   let a = Math.random();
+  let data = {};
   return (
     <>
       {/* <NavBar /> */}
@@ -109,7 +110,13 @@ const Users = () => {
                 key={user._id}
               >
                 <div className="ml-2 mt-3 w-10 ...">
-                  <AiOutlineUser className="h-5 w-5 text-neutral-500" />
+                  <AiOutlineUser
+                    className={
+                      user.isActive === true
+                        ? "h-5 w-5 text-neutral-500"
+                        : "h-5 w-5 text-red-500"
+                    }
+                  />
                 </div>
                 <div className="mt-3 w-[220px] text-neutral-800">
                   <span className="text-neutral-500">Name: </span>
@@ -147,7 +154,11 @@ const Users = () => {
                   <button
                     type="button"
                     className="mt-2 w-8 bg-white rounded-full h-8 hover:bg-teal-500"
-                    onClick={() => calldeleteUserAPI(user._id)}
+                    onClick={() => (
+                      (data._id = user._id),
+                      (data.isActive = user.isActive),
+                      callEditUserAPI(data)
+                    )}
                   >
                     <AiOutlineDelete className="ml-[6px] h-5 w-5 text-teal-500 hover:scale-110 transition-all hover:text-white" />
                   </button>

@@ -7,7 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useUserStore } from "../stores/userStore";
 import { useParams } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const schema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
@@ -31,6 +32,8 @@ const EditUserForm = (props) => {
   const callGetUserAPI = useUserStore((state) => state.getUserAPI);
   const callAddUserAPI = useUserStore((state) => state.addUserAPI);
   const callEditUserAPI = useUserStore((state) => state.editUserAPI);
+
+  const userErrorMessage = useUserStore((state) => state.error);
 
   const {
     register,
@@ -73,6 +76,7 @@ const EditUserForm = (props) => {
 
   return (
     <>
+      {userErrorMessage && toast.error(userErrorMessage)}
       {showModal ? (
         <div
           className="relative z-10"
@@ -81,7 +85,7 @@ const EditUserForm = (props) => {
           aria-modal="true"
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
-
+          <ToastContainer />
           <div className="fixed inset-0 z-10 overflow-y-auto">
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-l transition-all sm:my-8 sm:w-full sm:max-w-lg">
