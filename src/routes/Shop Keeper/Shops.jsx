@@ -10,6 +10,9 @@ import React from "react";
 import NavBar from "../navbar";
 import { useShopStore } from "../../stores/shopStore";
 import ShopForm from "../../Forms/ShopForm";
+import { useUserStore } from "../../stores/userStore";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Shops = () => {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +21,8 @@ const Shops = () => {
   const callgetAllShops = useShopStore((state) => state.getAllShopsAPI);
   const shops = useShopStore((state) => state.shops);
   const callDeleteShopAPI = useShopStore((state) => state.deleteShopAPI);
+  const errorMessageFromShop = useShopStore((state) => state.error);
+  const errorMessageFromUser = useUserStore((state) => state.error);
   console.log(shops);
   useEffect(() => {
     callgetAllShops();
@@ -31,11 +36,13 @@ const Shops = () => {
     }
   });
 
+
   return (
     <>
       {/* <NavBar /> */}
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
+          <ToastContainer />
           {/* 1 */}
         </div>
 
@@ -87,6 +94,28 @@ const Shops = () => {
         </div>
         <div>
           <div className="">
+            {/* {errorMessageFromShop && (
+              <p className="mr-10 text-center text-red-500">
+                {errorMessageFromShop}
+              </p>
+            )}
+            {errorMessageFromUser && (
+              <p className="mr-10 text-center text-red-500">
+                {errorMessageFromUser}
+              </p>
+            )} */}
+            {errorMessageFromShop &&
+              toast.error(
+                <p className="mr-10 text-center text-red-500">
+                  {errorMessageFromShop}
+                </p>
+              )}
+            {/* {errorMessageFromUser &&
+              toast.error(
+                <p className="mr-10 text-center text-red-500">
+                  {errorMessageFromUser}
+                </p>
+              )} */}
             {filteredShops.map((shop) => (
               <div
                 key={shop._id}

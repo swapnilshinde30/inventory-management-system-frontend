@@ -2,20 +2,17 @@ import axios from "axios";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-
+const apiEndPoint = process.env.REACT_APP_API_URL;
 export const useRequisitionStore = create(
   devtools(
     immer((set) => ({
       requisitions: [],
       getAllRequisitionsAPI: async (user) => {
-        const requisitions = await axios.get(
-          "http://localhost:3030/requisitions",
-          {
-            params: { user },
-          }
-        );
-        const shops = await axios.get("http://localhost:3030/shops");
-        const shopItems = await axios.get("http://localhost:3030/shopitems");
+        const requisitions = await axios.get(`${apiEndPoint}/requisitions`, {
+          params: { user },
+        });
+        const shops = await axios.get(`${apiEndPoint}/shops`);
+        const shopItems = await axios.get(`${apiEndPoint}/shopitems`);
 
         const requisitionsDetails = requisitions.data.data.map(
           (requisition) => {
@@ -40,7 +37,7 @@ export const useRequisitionStore = create(
         console.log("in store");
         console.log(payload);
         const response = await axios.post(
-          "http://localhost:3030/requisitions",
+          `${apiEndPoint}/requisitions`,
           payload
         );
         console.log(response.data);
@@ -55,7 +52,7 @@ export const useRequisitionStore = create(
         console.log(id);
         delete payload.id;
         const response = await axios.patch(
-          `http://localhost:3030/requisitions/${id}`,
+          `${apiEndPoint}/requisitions/${id}`,
           payload
         );
         set((state) => {

@@ -234,8 +234,14 @@ const Order = () => {
                   <span className="text-neutral-400 text-lg">Status</span>
                 </div>
                 <div className="col-span-2">
-                  <span className="text-teal-400 text-lg font-bold">
-                    {requisitionGroup[0].status}
+                  <span
+                    className={
+                      requisitionGroup[0].status === "dispatched"
+                        ? "text-green-600 text-lg font-bold"
+                        : "text-teal-400 text-lg font-bold"
+                    }
+                  >
+                    {requisitionGroup[0].status.toUpperCase()}
                   </span>
                 </div>
               </div>

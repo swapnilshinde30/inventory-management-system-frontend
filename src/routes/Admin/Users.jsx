@@ -18,7 +18,7 @@ const Users = () => {
 
   useEffect(() => {
     getAllUsers();
-  }, []);
+  }, [users.firstName]);
 
   const handleSelect = (role) => {
     getAllUsers(role);

@@ -2,18 +2,18 @@ import axios from "axios";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-
+const apiEndPoint = process.env.REACT_APP_API_URL;
 export const useShopitemStore = create(
   devtools(
     immer((set) => ({
       shopitems: [],
       currentShopitem: {},
       getAllShopitemsAPI: async (shop) => {
-        const shopItems = await axios.get("http://localhost:3030/shopitems", {
+        const shopItems = await axios.get(`${apiEndPoint}/shopitems`, {
           params: { shop },
         });
-        const shops = await axios.get("http://localhost:3030/shops");
-        const items = await axios.get("http://localhost:3030/items");
+        const shops = await axios.get(`${apiEndPoint}/shops`);
+        const items = await axios.get(`${apiEndPoint}/items`);
         console.log(shopItems);
         const shopItemDetails = shopItems.data.data.map((si) => {
           let shop = shops.data.data.find((s) => s._id === si.shop);
@@ -38,11 +38,9 @@ export const useShopitemStore = create(
         // const response = await axios.get(
         //   `http://localhost:3030/shopitems/${id}`
         // );
-        const shopItem = await axios.get(
-          `http://localhost:3030/shopitems/${id}`
-        );
-        const shops = await axios.get("http://localhost:3030/shops");
-        const items = await axios.get("http://localhost:3030/items");
+        const shopItem = await axios.get(`${apiEndPoint}/shopitems/${id}`);
+        const shops = await axios.get(`${apiEndPoint}/shops`);
+        const items = await axios.get(`${apiEndPoint}/items`);
         let item = items.find((i) => i._id === shopItem.item);
         let shop = shops.find((s) => s._id === shopItem.shop);
         shopItem.shopId = shop.shopId;
@@ -58,10 +56,7 @@ export const useShopitemStore = create(
       },
 
       addShopitemAPI: async (payload) => {
-        const response = await axios.post(
-          "http://localhost:3030/shopitems",
-          payload
-        );
+        const response = await axios.post(`${apiEndPoint}/shopitems`, payload);
 
         console.log(response.data);
         let shop = response.data.shop;
@@ -69,11 +64,11 @@ export const useShopitemStore = create(
           state.shopitems = [...state.shopitems, response.data];
         });
 
-        const shopItems = await axios.get("http://localhost:3030/shopitems", {
+        const shopItems = await axios.get(`${apiEndPoint}/shopitems`, {
           params: { shop },
         });
-        const shops = await axios.get("http://localhost:3030/shops");
-        const items = await axios.get("http://localhost:3030/items");
+        const shops = await axios.get(`${apiEndPoint}/shops`);
+        const items = await axios.get(`${apiEndPoint}/items`);
         console.log(shopItems);
         const shopItemDetails = shopItems.data.data.map((si) => {
           let shop = shops.data.data.find((s) => s._id === si.shop);
@@ -93,9 +88,7 @@ export const useShopitemStore = create(
       },
 
       deleteShopitemAPI: async (id) => {
-        const response = await axios.delete(
-          `http://localhost:3030/shopitems/${id}`
-        );
+        const response = await axios.delete(`${apiEndPoint}/shopitems/${id}`);
         set((state) => {
           state.shopitems = state.shopitems.filter(
             (shopitem) => shopitem._id !== response.data._id
@@ -107,7 +100,7 @@ export const useShopitemStore = create(
         const id = payload._id;
         delete payload._id;
         const response = await axios.patch(
-          `http://localhost:3030/shopitems/${id}`,
+          `${apiEndPoint}/shopitems/${id}`,
           payload
         );
         let shop = response.data.shop;
@@ -117,11 +110,11 @@ export const useShopitemStore = create(
           );
           state.shopitems[index] = response.data;
         });
-        const shopItems = await axios.get("http://localhost:3030/shopitems", {
+        const shopItems = await axios.get(`${apiEndPoint}/shopitems`, {
           params: { shop },
         });
-        const shops = await axios.get("http://localhost:3030/shops");
-        const items = await axios.get("http://localhost:3030/items");
+        const shops = await axios.get(`${apiEndPoint}/shops`);
+        const items = await axios.get(`${apiEndPoint}/items`);
         console.log(shopItems);
         const shopItemDetails = shopItems.data.data.map((si) => {
           let shop = shops.data.data.find((s) => s._id === si.shop);

@@ -4,35 +4,46 @@ import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 //const http = axios.create({ baseURL: "http://localhost:3030/" });
-
+const apiEndPoint = process.env.REACT_APP_API_URL + "users";
 export const useUserStore = create(
   devtools(
     immer((set) => ({
       users: [],
       currentUser: {},
+      error: "",
+
       getAllUsersAPI: async (role) => {
-        const response = await axios.get("http://localhost:3030/users", {
-          params: { role },
-        });
-        set((state) => {
-          state.users = response.data.data;
-        });
+        try {
+          const response = await axios.get(apiEndPoint, {
+            params: { role },
+          });
+          set((state) => {
+            state.users = response.data.data;
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
       getUserAPI: async (id) => {
         console.log(id);
-        const response = await axios.get(`http://localhost:3030/users/${id}`);
+        try {
+          const response = await axios.get(`${apiEndPoint}/${id}`);
 
-        set((state) => {
-          state.currentUser = response.data;
-          console.log(state.currentUser);
-        });
+          set((state) => {
+            state.currentUser = response.data;
+            console.log(state.currentUser);
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
       addUserAPI: async (payload) => {
         console.log(payload);
-        const response = await axios.post(
-          "http://localhost:3030/users",
-          payload
-        );
+        const response = await axios.post(apiEndPoint, payload);
 
         set((state) => {
           state.users = [...state.users, response.data];
@@ -40,9 +51,7 @@ export const useUserStore = create(
       },
 
       deleteUserAPI: async (id) => {
-        const response = await axios.delete(
-          `http://localhost:3030/users/${id}`
-        );
+        const response = await axios.delete(`${apiEndPoint}/${id}`);
         set((state) => {
           state.users = state.users.filter(
             (user) => user._id !== response.data._id
@@ -53,10 +62,7 @@ export const useUserStore = create(
         const id = payload._id;
         delete payload._id;
         console.log(payload);
-        const response = await axios.patch(
-          `http://localhost:3030/users/${id}`,
-          payload
-        );
+        const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
         set((state) => {
           const index = state.users.findIndex(
             (c) => c._id === response.data._id

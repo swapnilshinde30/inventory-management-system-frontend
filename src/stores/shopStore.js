@@ -4,66 +4,98 @@ import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 // const http = axios.create({ baseURL: "http://localhost:3030" });
-
+const apiEndPoint = process.env.REACT_APP_API_URL + "shops";
 export const useShopStore = create(
   devtools(
     immer((set) => ({
       shops: [],
-
+      error: "",
       currentShop: {},
 
       getAllShopsAPI: async (owner, category) => {
         const data = { owner, category };
-
-        const response = await axios.get("http://localhost:3030/shops", {
-          params: data,
-        });
-        console.log(data);
-        set((state) => {
-          state.shops = response.data.data;
-        });
+        try {
+          const response = await axios.get(apiEndPoint, {
+            params: data,
+          });
+          console.log(data);
+          set((state) => {
+            state.error = "";
+            state.shops = response.data.data;
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+            console.log(err.response.data.message);
+          });
+        }
       },
+
       getShopAPI: async (id) => {
         console.log(id);
-        const response = await axios.get(`http://localhost:3030/shops/${id}`);
-        console.log(response.data);
-        set((state) => {
-          state.currentShop = response.data;
-        });
+        try {
+          const response = await axios.get(`${apiEndPoint}/${id}`);
+          console.log(response.data);
+          set((state) => {
+            state.error = "";
+            state.currentShop = response.data;
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+            console.log(err.response.data.message);
+          });
+        }
       },
       addShopAPI: async (payload) => {
-        const response = await axios.post(
-          "http://localhost:3030/shops",
-          payload
-        );
-        set((state) => {
-          state.shops = [...state.shops, response.data];
-        });
+        try {
+          const response = await axios.post(apiEndPoint, payload);
+          set((state) => {
+            state.error = "";
+            state.shops = [...state.shops, response.data];
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+            console.log(err.response.data.message);
+          });
+        }
       },
 
       deleteShopAPI: async (id) => {
-        const response = await axios.delete(
-          `http://localhost:3030/shops/${id}`
-        );
-        set((state) => {
-          state.shops = state.shops.filter(
-            (shop) => shop._id !== response.data._id
-          );
-        });
+        try {
+          const response = await axios.delete(`${apiEndPoint}/${id}`);
+          set((state) => {
+            state.error = "";
+            state.shops = state.shops.filter(
+              (shop) => shop._id !== response.data._id
+            );
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+            console.log(err.response.data.message);
+          });
+        }
       },
       editShopAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
-        const response = await axios.patch(
-          `http://localhost:3030/shops/${id}`,
-          payload
-        );
-        set((state) => {
-          const index = state.shops.findIndex(
-            (c) => c._id === response.data._id
-          );
-          state.shops[index] = response.data;
-        });
+        try {
+          const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+          set((state) => {
+            state.error = "";
+            const index = state.shops.findIndex(
+              (c) => c._id === response.data._id
+            );
+            state.shops[index] = response.data;
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+            console.log(err.response.data.message);
+          });
+        }
       },
     }))
   )
