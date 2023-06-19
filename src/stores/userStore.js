@@ -3,7 +3,6 @@ import axios from "axios";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-//const http = axios.create({ baseURL: "http://localhost:3030/" });
 const apiEndPoint = process.env.REACT_APP_API_URL + "users";
 export const useUserStore = create(
   devtools(

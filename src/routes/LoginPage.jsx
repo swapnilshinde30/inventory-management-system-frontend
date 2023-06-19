@@ -10,8 +10,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import SendOTPForm from "../Forms/ForgotPassword";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+
 const schema = yup.object().shape({
   userName: yup.string().required(),
   password: yup.string().required(),
@@ -38,11 +37,7 @@ function LoginPage() {
   const onSubmitHandler = async (data) => {
     data.strategy = "local";
     console.log(user);
-    // try {
     await callloginUserAPI(data);
-    // } catch (err) {
-    //   toast.error("Invalid Login..");
-    // }
   };
   useEffect(() => {
     console.log(user);
@@ -58,12 +53,10 @@ function LoginPage() {
       navigate("/shopsForCustomer");
     }
   }, [user, errorMessage]);
-  // }, [user?.role]);
 
   return (
     <>
       <div>
-        {/* <ToastContainer /> */}
         <section className="gradient-form bg-gradient-to-r from-emerald-400 to-teal-600 h-full">
           <div className="flex items-center justify-center ">
             <div
@@ -75,24 +68,11 @@ function LoginPage() {
                 backgroundRepeat: "no-repeat",
               }}
             >
-              <div className="flex flex-row-reverse space-x-4 space-x-reverse mr-9 mt-5">
-                {/* <div className="italic text-sm font-semibold text-cyan-700">
-              <a href="#!">LOGIN</a>
-            </div>
-            <div className="italic text-sm">
-              <a href="#!">ABOUT US</a>
-            </div> */}
-              </div>
+              <div className="flex flex-row-reverse space-x-4 space-x-reverse mr-9 mt-5"></div>
               <div className="relative">
                 <div className="absolute top-[325px] left-[400px]">
                   <div className="form w-[240px] h-56 bg-white">
-                    {/* {errorMessage && (
-                      <p className="mr-10 text-center text-red-500">
-                        {errorMessage}
-                      </p>
-                    )} */}
                     <form onSubmit={handleSubmit(onSubmitHandler)}>
-                      {/* <!-- Email input --> */}
                       <div className="form-outline mb-5 ">
                         <input
                           type="text"
@@ -104,7 +84,6 @@ function LoginPage() {
                         <AiOutlineUser className="-mt-6 ml-3" />
                       </div>
 
-                      {/* <!-- Password input --> */}
                       <div className="form-outline mb-5">
                         <input
                           type="password"
@@ -115,7 +94,6 @@ function LoginPage() {
                         />
                         <FiLock className="-mt-6 ml-3" />
                       </div>
-                      {/* <!-- Submit button --> */}
 
                       <button
                         type="submit"
@@ -125,12 +103,7 @@ function LoginPage() {
                       </button>
 
                       <div className="ml-14 mb-8 text-sm text-blue-600">
-                        <NavLink
-                          to={"/register"}
-                          // onClick={() => setShowModal(true)}
-                        >
-                          Create Account
-                        </NavLink>
+                        <NavLink to={"/register"}>Create Account</NavLink>
                       </div>
 
                       <div className="ml-14 text-xs  text-blue-600">

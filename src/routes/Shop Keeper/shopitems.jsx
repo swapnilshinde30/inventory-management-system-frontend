@@ -1,9 +1,7 @@
-// import { SearchIcon } from "@heroicons/react/24/outline";
 
 import { useEffect, useState } from "react";
 import ListGroup from "../common/listgroup";
 import React from "react";
-import NavBar from "../navbar";
 import { useShopitemStore } from "../../stores/shopitemStore";
 import { Link, NavLink } from "react-router-dom";
 import ShopItemsForm from "../../Forms/ShopItemsForm";
@@ -14,10 +12,6 @@ import { useShopStore } from "../../stores/shopStore";
 const ShopItems = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
-  // const [shopName, setShopName] = useState("");
-  // const callGetAllShopItemsAPI = useShopitemStore(
-  //   (state) => state.getAllShopItemsOfOwner
-  // );
 
   const callGetAllShopItemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
@@ -52,9 +46,7 @@ const ShopItems = () => {
   useEffect(() => {
     callGetAllShopItemsAPI();
     callGetAllItemClassesAPI();
-    // callGetAllItemsAPI();
     callGetAllShopsAPI(user._id);
-    //console.log(shopitems.length);
   }, [callGetAllShopItemsAPI, shopitems._id]);
 
   let count = 0;
@@ -69,25 +61,19 @@ const ShopItems = () => {
     count++;
   });
 
-  // console.log(arrayitem);
-
   const handleSelectShop = (name) => {
-    //  setShopName(name);
     callGetAllShopItemsAPI(name);
     console.log(name);
   };
 
   return (
     <>
-      {/* <NavBar /> */}
-
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
         </div>
 
         <div className="flex-1 h-16 border-b border-slate-200">
-          {/* Search box */}
           <div className="flex flex-row content-between">
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
@@ -134,11 +120,7 @@ const ShopItems = () => {
             <h4 className="text-center text-teal-700 mb-3 font-semibold">
               Shops
             </h4>
-            <ListGroup
-              items={[...shops]}
-              onSelectItem={handleSelectShop}
-              //  selectedItem={shopName}
-            />
+            <ListGroup items={[...shops]} onSelectItem={handleSelectShop} />
           </div>
         </div>
         <div>

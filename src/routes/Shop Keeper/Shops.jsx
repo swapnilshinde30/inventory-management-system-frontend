@@ -1,18 +1,12 @@
-// import { SearchIcon } from "@heroicons/react/24/outline";
-import { Link, NavLink, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BsShop } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useEffect, useState } from "react";
-
 import React from "react";
-
-import NavBar from "../navbar";
 import { useShopStore } from "../../stores/shopStore";
 import ShopForm from "../../Forms/ShopForm";
 import { useUserStore } from "../../stores/userStore";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 
 const Shops = () => {
   const [showModal, setShowModal] = useState(false);
@@ -78,7 +72,6 @@ const Shops = () => {
             </div>
             <div className="flex-1 mt-5">
               <button
-                // to={"/shops/new"}
                 className="ml-10  md:ml-96  rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
                 onClick={() => setShowModal(true)}
               >
@@ -95,28 +88,10 @@ const Shops = () => {
         </div>
         <div>
           <div className="">
-            {/* {errorMessageFromShop && (
-              <p className="mr-10 text-center text-red-500">
-                {errorMessageFromShop}
-              </p>
-            )}
-            {errorMessageFromUser && (
-              <p className="mr-10 text-center text-red-500">
-                {errorMessageFromUser}
-              </p>
-            )} */}
-            {/* {errorMessageFromShop && */}
-            {/* toast.error( */}
             <p className="mr-10 text-center text-red-500">
               {errorMessageFromShop}
             </p>
-            {/* )} */}
-            {/* {errorMessageFromUser &&
-              toast.error(
-                <p className="mr-10 text-center text-red-500">
-                  {errorMessageFromUser}
-                </p>
-              )} */}
+
             {filteredShops.map((shop) => (
               <div
                 key={shop._id}
@@ -139,7 +114,6 @@ const Shops = () => {
                 </div>
 
                 <button
-                  // to={"/shops/new"}
                   className="mt-2 w-8 ml-[80px] mr-2 bg-white rounded-full h-8 hover:bg-teal-500"
                   onClick={() => {
                     setShowModal(true);

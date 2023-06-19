@@ -36,7 +36,6 @@ export default function NavBar() {
   const [showModalp, setShowModalp] = useState(false);
   const [navLinkNames, setNavLinkNames] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
-  // console.log(user);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -47,7 +46,6 @@ export default function NavBar() {
   };
 
   useEffect(() => {
-    // console.log(user);
     if (user === null) {
       navigate("/login");
       return;
@@ -66,15 +64,12 @@ export default function NavBar() {
 
   return (
     <>
-      {/* <p>Navbar</p> */}
-      {/* <!-- Main navigation container --> */}
       {sessionStorage.getItem("token") ? (
         <nav
           className="flex-1 h-14 w-full items-center justify-between py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4"
           data-te-navbar-ref
         >
           <div className="flex w-full flex-wrap items-center justify-between px-3">
-            {/* <!-- Hamburger button for mobile view --> */}
             <button
               className="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
               type="button"
@@ -84,7 +79,6 @@ export default function NavBar() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              {/* <!-- Hamburger icon --> */}
               <span className="[&>svg]:w-7">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,13 +95,11 @@ export default function NavBar() {
               </span>
             </button>
 
-            {/* <!-- Collapsible navigation container --> */}
             <div
               className="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
               id="navbarSupportedContent1"
               data-te-collapse-item
             >
-              {/* <!-- Logo --> */}
               <div className="w-56 ">
                 <a
                   className="mb-4 mr-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
@@ -123,7 +115,6 @@ export default function NavBar() {
                 </a>
               </div>
 
-              {/* <!-- Left navigation links --> */}
               <ul
                 className="list-style-none mr-auto flex flex-col pl-0 lg:flex-row "
                 data-te-navbar-nav-ref
@@ -135,7 +126,6 @@ export default function NavBar() {
                     className="mb-4 lg:mb-0 lg:pr-2"
                     data-te-nav-item-ref
                   >
-                    {/* <!-- Dashboard link --> */}
                     <NavLink
                       to={x.pageLink}
                       aria-current="page"
@@ -161,12 +151,8 @@ export default function NavBar() {
                 role="button"
                 data-te-dropdown-toggle-ref
                 aria-expanded="false"
-                // onClick={handleLogout}
-                // onClick={() => setShowModal(true)}
                 onFocus={focusHandler}
-                // onBlur={blurHandler}
               >
-                {/* <!-- User avatar --> */}
                 <div className="flex flex-col items-end">
                   <span className="pr-2 flex-1 text-sm">
                     {user.firstName + " " + user.lastName}
@@ -191,7 +177,6 @@ export default function NavBar() {
                         "default" +
                         ".jpg"
                   }
-                  // src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
                   className="rounded-full"
                   style={{ height: "40px", width: "40px" }}
                   alt=""
@@ -210,8 +195,6 @@ export default function NavBar() {
                     tabindex="-1"
                   >
                     <div class="py-1" role="none">
-                      {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-
                       <div className="flex-col">
                         <div className="flex flex-row">
                           {" "}
@@ -232,7 +215,6 @@ export default function NavBar() {
                                   "default" +
                                   ".jpg"
                             }
-                            // src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
                             className="border-double border-4 border-teal-500 rounded-full mx-auto mt-2"
                             style={{ height: "65px", width: "65px" }}
                             alt=""
@@ -285,18 +267,6 @@ export default function NavBar() {
                           </div>
                         </div>
                       </div>
-
-                      {/* <form method="POST" action="#" role="none">
-                        <button
-                          type="submit"
-                          class="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                          role="menuitem"
-                          tabindex="-1"
-                          id="menu-item-3"
-                        >
-                          Sign out
-                        </button>
-                      </form> */}
                     </div>
                   </div>
                 </div>
@@ -309,181 +279,3 @@ export default function NavBar() {
     </>
   );
 }
-
-{
-  /* <svg
-              className="absolute w-5 h-5 mt-8 stroke-slate-300"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
-            <input
-              className=" ml-12 w-80 rounded-full border border-solid border-slate-400 bg-transparent hover:border-teal-600 focus:outline-none placeholder:text-gray-500 pl-8"
-              type="search"
-              placeholder="Search"
-            /> */
-}
-
-// <ul
-// className="list-style-none mr-auto flex flex-col pl-0 lg:flex-row "
-// data-te-navbar-nav-ref
-// >
-// <li
-//   id="one"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   {/* <!-- Dashboard link --> */}
-//   <Link
-//     to="/categories"
-//     aria-current="page"
-//     className=" nav-link text-neutral-500 hover:text-neutral-700 hover:bottom-[5px]  focus:border-b-2 border-teal-500 pb-2  focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-//     href="#"
-//     data-te-nav-link-ref
-//   >
-//     CATEGORIES
-//   </Link>
-// </li>
-// {/* <!-- Team link --> */}
-// <li
-//   id="two"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/itemclasses"
-//     aria-current="page"
-//     className="text-neutral-500  focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     href="#"
-//     data-te-nav-link-ref
-//   >
-//     ITEM CLASSES
-//   </Link>
-// </li>
-// {/* <!-- Projects link --> */}
-// <li
-//   id="three"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/items"
-//     aria-current="page"
-//     className=" text-neutral-500 focus:border-b-2 border-teal-500 pb-2 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     href="#"
-//     data-te-nav-link-ref
-//   >
-//     ITEMS
-//   </Link>
-// </li>
-
-// <li
-//   id="four"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/users"
-//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     data-te-nav-link-ref
-//   >
-//     USERS
-//   </Link>
-// </li>
-// {/* shop Owner */}
-
-// <li
-//   id="four"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/shopitems"
-//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     data-te-nav-link-ref
-//   >
-//     SHOP ITEMS
-//   </Link>
-// </li>
-// {/* <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-//   <Link
-//     to="/requisitions"
-//     className="focus:border-b-2 border-teal-500 pb-3 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//   ></Link>
-// </li> */}
-
-// <li
-//   id="four"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/requisitions"
-//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     data-te-nav-link-ref
-//   >
-//     REQUISITION
-//   </Link>
-// </li>
-// <li
-//   id="four"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/shops"
-//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     data-te-nav-link-ref
-//   >
-//     SHOPS
-//   </Link>
-// </li>
-// <li
-//   id="four"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/shopsForCustomer"
-//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     data-te-nav-link-ref
-//   >
-//     CSHOPS
-//   </Link>
-// </li>
-// <li
-//   id="four"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/cart"
-//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     data-te-nav-link-ref
-//   >
-//     CART
-//   </Link>
-// </li>
-// <li
-//   id="four"
-//   className="mb-4 lg:mb-0 lg:pr-2"
-//   data-te-nav-item-ref
-// >
-//   <Link
-//     to="/orders"
-//     className="focus:border-b-2 border-teal-500 pb-2 text-neutral-500 hover:text-neutral-700 focus:text-teal-500 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-//     data-te-nav-link-ref
-//   >
-//     ORDERS
-//   </Link>
-// </li>
-// </ul>
