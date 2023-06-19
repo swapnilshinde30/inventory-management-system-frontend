@@ -10,14 +10,24 @@ export const useItemClassStore = create(
       itemClasses: [],
       currentItemclass: {},
       getAllItemClassesAPI: async () => {
-        const response = await axios.get(`${apiEndPoint}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(`${apiEndPoint}`, config);
         set((state) => {
           state.itemClasses = response.data.data;
         });
       },
       getItemClassAPI: async (id) => {
         console.log(id);
-        const response = await axios.get(`${apiEndPoint}/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(`${apiEndPoint}/${id}`, config);
 
         set((state) => {
           state.currentItemclass = response.data;
@@ -26,14 +36,24 @@ export const useItemClassStore = create(
       },
 
       addItemClassesAPI: async (payload) => {
-        const response = await axios.post(apiEndPoint, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.post(apiEndPoint, payload, config);
         set((state) => {
           state.itemClasses = [...state.itemClasses, response.data];
         });
       },
 
       deleteItemClassAPI: async (id) => {
-        const response = await axios.delete(`${apiEndPoint}/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.delete(`${apiEndPoint}/${id}`, config);
         set((state) => {
           state.itemClasses = state.itemClasses.filter(
             (itemClass) => itemClass._id != response.data._id
@@ -43,7 +63,16 @@ export const useItemClassStore = create(
       editItemClassAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
-        const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.patch(
+          `${apiEndPoint}/${id}`,
+          payload,
+          config
+        );
         set((state) => {
           const index = state.itemClasses.findIndex(
             (c) => c._id === response.data._id

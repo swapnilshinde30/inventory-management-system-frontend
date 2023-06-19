@@ -11,14 +11,24 @@ export const useItemStore = create(
       items: [],
       currentItem: {},
       getAllItemsAPI: async () => {
-        const response = await axios.get(apiEndPoint);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(apiEndPoint, config);
         set((state) => {
           state.items = response.data.data;
           console.log(state.items);
         });
       },
       getItemAPI: async (id) => {
-        const response = await axios.get(`${apiEndPoint}/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(`${apiEndPoint}/${id}`, config);
         console.log(response.data);
         set((state) => {
           state.currentItem = response.data;
@@ -28,14 +38,24 @@ export const useItemStore = create(
       addItemAPI: async (payload) => {
         console.log("in store");
         console.log(payload);
-        const response = await axios.post(apiEndPoint, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.post(apiEndPoint, payload, config);
         set((state) => {
           state.items = [...state.items, response.data];
         });
       },
 
       deleteItemAPI: async (id) => {
-        const response = await axios.delete(`${apiEndPoint}/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.delete(`${apiEndPoint}/${id}`, config);
         set((state) => {
           state.items = state.items.filter(
             (item) => item._id != response.data._id
@@ -45,7 +65,16 @@ export const useItemStore = create(
       editItemAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
-        const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.patch(
+          `${apiEndPoint}/${id}`,
+          payload,
+          config
+        );
         set((state) => {
           const index = state.items.findIndex(
             (c) => c._id === response.data._id
