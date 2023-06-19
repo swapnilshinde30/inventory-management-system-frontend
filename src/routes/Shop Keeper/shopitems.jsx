@@ -55,7 +55,7 @@ const ShopItems = () => {
     // callGetAllItemsAPI();
     callGetAllShopsAPI(user._id);
     //console.log(shopitems.length);
-  }, [callGetAllShopItemsAPI, shopitems]);
+  }, [callGetAllShopItemsAPI, shopitems._id]);
 
   let count = 0;
 

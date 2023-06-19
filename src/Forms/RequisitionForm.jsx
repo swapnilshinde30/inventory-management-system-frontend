@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { SlClose } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { useRequisitionStore } from "../stores/requisitionStore";
 
@@ -123,11 +124,19 @@ const RequisitionForm = (props) => {
                     <div className="flex-col border border-b-black">
                       <img
                         src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
-                        className="border-double border-4 border-teal-500 rounded-full mx-auto mt-2"
+                        className="border-double border-4 border-teal-500 rounded-full mx-auto mt-8"
                         style={{ height: "65px", width: "65px" }}
                         alt=""
                         loading="lazy"
-                      />
+                      />{" "}
+                      <div className="absolute pb-2 right-5 top-5">
+                        <SlClose
+                          className="w-7 h-7 text-teal-500 cursor-pointer"
+                          onClick={() => {
+                            setShowModal(false);
+                          }}
+                        />
+                      </div>
                       <div id="details" className="text-center mb-2">
                         {`${requisitionDetails.user.firstName} ${requisitionDetails.user.lastName} ${requisitionDetails.user.phone}`}
                       </div>

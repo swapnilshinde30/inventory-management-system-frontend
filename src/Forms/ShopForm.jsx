@@ -37,6 +37,7 @@ const ShopForm = (props) => {
   const callAddShopAPI = useShopStore((state) => state.addShopAPI);
   const callEditShopAPI = useShopStore((state) => state.editShopAPI);
   const shop = useShopStore((state) => state.currentShop);
+  const errorMessage = useShopStore((state) => state.error);
 
   const callgetAllCategoriesAPI = useCategoryStore(
     (state) => state.getAllCategoriesAPI
@@ -83,7 +84,7 @@ const ShopForm = (props) => {
     callgetAllUsersAPI();
     if (!shopId) return;
     callGetShopAPI(shopId);
-    // callgetAllUsersAPI("shopkeeper");
+    if (!shop._id) return;
     setValue("_id", shop._id);
     setValue("name", shop.name);
     setValue("shopId", shop.shopId);
@@ -97,7 +98,7 @@ const ShopForm = (props) => {
     // setValue("owner", shop.owner);
     setValue("contactPerson.name", shop.contactPerson["name"]);
     setValue("contactPerson.phone", shop.contactPerson["phone"]);
-  }, [shopId, shop.name]);
+  }, [shopId, shop?.name, errorMessage]);
 
   return (
     <>
@@ -302,6 +303,11 @@ const ShopForm = (props) => {
                     >
                       Add
                     </button>
+                    {errorMessage && (
+                      <p className="mr-10 text-center text-red-500">
+                        {errorMessage}
+                      </p>
+                    )}
                   </div>
                 </form>
               </div>

@@ -3,6 +3,7 @@ import { useLoginStore } from "../stores/loginStore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
+import EditUserForm from "../Forms/EditUserForm";
 const navLinkAdmin = [
   { id: 1, name: "CATEGORIES", pageLink: "/categories", role: "admin" },
   { id: 2, name: "ITEMCLASSES", pageLink: "/itemclasses", role: "admin" },
@@ -32,6 +33,7 @@ const NavLinksShopkeeper = [
 
 export default function NavBar() {
   const [showModal, setShowModal] = useState(false);
+  const [showModalp, setShowModalp] = useState(false);
   const [navLinkNames, setNavLinkNames] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
   // console.log(user);
@@ -56,10 +58,10 @@ export default function NavBar() {
   }, [user]);
 
   const focusHandler = () => {
-    setShowModal(true);
+    setShowModalp(true);
   };
   const blurHandler = () => {
-    setShowModal(false);
+    setShowModalp(false);
   };
 
   return (
@@ -173,7 +175,23 @@ export default function NavBar() {
                 </div>
 
                 <img
-                  src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
+                  src={
+                    user.firstName === "Sachin"
+                      ? process.env.PUBLIC_URL +
+                        "/images/users/" +
+                        "sachinimg1" +
+                        ".jpg"
+                      : user.firstName === "Swapnil"
+                      ? process.env.PUBLIC_URL +
+                        "/images/users/" +
+                        "swapnilimg" +
+                        ".jpg"
+                      : process.env.PUBLIC_URL +
+                        "/images/users/" +
+                        "default" +
+                        ".jpg"
+                  }
+                  // src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
                   className="rounded-full"
                   style={{ height: "40px", width: "40px" }}
                   alt=""
@@ -181,7 +199,7 @@ export default function NavBar() {
                 />
               </a>
             </div>
-            {showModal ? (
+            {showModalp ? (
               <>
                 <div class="relative inline-block text-left">
                   <div
@@ -198,7 +216,23 @@ export default function NavBar() {
                         <div className="flex flex-row">
                           {" "}
                           <img
-                            src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
+                            src={
+                              user.firstName === "Sachin"
+                                ? process.env.PUBLIC_URL +
+                                  "/images/users/" +
+                                  "sachinimg1" +
+                                  ".jpg"
+                                : user.firstName === "Swapnil"
+                                ? process.env.PUBLIC_URL +
+                                  "/images/users/" +
+                                  "swapnilimg" +
+                                  ".jpg"
+                                : process.env.PUBLIC_URL +
+                                  "/images/users/" +
+                                  "default" +
+                                  ".jpg"
+                            }
+                            // src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
                             className="border-double border-4 border-teal-500 rounded-full mx-auto mt-2"
                             style={{ height: "65px", width: "65px" }}
                             alt=""
@@ -207,7 +241,9 @@ export default function NavBar() {
                           <NavLink to={`/users/${user._id}`}>
                             <FiEdit
                               className="absolute right-5 top-5 text-lg cursor-pointer"
-                              onClick={() => setShowModal(false)}
+                              onClick={() => (
+                                setShowModalp(false), setShowModal(true)
+                              )}
                             />
                           </NavLink>
                         </div>
@@ -235,7 +271,7 @@ export default function NavBar() {
                             <button
                               type="button"
                               className="ml-[35px] rounded-lg text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
-                              onClick={() => setShowModal(false)}
+                              onClick={() => setShowModalp(false)}
                             >
                               Cancel
                             </button>
@@ -269,6 +305,7 @@ export default function NavBar() {
           </div>
         </nav>
       ) : null}
+      <EditUserForm showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 }

@@ -146,7 +146,11 @@ const ShopsForCustomer = () => {
             {/* You are shopping from <b> {`${shopName}`}</b>  */}
           </h4>
           {shopitems.length === 0 ? (
-            <h3 className="text-slate-600 mx-4 my-4">No items to show</h3>
+            <h3 className="text-slate-600 mx-4 my-4">
+              <div className="ml-10 p-[10px] bg-white font-serif">
+                <h1 className="text-blue-600 text-5xl">No items to show</h1>
+              </div>
+            </h3>
           ) : null}
 
           <div className="grid grid-cols-1 md:grid-cols-4 ">

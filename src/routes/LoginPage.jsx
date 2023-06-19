@@ -10,7 +10,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import SendOTPForm from "../Forms/ForgotPassword";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const schema = yup.object().shape({
   email: yup.string().required(),
   password: yup.string().required(),
@@ -23,6 +24,7 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -31,11 +33,19 @@ function LoginPage() {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   const token = sessionStorage.getItem("token");
+  const errorMessage = useLoginStore((state) => state.error);
 
   const onSubmitHandler = (data) => {
     data.strategy = "local";
     console.log(user);
-    callloginUserAPI(data);
+    callloginUserAPI(data)
+      .then((res) => {
+        toast.success("Logged In Success...");
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        toast.error("Invalid Login..");
+      });
     //navigate("/login");
   };
   useEffect(() => {
@@ -50,11 +60,12 @@ function LoginPage() {
       sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
       navigate("/shopsForCustomer");
     }
-  }, [user]);
+  }, [user, errorMessage]);
 
   return (
     <>
       <div>
+        <ToastContainer />
         <section className="gradient-form bg-gradient-to-r from-emerald-400 to-teal-600 h-full">
           <div className="flex items-center justify-center ">
             <div
@@ -77,6 +88,11 @@ function LoginPage() {
               <div className="relative">
                 <div className="absolute top-[325px] left-[400px]">
                   <div className="form w-[240px] h-56 bg-white">
+                    {/* {errorMessage && (
+                      <p className="mr-10 text-center text-red-500">
+                        {errorMessage}
+                      </p>
+                    )} */}
                     <form onSubmit={handleSubmit(onSubmitHandler)}>
                       {/* <!-- Email input --> */}
                       <div className="form-outline mb-5 ">
@@ -124,6 +140,10 @@ function LoginPage() {
                           Forget Password?
                         </button>
                       </div>
+
+                      <p className="mr-10 text-center text-red-500">
+                        {errorMessage}
+                      </p>
                     </form>
                   </div>
                 </div>

@@ -10,13 +10,13 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
+  firstName: yup.string().required("Please enter First Name"),
+  lastName: yup.string().required("Please enter Last Name"),
   email: yup.string().email().min(8).max(30).required(),
   phone: yup.string().min(10).max(10).required(),
-  userName: yup.string().required(),
+  userName: yup.string().required("Please enter User Name"),
   password: yup.string().min(8).required(),
-  role: yup.string().required(),
+  role: yup.string().required("Please select Role"),
 });
 const RegistrationForm = () => {
   const callAddUserAPI = useUserStore((state) => state.addUserAPI);
@@ -57,6 +57,7 @@ const RegistrationForm = () => {
                   {...register("firstName")}
                 />
               </div>
+              <p className="text-red-500">{errors.firstName?.message}</p>
             </div>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
@@ -73,6 +74,7 @@ const RegistrationForm = () => {
                   {...register("lastName")}
                 />
               </div>
+              <p className="text-red-500">{errors.lastName?.message}</p>
             </div>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
@@ -89,6 +91,7 @@ const RegistrationForm = () => {
                   {...register("email")}
                 />
               </div>
+              <p className="text-red-500">{errors.email?.message}</p>
             </div>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
@@ -105,6 +108,7 @@ const RegistrationForm = () => {
                   {...register("phone")}
                 />
               </div>
+              <p className="text-red-500">{errors.phone?.message}</p>
             </div>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
@@ -121,6 +125,7 @@ const RegistrationForm = () => {
                   {...register("userName")}
                 />
               </div>
+              <p className="text-red-500">{errors.userName?.message}</p>
             </div>
             <div className="px-3 mb-5">
               <label htmlFor="" className="text-base">
@@ -137,6 +142,7 @@ const RegistrationForm = () => {
                   {...register("password")}
                 />
               </div>
+              <p className="text-red-500">{errors.password?.message}</p>
             </div>
 
             <div className="flex justify-center">
@@ -180,6 +186,7 @@ const RegistrationForm = () => {
                 </label>
               </div>
             </div>
+            {/* <p className="text-red-500">{errors.role?.message}</p> */}
             {/* <div className="ml-2">
               <label htmlFor="role" className="text-base ml-1">
                 Select an Role
