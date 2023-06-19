@@ -2,7 +2,6 @@ import axios from "axios";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-//const http = axios.create({ baseURL: "http://localhost:3030" });
 const apiEndPoint = process.env.REACT_APP_API_URL + "itemclasses";
 export const useItemClassStore = create(
   devtools(
@@ -29,11 +28,10 @@ export const useItemClassStore = create(
         };
         const response = await axios.get(`${apiEndPoint}/${id}`, config);
 
-          set((state) => {
-            state.currentItemclass = response.data;
-            console.log(state.currentItemclass);
-          });
-        
+        set((state) => {
+          state.currentItemclass = response.data;
+          console.log(state.currentItemclass);
+        });
       },
 
       addItemClassesAPI: async (payload) => {

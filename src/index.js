@@ -24,17 +24,9 @@ import Error404 from "./routes/errorPage/404";
 import Error403 from "./routes/errorPage/403";
 import Error401 from "./routes/errorPage/401";
 import Error500 from "./routes/errorPage/500";
-import ItemClassesForm from "./Forms/ItemClassesForm";
-import CategoryForm from "./Forms/CategoryForm";
-import ItemsForm from "./Forms/ItemsForm";
-import EditUserForm from "./Forms/EditUserForm";
-import ShopItemsForm from "./Forms/ShopItemsForm";
-import CartForm from "./Forms/CartForm";
-import ShopForm from "./Forms/ShopForm";
+
 import RegisterForm from "./Forms/RegisterForm";
-import RequisitionForm from "./Forms/RequisitionForm";
 import RegistrationPage from "./routes/RegistrationPage";
-import SendOTPForm from "./Forms/ForgotPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -46,24 +38,18 @@ root.render(
             <Route index={true} element={<HomePage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegistrationPage />} />
-            {/* <Route path="register1" element={<Register1 />} /> */}
             <Route path="login/new" element={<RegisterForm />} />
             <Route path="/categories" element={<Categories />} />
-            {/* <Route path="/categories/new" element={<CategoryForm />} /> */}
             <Route path="/categories/:id" element={<Categories />} />
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<Users />} />
             <Route path="shops" element={<Shops />} />
-            {/* <Route path="/shops/new" element={<ShopForm />} /> */}
             <Route path="/shops/:id" element={<Shops />} />
             <Route path="/itemclasses" element={<ItemClasses />} />
-            {/* <Route path="/itemclasses/new" element={<ItemClassesForm />} /> */}
             <Route path="/itemclasses/:id" element={<ItemClasses />} />
             <Route path="items" element={<Items />} />
-            {/* <Route path="items/new" element={<ItemsForm />} /> */}
             <Route path="items/:id" element={<Items />} />
             <Route path="shopitems" element={<ShopItems />} />
-            {/* <Route path="/shopitems/new" element={<ShopItemsForm />} /> */}
             <Route path="shopitems/:id" element={<ShopItems />} />
             <Route path="/shopsForCustomer" element={<ShopsForCustomer />} />
             <Route

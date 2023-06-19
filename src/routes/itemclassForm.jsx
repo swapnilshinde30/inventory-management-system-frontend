@@ -32,7 +32,6 @@ const ItemclassForm = () => {
             </div>
             <div className="rounded bg-white max-w-md overflow-hidden shadow-xl p-5 border border-teal-500">
               <form>
-                {/* <input type="hidden" name="remember" value="True" /> */}
                 <div className="rounded-md shadow-sm -space-y-px">
                   <div className="grid gap-6">
                     <div className="col-span-12">
@@ -55,13 +54,7 @@ const ItemclassForm = () => {
                       >
                         Category Name
                       </label>
-                      {/* <input
-                        type="text"
-                        name="category_name"
-                        id="category_name"
-                        autocomplete="given-name"
-                        className="mt-2 p-2 border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 block w-full shadow-sm sm:text-sm  rounded-md"
-                      /> */}
+
                       <select className="mt-2 p-2  text-teal-700 font-semibold border border-teal-300 focus:  focus:ring-teal-500 focus:outline-none focus:border-teal-500 block w-full shadow-sm sm:text-sm  rounded-md">
                         {category.map((c) => (
                           <option

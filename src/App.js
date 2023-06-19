@@ -1,11 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import NavBar from "./routes/navbar";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import Categories from "./routes/Admin/categories";
-import HomePage from "./routes/HomePage";
-import LoginPage from "./routes/LoginPage";
-import { useLoginStore } from "./stores/loginStore";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 function App() {
@@ -16,7 +12,6 @@ function App() {
     if (user === null) {
       navigate("/");
     }
-    // console.log(user);
   }, [user]);
   return (
     <div>

@@ -186,26 +186,7 @@ const RegistrationForm = () => {
                 </label>
               </div>
             </div>
-            {/* <p className="text-red-500">{errors.role?.message}</p> */}
-            {/* <div className="ml-2">
-              <label htmlFor="role" className="text-base ml-1">
-                Select an Role
-              </label>
-              <select
-                id="role"
-                className="w-[415px] pl-2 py-1 rounded-lg border-2 border-gray-200 outline-none focus:border-emerald-500"
-                {...register("role")}
-              >
-                <option key={1} value={"Customer"}>
-                  {" "}
-                  Customer
-                </option>
-                <option key={2} value={"Shopkeeper"}>
-                  {" "}
-                  Shopkeeper
-                </option>
-              </select>
-            </div> */}
+
             <div className="flex -mx-3">
               <div className="w-full px-3 mb-1 mt-8">
                 <button

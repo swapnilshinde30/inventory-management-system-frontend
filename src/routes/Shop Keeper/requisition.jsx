@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import NavBar from "../navbar";
 import { useRequisitionStore } from "../../stores/requisitionStore";
-import { NavLink } from "react-router-dom";
 import RequisitionForm from "../../Forms/RequisitionForm";
 import { useShopStore } from "../../stores/shopStore";
 import { useUserStore } from "../../stores/userStore";
 const Requisitions = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedShop, setSelectedShop] = useState("");
-  //  const [searchField, setSearchField] = useState("");
   const [usersData, setUsersData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const getAllRequisitions = useRequisitionStore(
@@ -25,7 +22,6 @@ const Requisitions = () => {
 
   useEffect(() => {
     callGetAllShopsAPI(user._id);
-    //console.log(shopitems.length);
   }, []);
 
   useEffect(() => {
@@ -192,12 +188,7 @@ const Requisitions = () => {
                           </p>
                           <div>{requisition.orderDate}</div>
                         </div>
-                        {/* <div>
-                            <p className=" text-gray-400 dark:text-gray-500">
-                              Address
-                            </p>
-                            <div>{user.Address}</div>
-                          </div> */}
+
                         <div>
                           <p className=" text-gray-400 dark:text-gray-500">
                             Status
