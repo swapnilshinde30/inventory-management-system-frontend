@@ -100,7 +100,7 @@ const ShopForm = (props) => {
     // setValue("owner", shop.owner);
     setValue("contactPerson.name", shop.contactPerson["name"]);
     setValue("contactPerson.phone", shop.contactPerson["phone"]);
-  }, [shopId, shop?.name, errorMessage]);
+  }, [shopId, shop?.name]);
 
   return (
     <>
@@ -305,11 +305,11 @@ const ShopForm = (props) => {
                     >
                       Add
                     </button>
-                    {errorMessage && (
+                    {/* {errorMessage && (
                       <p className="mr-10 text-center text-red-500">
                         {errorMessage}
                       </p>
-                    )}
+                    )} */}
                   </div>
                 </form>
               </div>

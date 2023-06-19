@@ -14,11 +14,17 @@ export const useCategoryStore = create(
       getAllCategoriesAPI: async () => {
         // const response = await axios.get("http://localhost:3030/categories");
         console.log(apiEndPoint);
-        const response = await axios.get(`${apiEndPoint}`);
-        console.log(response);
-        set((state) => {
-          state.categories = response.data.data;
-        });
+        try {
+          const response = await axios.get(`${apiEndPoint}`);
+          console.log(response);
+          set((state) => {
+            state.categories = response.data.data;
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       getCategoryAPI: async (id) => {
@@ -26,11 +32,17 @@ export const useCategoryStore = create(
         // const response = await axios.get(
         //   `http://localhost:3030/categories/${id}`
         // );
-        const response = await axios.get(`${apiEndPoint}/${id}`);
-        console.log(response.data);
-        set((state) => {
-          state.currentCategory = response.data;
-        });
+        try {
+          const response = await axios.get(`${apiEndPoint}/${id}`);
+          console.log(response.data);
+          set((state) => {
+            state.currentCategory = response.data;
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       addCategoryAPI: async (payload) => {
@@ -39,22 +51,34 @@ export const useCategoryStore = create(
         //   "http://localhost:3030/categories",
         //   payload
         // );
-        const response = await axios.post(apiEndPoint, payload);
-        set((state) => {
-          state.categories = [...state.categories, response.data];
-        });
+        try {
+          const response = await axios.post(apiEndPoint, payload);
+          set((state) => {
+            state.categories = [...state.categories, response.data];
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       deleteCategoryAPI: async (id) => {
         // const response = await axios.delete(
         //   `http://localhost:3030/categories/${id}`
         // );
-        const response = await axios.delete(`${apiEndPoint}/${id}`);
-        set((state) => {
-          state.categories = state.categories.filter(
-            (category) => category._id != response.data._id
-          );
-        });
+        try {
+          const response = await axios.delete(`${apiEndPoint}/${id}`);
+          set((state) => {
+            state.categories = state.categories.filter(
+              (category) => category._id != response.data._id
+            );
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       patchCategoryAPI: async (payload) => {
@@ -64,13 +88,19 @@ export const useCategoryStore = create(
         //   `http://localhost:3030/categories/${id}`,
         //   payload
         // );
-        const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
-        set((state) => {
-          const index = state.categories.findIndex(
-            (c) => c._id === response.data._id
-          );
-          state.categories[index] = response.data;
-        });
+        try {
+          const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+          set((state) => {
+            const index = state.categories.findIndex(
+              (c) => c._id === response.data._id
+            );
+            state.categories[index] = response.data;
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
     }))
   )

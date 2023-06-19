@@ -16,6 +16,7 @@ const Items = () => {
   );
   const itemClasses = useItemClassStore((state) => state.itemClasses);
   const callDeleteItemAPI = useItemStore((state) => state.deleteItemAPI);
+  const errorMessage = useItemStore((state) => state.error);
   useEffect(() => {
     callGetAllItems();
     callGetAllItemClasses();
@@ -93,7 +94,7 @@ const Items = () => {
             <div className="flex-1">
               <button
                 // to={`/items/new`}
-                className="ml-10  md:ml-96 mt-5 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
+                className="ml-10  md:ml-96 mt-4 rounded-full bg-teal-500 px-6 pb-1.5 pt-1.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] hover:bg-teal-600"
                 onClick={() => setShowModal(true)}
               >
                 Add Item
@@ -126,6 +127,9 @@ const Items = () => {
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-6">
+                    <p className="absolute mr-10 text-center text-red-500">
+                      {errorMessage}
+                    </p>
                     {filteredItems.map((item) => {
                       if (itemClass._id === item.itemClass) {
                         return (

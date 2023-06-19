@@ -11,6 +11,7 @@ const Categories = () => {
     (state) => state.getAllCategoriesAPI
   );
   const categories = useCategoryStore((state) => state.categories);
+  const errorMessage = useCategoryStore((state) => state.error);
   const callDeleteCategoryAPI = useCategoryStore(
     (state) => state.deleteCategoryAPI
   );
@@ -40,6 +41,7 @@ const Categories = () => {
 
         <div className="flex-1 h-16 border-b border-slate-200">
           {/* Search box */}
+
           <div className="flex flex-row content-between">
             <div className="flex-1">
               <div className="pt-2 relative mx-auto text-gray-600">
@@ -88,6 +90,9 @@ const Categories = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
+            <p className="absolute mr-10 text-center text-red-500">
+              {errorMessage}
+            </p>
             {filteredCategories.map((category) => (
               <div
                 key={category._id}

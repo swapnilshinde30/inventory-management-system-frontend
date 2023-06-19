@@ -32,7 +32,7 @@ const ResetPasswordForm = (props) => {
                           <div>
                             <label
                               for="email"
-                              className="block font-base -ml-[245px] mb-2 dark:text-white"
+                              className="block font-base -ml-[310px] mb-2 dark:text-white"
                             >
                               OTP
                             </label>

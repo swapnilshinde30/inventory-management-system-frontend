@@ -10,48 +10,80 @@ export const useItemStore = create(
     immer((set) => ({
       items: [],
       currentItem: {},
+      error: ``,
       getAllItemsAPI: async () => {
-        const response = await axios.get(apiEndPoint);
-        set((state) => {
-          state.items = response.data.data;
-          console.log(state.items);
-        });
+        try {
+          const response = await axios.get(apiEndPoint);
+          set((state) => {
+            state.items = response.data.data;
+            console.log(state.items);
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+            //"Failed to fetch items."
+          });
+        }
       },
       getItemAPI: async (id) => {
-        const response = await axios.get(`${apiEndPoint}/${id}`);
-        console.log(response.data);
-        set((state) => {
-          state.currentItem = response.data;
-        });
+        try {
+          const response = await axios.get(`${apiEndPoint}/${id}`);
+          console.log(response.data);
+          set((state) => {
+            state.currentItem = response.data;
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       addItemAPI: async (payload) => {
         console.log("in store");
         console.log(payload);
-        const response = await axios.post(apiEndPoint, payload);
-        set((state) => {
-          state.items = [...state.items, response.data];
-        });
+        try {
+          const response = await axios.post(apiEndPoint, payload);
+          set((state) => {
+            state.items = [...state.items, response.data];
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       deleteItemAPI: async (id) => {
-        const response = await axios.delete(`${apiEndPoint}/${id}`);
-        set((state) => {
-          state.items = state.items.filter(
-            (item) => item._id != response.data._id
-          );
-        });
+        try {
+          const response = await axios.delete(`${apiEndPoint}/${id}`);
+          set((state) => {
+            state.items = state.items.filter(
+              (item) => item._id != response.data._id
+            );
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
       editItemAPI: async (payload) => {
-        const id = payload._id;
-        delete payload._id;
-        const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
-        set((state) => {
-          const index = state.items.findIndex(
-            (c) => c._id === response.data._id
-          );
-          state.items[index] = response.data;
-        });
+        try {
+          const id = payload._id;
+          delete payload._id;
+          const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+          set((state) => {
+            const index = state.items.findIndex(
+              (c) => c._id === response.data._id
+            );
+            state.items[index] = response.data;
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
     }))
   )

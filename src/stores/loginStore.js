@@ -14,17 +14,23 @@ export const useLoginStore = create(
         //   "http://localhost:3030/authentication",
         //   payload
         // );
-        const response = await axios.post(apiEndPoint, payload);
-        // console.log(response.data);
-        sessionStorage.setItem("token", response.data.accessToken);
-        sessionStorage.setItem("user", JSON.stringify(response.data.user));
-        //  console.log(sessionStorage.getItem("token"));
-        set((state) => {
-          state.error = "";
-          state.user = response.data.user;
-          state.token = response.data.accessToken;
-        });
-        return response;
+        try {
+          const response = await axios.post(apiEndPoint, payload);
+          // console.log(response.data);
+          sessionStorage.setItem("token", response.data.accessToken);
+          sessionStorage.setItem("user", JSON.stringify(response.data.user));
+          //  console.log(sessionStorage.getItem("token"));
+          set((state) => {
+            state.error = "";
+            state.user = response.data.user;
+            state.token = response.data.accessToken;
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
+        // return response;
       },
     }))
   )

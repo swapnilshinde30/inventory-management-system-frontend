@@ -11,8 +11,8 @@ import NavBar from "../navbar";
 import { useShopStore } from "../../stores/shopStore";
 import ShopForm from "../../Forms/ShopForm";
 import { useUserStore } from "../../stores/userStore";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const Shops = () => {
   const [showModal, setShowModal] = useState(false);
@@ -43,7 +43,7 @@ const Shops = () => {
       {/* <NavBar /> */}
       <div className="flex sm:flex-column md:flex-row">
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
-          <ToastContainer />
+          {/* <ToastContainer /> */}
           {/* 1 */}
         </div>
 
@@ -105,12 +105,12 @@ const Shops = () => {
                 {errorMessageFromUser}
               </p>
             )} */}
-            {errorMessageFromShop &&
-              toast.error(
-                <p className="mr-10 text-center text-red-500">
-                  {errorMessageFromShop}
-                </p>
-              )}
+            {/* {errorMessageFromShop && */}
+            {/* toast.error( */}
+            <p className="mr-10 text-center text-red-500">
+              {errorMessageFromShop}
+            </p>
+            {/* )} */}
             {/* {errorMessageFromUser &&
               toast.error(
                 <p className="mr-10 text-center text-red-500">

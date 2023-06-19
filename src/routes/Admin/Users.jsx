@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import NavBar from "../navbar";
 import EditUserForm from "../../Forms/EditUserForm";
 import { useUserStore } from "../../stores/userStore";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Users = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,6 +16,7 @@ const Users = () => {
   const users = useUserStore((state) => state.users);
   const calldeleteUserAPI = useUserStore((state) => state.deleteUserAPI);
   const callEditUserAPI = useUserStore((state) => state.editUserAPI);
+  const errorMessage = useUserStore((state) => state.error);
   useEffect(() => {
     getAllUsers();
   }, [users.firstName]);
@@ -104,6 +105,9 @@ const Users = () => {
         </div>
         <div>
           <div className="">
+            <p className="absolute mr-10 text-center text-red-500">
+              {errorMessage}
+            </p>
             {filteredUsers.map((user) => (
               <div
                 className="flex bg-neutral-100 rounded-lg h-12 mt-6 ml-5"

@@ -10,8 +10,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import SendOTPForm from "../Forms/ForgotPassword";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 const schema = yup.object().shape({
   userName: yup.string().required(),
   password: yup.string().required(),
@@ -38,11 +38,11 @@ function LoginPage() {
   const onSubmitHandler = async (data) => {
     data.strategy = "local";
     console.log(user);
-    try {
-      await callloginUserAPI(data);
-    } catch (err) {
-      toast.error("Invalid Login..");
-    }
+    // try {
+    await callloginUserAPI(data);
+    // } catch (err) {
+    //   toast.error("Invalid Login..");
+    // }
   };
   useEffect(() => {
     console.log(user);
@@ -63,7 +63,7 @@ function LoginPage() {
   return (
     <>
       <div>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <section className="gradient-form bg-gradient-to-r from-emerald-400 to-teal-600 h-full">
           <div className="flex items-center justify-center ">
             <div

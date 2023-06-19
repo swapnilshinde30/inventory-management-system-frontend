@@ -43,32 +43,50 @@ export const useUserStore = create(
       },
       addUserAPI: async (payload) => {
         console.log(payload);
-        const response = await axios.post(apiEndPoint, payload);
+        try {
+          const response = await axios.post(apiEndPoint, payload);
 
-        set((state) => {
-          state.users = [...state.users, response.data];
-        });
+          set((state) => {
+            state.users = [...state.users, response.data];
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       deleteUserAPI: async (id) => {
-        const response = await axios.delete(`${apiEndPoint}/${id}`);
-        set((state) => {
-          state.users = state.users.filter(
-            (user) => user._id !== response.data._id
-          );
-        });
+        try {
+          const response = await axios.delete(`${apiEndPoint}/${id}`);
+          set((state) => {
+            state.users = state.users.filter(
+              (user) => user._id !== response.data._id
+            );
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
       editUserAPI: async (payload) => {
-        const id = payload._id;
-        delete payload._id;
-        console.log(payload);
-        const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
-        set((state) => {
-          const index = state.users.findIndex(
-            (c) => c._id === response.data._id
-          );
-          state.users[index] = response.data;
-        });
+        try {
+          const id = payload._id;
+          delete payload._id;
+          console.log(payload);
+          const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+          set((state) => {
+            const index = state.users.findIndex(
+              (c) => c._id === response.data._id
+            );
+            state.users[index] = response.data;
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
     }))
   )
