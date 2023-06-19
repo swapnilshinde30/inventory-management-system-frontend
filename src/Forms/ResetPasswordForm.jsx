@@ -1,6 +1,52 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForgotPasswordStore } from "../stores/forgotPasswordStore";
+import { useNavigate } from "react-router";
+
+const schema = yup.object().shape({
+  otp: yup.number().required(),
+  userName: yup.string().required(),
+
+  newPassword: yup
+    .string()
+    .min(8)
+    .required("Password must be at least 8 character"),
+  confirmPassword: yup
+    .string()
+    .min(8)
+    .required("Password must be at least 8 character"),
+});
+
 const ResetPasswordForm = (props) => {
   const { showResetModal, setResetShowModal } = props;
+  const callForgotPasswordApi = useForgotPasswordStore(
+    (state) => state.forgotPasswordAPI
+  );
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmitHandler = (data) => {
+    let validotp = sessionStorage.getItem("otp");
+    console.log(validotp);
+    console.log(data.otp);
+    if (data.otp === parseInt(validotp)) {
+      console.log("otp verified");
+      delete data.otp;
+      console.log(data);
+      callForgotPasswordApi(data);
+      setResetShowModal(false);
+    }
+  };
   return (
     <>
       {showResetModal ? (
@@ -27,7 +73,7 @@ const ResetPasswordForm = (props) => {
                     </div>
 
                     <div className="mt-5">
-                      <form>
+                      <form onSubmit={handleSubmit(onSubmitHandler)}>
                         <div className="grid gap-y-4">
                           <div>
                             <label
@@ -43,7 +89,23 @@ const ResetPasswordForm = (props) => {
                                 name="otp"
                                 className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                 required
-                                aria-describedby="otp-error"
+                                {...register("otp")}
+                              />
+                            </div>
+                            <label
+                              for="email"
+                              className="block font-base -ml-[245px] mb-2 dark:text-white"
+                            >
+                              UserName
+                            </label>
+                            <div className="relative">
+                              <input
+                                type="text"
+                                id="otp"
+                                name="otp"
+                                className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                required
+                                {...register("userName")}
                               />
                             </div>
                             <label
@@ -59,7 +121,7 @@ const ResetPasswordForm = (props) => {
                                 name="password"
                                 className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                 required
-                                aria-describedby="email-error"
+                                {...register("newPassword")}
                               />
                             </div>
                             <label
@@ -75,7 +137,7 @@ const ResetPasswordForm = (props) => {
                                 name="email"
                                 className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                 required
-                                aria-describedby="email-error"
+                                {...register("confirmPassword")}
                               />
                             </div>
                             <p
@@ -87,10 +149,10 @@ const ResetPasswordForm = (props) => {
                             </p>
                           </div>
                           <button
-                            type="button"
+                            type="submit"
                             className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-gradient-to-r from-emerald-400 to-teal-600 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                           >
-                            Reset
+                            Submit
                           </button>
                         </div>
                       </form>

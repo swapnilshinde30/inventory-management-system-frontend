@@ -1,9 +1,65 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ResetPasswordForm from "./ResetPasswordForm";
 import LoginPage from "../routes/LoginPage";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useUserStore } from "../stores/userStore";
+import { useForgotPasswordStore } from "../stores/forgotPasswordStore";
+
+const schema = yup.object().shape({
+  email: yup.string().email().min(8).max(30).required(),
+  userName: yup.string().required(),
+});
 const SendOTPForm = (props) => {
   const { showModal, setShowModal } = props;
   const [showResetModal, setResetShowModal] = useState(false);
+  const users = useUserStore((state) => state.users);
+  const callOtpAuthenticationAPI = useForgotPasswordStore(
+    (state) => state.otpAuthenticationAPI
+  );
+  let randomNumber = 0;
+  let user;
+  const callGetAllUsersAPi = useUserStore((state) => state.getAllUsersAPI);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmitHandler = (data) => {
+    console.log(data);
+    user = users.find(
+      (user) => user.userName === data.userName && user.email === data.email
+    );
+    console.log(user);
+    if (user) {
+      randomNumber = Math.floor(Math.random() * 9000 + 1000);
+      console.log(randomNumber);
+      sessionStorage.setItem("otp", randomNumber);
+      setTimeout(() => {
+        sessionStorage.removeItem("otp");
+        randomNumber = 0;
+        console.log("setInterval Executed");
+      }, 300000);
+      let payload = {};
+      payload.email = data.email;
+      payload.otp = randomNumber;
+      console.log(payload);
+      callOtpAuthenticationAPI(payload);
+      setShowModal(false);
+      setResetShowModal(true);
+    }
+  };
+  useEffect(() => {
+    callGetAllUsersAPi();
+    console.log(users);
+  }, [users.length]);
+
   return (
     <>
       {showModal ? (
@@ -31,40 +87,54 @@ const SendOTPForm = (props) => {
                     </div>
 
                     <div className="mt-5">
-                      <form>
+                      <form onSubmit={handleSubmit(onSubmitHandler)}>
                         <div className="grid gap-y-4">
                           <div>
                             <label
-                              for="email"
+                              for="userName"
                               className="block font-base -ml-[240px] mb-2 dark:text-white"
                             >
-                              Email address
+                              UserName
                             </label>
                             <div className="relative">
                               <input
-                                type="email"
-                                id="email"
-                                name="email"
+                                type="text"
+                                id="name"
+                                name="name"
                                 className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                 required
-                                aria-describedby="email-error"
+                                {...register("userName")}
                               />
                             </div>
-                            <p
-                              className="hidden text-xs text-red-600 mt-2"
-                              id="email-error"
-                            >
-                              Please include a valid email address so we can get
-                              back to you
-                            </p>
+                            <div>
+                              <label
+                                for="email"
+                                className="block font-base -ml-[240px] mb-2 dark:text-white"
+                              >
+                                Email address
+                              </label>
+                              <div className="relative">
+                                <input
+                                  type="email"
+                                  id="email"
+                                  name="email"
+                                  className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                                  required
+                                  {...register("email")}
+                                />
+                              </div>
+                              <p
+                                className="hidden text-xs text-red-600 mt-2"
+                                id="email-error"
+                              >
+                                Please include a valid email address so we can
+                                get back to you
+                              </p>
+                            </div>
                           </div>
                           <button
-                            type="button"
+                            type="submit"
                             className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-gradient-to-r from-emerald-400 to-teal-600 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                            onClick={() => {
-                              setShowModal(false);
-                              setResetShowModal(true);
-                            }}
                           >
                             Submit
                           </button>

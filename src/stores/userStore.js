@@ -16,6 +16,9 @@ export const useUserStore = create(
         try {
           const response = await axios.get(apiEndPoint, {
             params: { role },
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
           });
           set((state) => {
             state.users = response.data.data;
@@ -28,8 +31,13 @@ export const useUserStore = create(
       },
       getUserAPI: async (id) => {
         console.log(id);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         try {
-          const response = await axios.get(`${apiEndPoint}/${id}`);
+          const response = await axios.get(`${apiEndPoint}/${id}`, config);
 
           set((state) => {
             state.currentUser = response.data;
@@ -43,7 +51,12 @@ export const useUserStore = create(
       },
       addUserAPI: async (payload) => {
         console.log(payload);
-        const response = await axios.post(apiEndPoint, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.post(apiEndPoint, payload, config);
 
         set((state) => {
           state.users = [...state.users, response.data];
@@ -51,7 +64,12 @@ export const useUserStore = create(
       },
 
       deleteUserAPI: async (id) => {
-        const response = await axios.delete(`${apiEndPoint}/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.delete(`${apiEndPoint}/${id}`, config);
         set((state) => {
           state.users = state.users.filter(
             (user) => user._id !== response.data._id
@@ -62,7 +80,16 @@ export const useUserStore = create(
         const id = payload._id;
         delete payload._id;
         console.log(payload);
-        const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.patch(
+          `${apiEndPoint}/${id}`,
+          payload,
+          config
+        );
         set((state) => {
           const index = state.users.findIndex(
             (c) => c._id === response.data._id
@@ -73,11 +100,3 @@ export const useUserStore = create(
     }))
   )
 );
-
-// export const useUserStore = create((set) => ({
-//   users: [],
-//   getUsers: async (role) => {
-//     const response = await http.get("users", { params: { role } });
-//     set(() => ({ users: response.data.data }));
-//   },
-// }));
