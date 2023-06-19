@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
 import { useRequisitionStore } from "../stores/requisitionStore";
+import { SlClose } from "react-icons/sl";
 
 const RequisitionForm = (props) => {
   const { showModal, setShowModal, requisitionDetails } = props;
@@ -17,18 +18,17 @@ const RequisitionForm = (props) => {
   //  const navigate = useNavigate();
   // const [showModal] = useState(true);
 
-  // useEffect(() => {
-  //   if (requisitionDetails && requisitionDetails.status === "created") {
-  //     setTextAccept("Accept");
-  //   } else if (requisitionDetails && requisitionDetails.status === "accepted") {
-  //     setTextAccept("Accepted");
-  //   } else if (
-  //     requisitionDetails &&
-  //     requisitionDetails.status === "dispatched"
-  //   ) {
-  //     setTextAccept("Dispatched");
-  //   }
-  // }, [requisitionDetails]);
+  useEffect(() => {
+    if (requisitionDetails && requisitionDetails.status === "created") {
+      setTextAccept("Accept");
+    } else if (requisitionDetails && requisitionDetails.status === "accepted") {
+      setTextAccept("Accepted");
+    } else if (requisitionDetails && requisitionDetails.status === "dispatched")
+      if (requisitionDetails && requisitionDetails.status === "cancelled") {
+        setTextAccept("Accept");
+        setTextReject("Cancelled");
+      }
+  }, [requisitionDetails]);
 
   const handleAcceptRequisition = (data, status, shopitems) => {
     if (!data) return;
@@ -47,13 +47,11 @@ const RequisitionForm = (props) => {
     try {
       console.log(updatedRequisitions);
       updatedRequisitions.map((requisition) => {
-        // const requisitionId = requisition.id; // Assuming the ID property is named 'id'
         console.log("in map");
         console.log(requisition);
         callPatchRequisitionsAPI(requisition);
       });
     } catch (error) {
-      // Handle error if needed
       console.log(error);
     }
 
@@ -81,13 +79,11 @@ const RequisitionForm = (props) => {
     try {
       console.log(updatedRequisitions);
       updatedRequisitions.map((requisition) => {
-        // const requisitionId = requisition.id; // Assuming the ID property is named 'id'
         console.log("in map");
         console.log(requisition);
         callPatchRequisitionsAPI(requisition);
       });
     } catch (error) {
-      // Handle error if needed
       console.log(error);
     }
 
@@ -186,38 +182,49 @@ const RequisitionForm = (props) => {
                       </div>
 
                       <div className="flex space-x-[180px]">
-                        <button
-                          type="button"
-                          className="ml-10 rounded-full text-black border border-neutral-500 bg-transperent px-6 pb-1 pt-1"
-                          //   onClick={() => setvisible(true)}
-                          disabled={
-                            requisitionDetails.status === "accepted" ||
-                            "dispatched" ||
-                            "cancelled"
-                          }
-                          onClick={() =>
-                            handleRejectRequisition(
-                              requisitionDetails.requisitionIds
-                            )
-                          }
-                        >
-                          {textReject}
-                        </button>
-                        <button
-                          type="button"
-                          className="ml rounded-full text-white border border-neutral-500 bg-teal-600 px-6 pb-1 pt-1"
-                          disabled={requisitionDetails.status === "cancelled"}
-                          onClick={() =>
-                            handleAcceptRequisition(
-                              requisitionDetails.requisitionIds,
-                              requisitionDetails.status,
-                              requisitionDetails.shopItems
-                            )
-                          }
-                        >
-                          {textAccept}
-                        </button>
+                        {requisitionDetails.status === "created" && (
+                          <button
+                            type="button"
+                            className="ml-10 rounded-full text-black border border-neutral-500 bg-transperent px-6 pb-1 pt-1"
+                            //   onClick={() => setvisible(true)}
+                            disabled={requisitionDetails.status != "created"}
+                            onClick={() =>
+                              handleRejectRequisition(
+                                requisitionDetails.requisitionIds
+                              )
+                            }
+                          >
+                            {textReject}
+                          </button>
+                        )}
+
+                        {requisitionDetails.status !== "dispatched" &&
+                          requisitionDetails.status !== "cancelled" && (
+                            <button
+                              type="button"
+                              className="ml rounded-full text-white border border-neutral-500 bg-teal-600 px-6 pb-1 pt-1"
+                              disabled={
+                                requisitionDetails.status === "cancelled" ||
+                                requisitionDetails.status === "dispatched"
+                              }
+                              onClick={() =>
+                                handleAcceptRequisition(
+                                  requisitionDetails.requisitionIds,
+                                  requisitionDetails.status,
+                                  requisitionDetails.shopItems
+                                )
+                              }
+                            >
+                              {textAccept}
+                            </button>
+                          )}
                       </div>
+                      {requisitionDetails.status === "dispatched" && (
+                        <p className="text-green-500">Order is dispatched...</p>
+                      )}
+                      {requisitionDetails.status === "cancelled" && (
+                        <p className="text-red-500">Order is Cancelled</p>
+                      )}
                     </div>
                   </div>
                 </div>

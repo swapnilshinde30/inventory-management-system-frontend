@@ -10,6 +10,7 @@ export const useCategoryStore = create(
     immer((set) => ({
       categories: [],
       currentCategory: {},
+      error: "",
       getAllCategoriesAPI: async () => {
         // const response = await axios.get("http://localhost:3030/categories");
         console.log(apiEndPoint);
@@ -19,6 +20,7 @@ export const useCategoryStore = create(
           state.categories = response.data.data;
         });
       },
+
       getCategoryAPI: async (id) => {
         console.log(id);
         // const response = await axios.get(
@@ -54,6 +56,7 @@ export const useCategoryStore = create(
           );
         });
       },
+
       patchCategoryAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;

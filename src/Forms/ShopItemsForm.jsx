@@ -116,6 +116,8 @@ const ShopItemsForm = (props) => {
                       onClick={() => {
                         setShowModal(false);
                         reset();
+                        navigate("/shopitems");
+
                       }}
                     />
                   </div>
@@ -208,6 +210,7 @@ const ShopItemsForm = (props) => {
                       className="ml-[50px] rounded-full text-neutral-500 border border-neutral-500 px-10 pb-1 pt-1"
                       onClick={() => {
                         setShowModal(false);
+                        navigate("/shopitems");
                         reset();
                       }}
                     >

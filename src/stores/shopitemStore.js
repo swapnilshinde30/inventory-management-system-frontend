@@ -35,24 +35,19 @@ export const useShopitemStore = create(
       },
 
       getShopitemAPI: async (id) => {
-        // const response = await axios.get(
-        //   `http://localhost:3030/shopitems/${id}`
-        // );
-        const shopItem = await axios.get(`${apiEndPoint}/shopitems/${id}`);
-        const shops = await axios.get(`${apiEndPoint}/shops`);
-        const items = await axios.get(`${apiEndPoint}/items`);
-        let item = items.find((i) => i._id === shopItem.item);
-        let shop = shops.find((s) => s._id === shopItem.shop);
-        shopItem.shopId = shop.shopId;
+        const shopItem = await axios.get(
+          `http://localhost:3030/shopitems/${id}`
+        );
+        const shops = await axios.get("http://localhost:3030/shops");
+        const items = await axios.get("http://localhost:3030/items");
+        let item = items.data.data.find((i) => i._id === shopItem.data.item);
+        let shop = shops.data.data.find((s) => s._id === shopItem.data.shop);
+        shopItem.shopId = shop._id;
         shopItem.itemName = item.name;
         shopItem.shopName = shop.name;
         set((state) => {
-          state.currentShopitem = shopItem;
+          state.currentShopitem = shopItem.data;
         });
-
-        // set((state) => {
-        //   state.currentShopitem = response.data;
-        // });
       },
 
       addShopitemAPI: async (payload) => {
