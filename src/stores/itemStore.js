@@ -12,78 +12,76 @@ export const useItemStore = create(
       currentItem: {},
       error: ``,
       getAllItemsAPI: async () => {
-        try {
-          const response = await axios.get(apiEndPoint);
-          set((state) => {
-            state.items = response.data.data;
-            console.log(state.items);
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-            //"Failed to fetch items."
-          });
-        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(apiEndPoint, config);
+        set((state) => {
+          state.items = response.data.data;
+          console.log(state.items);
+        });
       },
       getItemAPI: async (id) => {
-        try {
-          const response = await axios.get(`${apiEndPoint}/${id}`);
-          console.log(response.data);
-          set((state) => {
-            state.currentItem = response.data;
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(`${apiEndPoint}/${id}`, config);
+        console.log(response.data);
+        set((state) => {
+          state.currentItem = response.data;
+        });
       },
 
       addItemAPI: async (payload) => {
         console.log("in store");
         console.log(payload);
-        try {
-          const response = await axios.post(apiEndPoint, payload);
-          set((state) => {
-            state.items = [...state.items, response.data];
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.post(apiEndPoint, payload, config);
+        set((state) => {
+          state.items = [...state.items, response.data];
+        });
       },
 
       deleteItemAPI: async (id) => {
-        try {
-          const response = await axios.delete(`${apiEndPoint}/${id}`);
-          set((state) => {
-            state.items = state.items.filter(
-              (item) => item._id != response.data._id
-            );
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.delete(`${apiEndPoint}/${id}`, config);
+        set((state) => {
+          state.items = state.items.filter(
+            (item) => item._id != response.data._id
+          );
+        });
       },
       editItemAPI: async (payload) => {
-        try {
-          const id = payload._id;
-          delete payload._id;
-          const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
-          set((state) => {
-            const index = state.items.findIndex(
-              (c) => c._id === response.data._id
-            );
-            state.items[index] = response.data;
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const id = payload._id;
+        delete payload._id;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.patch(
+          `${apiEndPoint}/${id}`,
+          payload,
+          config
+        );
+        set((state) => {
+          const index = state.items.findIndex(
+            (c) => c._id === response.data._id
+          );
+          state.items[index] = response.data;
+        });
       },
     }))
   )

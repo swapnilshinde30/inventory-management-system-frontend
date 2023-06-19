@@ -10,76 +10,76 @@ export const useItemClassStore = create(
       itemClasses: [],
       currentItemclass: {},
       getAllItemClassesAPI: async () => {
-        try {
-          const response = await axios.get(`${apiEndPoint}`);
-          set((state) => {
-            state.itemClasses = response.data.data;
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(`${apiEndPoint}`, config);
+        set((state) => {
+          state.itemClasses = response.data.data;
+        });
       },
       getItemClassAPI: async (id) => {
         console.log(id);
-        try {
-          const response = await axios.get(`${apiEndPoint}/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(`${apiEndPoint}/${id}`, config);
 
           set((state) => {
             state.currentItemclass = response.data;
             console.log(state.currentItemclass);
           });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        
       },
 
       addItemClassesAPI: async (payload) => {
-        try {
-          const response = await axios.post(apiEndPoint, payload);
-          set((state) => {
-            state.itemClasses = [...state.itemClasses, response.data];
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.post(apiEndPoint, payload, config);
+        set((state) => {
+          state.itemClasses = [...state.itemClasses, response.data];
+        });
       },
 
       deleteItemClassAPI: async (id) => {
-        try {
-          const response = await axios.delete(`${apiEndPoint}/${id}`);
-          set((state) => {
-            state.itemClasses = state.itemClasses.filter(
-              (itemClass) => itemClass._id != response.data._id
-            );
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.delete(`${apiEndPoint}/${id}`, config);
+        set((state) => {
+          state.itemClasses = state.itemClasses.filter(
+            (itemClass) => itemClass._id != response.data._id
+          );
+        });
       },
       editItemClassAPI: async (payload) => {
-        try {
-          const id = payload._id;
-          delete payload._id;
-          const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
-          set((state) => {
-            const index = state.itemClasses.findIndex(
-              (c) => c._id === response.data._id
-            );
-            state.itemClasses[index] = response.data;
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const id = payload._id;
+        delete payload._id;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.patch(
+          `${apiEndPoint}/${id}`,
+          payload,
+          config
+        );
+        set((state) => {
+          const index = state.itemClasses.findIndex(
+            (c) => c._id === response.data._id
+          );
+          state.itemClasses[index] = response.data;
+        });
       },
     }))
   )

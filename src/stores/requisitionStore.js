@@ -8,11 +8,19 @@ export const useRequisitionStore = create(
     immer((set) => ({
       requisitions: [],
       getAllRequisitionsAPI: async (user) => {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         const requisitions = await axios.get(`${apiEndPoint}/requisitions`, {
           params: { user },
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
         });
-        const shops = await axios.get(`${apiEndPoint}/shops`);
-        const shopItems = await axios.get(`${apiEndPoint}/shopitems`);
+        const shops = await axios.get(`${apiEndPoint}/shops`, config);
+        const shopItems = await axios.get(`${apiEndPoint}/shopitems`, config);
 
         const requisitionsDetails = requisitions.data.data.map(
           (requisition) => {
@@ -34,11 +42,17 @@ export const useRequisitionStore = create(
       },
 
       addRequisitionsAPI: async (payload) => {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         console.log("in store");
         console.log(payload);
         const response = await axios.post(
           `${apiEndPoint}/requisitions`,
-          payload
+          payload,
+          config
         );
         console.log(response.data);
         set((state) => {
@@ -51,9 +65,15 @@ export const useRequisitionStore = create(
         const id = payload.id;
         console.log(id);
         delete payload.id;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         const response = await axios.patch(
           `${apiEndPoint}/requisitions/${id}`,
-          payload
+          payload,
+          config
         );
         set((state) => {
           const index = state.requisitions.findIndex(

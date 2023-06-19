@@ -17,6 +17,9 @@ export const useShopStore = create(
         try {
           const response = await axios.get(apiEndPoint, {
             params: data,
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
           });
           console.log(data);
           set((state) => {
@@ -33,8 +36,13 @@ export const useShopStore = create(
 
       getShopAPI: async (id) => {
         console.log(id);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         try {
-          const response = await axios.get(`${apiEndPoint}/${id}`);
+          const response = await axios.get(`${apiEndPoint}/${id}`, config);
           console.log(response.data);
           set((state) => {
             state.error = "";
@@ -49,7 +57,12 @@ export const useShopStore = create(
       },
       addShopAPI: async (payload) => {
         try {
-          const response = await axios.post(apiEndPoint, payload);
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await axios.post(apiEndPoint, payload, config);
           set((state) => {
             state.error = "";
             state.shops = [...state.shops, response.data];
@@ -64,7 +77,12 @@ export const useShopStore = create(
 
       deleteShopAPI: async (id) => {
         try {
-          const response = await axios.delete(`${apiEndPoint}/${id}`);
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await axios.delete(`${apiEndPoint}/${id}`, config);
           set((state) => {
             state.error = "";
             state.shops = state.shops.filter(
@@ -81,8 +99,17 @@ export const useShopStore = create(
       editShopAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         try {
-          const response = await axios.patch(`${apiEndPoint}/${id}`, payload);
+          const response = await axios.patch(
+            `${apiEndPoint}/${id}`,
+            payload,
+            config
+          );
           set((state) => {
             state.error = "";
             const index = state.shops.findIndex(

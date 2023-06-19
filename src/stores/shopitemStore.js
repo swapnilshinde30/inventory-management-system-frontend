@@ -9,11 +9,19 @@ export const useShopitemStore = create(
       shopitems: [],
       currentShopitem: {},
       getAllShopitemsAPI: async (shop) => {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         const shopItems = await axios.get(`${apiEndPoint}/shopitems`, {
           params: { shop },
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
         });
-        const shops = await axios.get(`${apiEndPoint}/shops`);
-        const items = await axios.get(`${apiEndPoint}/items`);
+        const shops = await axios.get(`${apiEndPoint}/shops`, config);
+        const items = await axios.get(`${apiEndPoint}/items`, config);
         console.log(shopItems);
         const shopItemDetails = shopItems.data.data.map((si) => {
           let shop = shops.data.data.find((s) => s._id === si.shop);
@@ -35,11 +43,17 @@ export const useShopitemStore = create(
       },
 
       getShopitemAPI: async (id) => {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         const shopItem = await axios.get(
-          `http://localhost:3030/shopitems/${id}`
+          `http://localhost:3030/shopitems/${id}`,
+          config
         );
-        const shops = await axios.get("http://localhost:3030/shops");
-        const items = await axios.get("http://localhost:3030/items");
+        const shops = await axios.get("http://localhost:3030/shops", config);
+        const items = await axios.get("http://localhost:3030/items", config);
         let item = items.data.data.find((i) => i._id === shopItem.data.item);
         let shop = shops.data.data.find((s) => s._id === shopItem.data.shop);
         shopItem.shopId = shop._id;
@@ -51,7 +65,16 @@ export const useShopitemStore = create(
       },
 
       addShopitemAPI: async (payload) => {
-        const response = await axios.post(`${apiEndPoint}/shopitems`, payload);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.post(
+          `${apiEndPoint}/shopitems`,
+          payload,
+          config
+        );
 
         console.log(response.data);
         let shop = response.data.shop;
@@ -61,9 +84,12 @@ export const useShopitemStore = create(
 
         const shopItems = await axios.get(`${apiEndPoint}/shopitems`, {
           params: { shop },
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
         });
-        const shops = await axios.get(`${apiEndPoint}/shops`);
-        const items = await axios.get(`${apiEndPoint}/items`);
+        const shops = await axios.get(`${apiEndPoint}/shops`, config);
+        const items = await axios.get(`${apiEndPoint}/items`, config);
         console.log(shopItems);
         const shopItemDetails = shopItems.data.data.map((si) => {
           let shop = shops.data.data.find((s) => s._id === si.shop);
@@ -83,7 +109,15 @@ export const useShopitemStore = create(
       },
 
       deleteShopitemAPI: async (id) => {
-        const response = await axios.delete(`${apiEndPoint}/shopitems/${id}`);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.delete(
+          `${apiEndPoint}/shopitems/${id}`,
+          config
+        );
         set((state) => {
           state.shopitems = state.shopitems.filter(
             (shopitem) => shopitem._id !== response.data._id
@@ -94,9 +128,15 @@ export const useShopitemStore = create(
       editShopitemAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
         const response = await axios.patch(
           `${apiEndPoint}/shopitems/${id}`,
-          payload
+          payload,
+          config
         );
         let shop = response.data.shop;
         set((state) => {
@@ -107,9 +147,12 @@ export const useShopitemStore = create(
         });
         const shopItems = await axios.get(`${apiEndPoint}/shopitems`, {
           params: { shop },
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
         });
-        const shops = await axios.get(`${apiEndPoint}/shops`);
-        const items = await axios.get(`${apiEndPoint}/items`);
+        const shops = await axios.get(`${apiEndPoint}/shops`, config);
+        const items = await axios.get(`${apiEndPoint}/items`, config);
         console.log(shopItems);
         const shopItemDetails = shopItems.data.data.map((si) => {
           let shop = shops.data.data.find((s) => s._id === si.shop);
@@ -128,27 +171,3 @@ export const useShopitemStore = create(
     }))
   )
 );
-
-// getAllShopItemsOfOwner: async (owner) => {
-//   console.log(owner);
-//   const shopItems = await axios.get("http://localhost:3030/shopitems");
-//   const shops = await axios.get("http://localhost:3030/shops", {
-//     params: { owner },
-//   });
-//   const filteredShopItems = [];
-//   console.log(shops);
-//   shops.data.data.forEach((s) => {
-//     const shopitem = shopItems.data.data.filter(
-//       (si) => si.shop === s._id
-//     );
-//     shopitem.forEach((sitem) => {
-//       filteredShopItems.push(sitem);
-//     });
-//   });
-//   console.log(filteredShopItems);
-//   set((state) => {
-//     // if (shop === undefined) return;
-//     state.shopitems = filteredShopItems;
-//     console.log(state.shopitems);
-//   });
-// },
