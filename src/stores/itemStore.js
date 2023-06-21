@@ -11,28 +11,40 @@ export const useItemStore = create(
       currentItem: {},
       error: ``,
       getAllItemsAPI: async () => {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        };
-        const response = await axios.get(apiEndPoint, config);
-        set((state) => {
-          state.items = response.data.data;
-          console.log(state.items);
-        });
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await axios.get(apiEndPoint, config);
+          set((state) => {
+            state.items = response.data.data;
+            console.log(state.items);
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
       getItemAPI: async (id) => {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        };
-        const response = await axios.get(`${apiEndPoint}/${id}`, config);
-        console.log(response.data);
-        set((state) => {
-          state.currentItem = response.data;
-        });
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await axios.get(`${apiEndPoint}/${id}`, config);
+          console.log(response.data);
+          set((state) => {
+            state.currentItem = response.data;
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
 
       addItemAPI: async (payload) => {
@@ -50,37 +62,50 @@ export const useItemStore = create(
       },
 
       deleteItemAPI: async (id) => {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        };
-        const response = await axios.delete(`${apiEndPoint}/${id}`, config);
-        set((state) => {
-          state.items = state.items.filter(
-            (item) => item._id != response.data._id
-          );
-        });
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await axios.delete(`${apiEndPoint}/${id}`, config);
+          set((state) => {
+            state.items = state.items.filter(
+              (item) => item._id != response.data._id
+            );
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
+
       editItemAPI: async (payload) => {
         const id = payload._id;
         delete payload._id;
-        const config = {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        };
-        const response = await axios.patch(
-          `${apiEndPoint}/${id}`,
-          payload,
-          config
-        );
-        set((state) => {
-          const index = state.items.findIndex(
-            (c) => c._id === response.data._id
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await axios.patch(
+            `${apiEndPoint}/${id}`,
+            payload,
+            config
           );
-          state.items[index] = response.data;
-        });
+          set((state) => {
+            const index = state.items.findIndex(
+              (c) => c._id === response.data._id
+            );
+            state.items[index] = response.data;
+          });
+        } catch (err) {
+          set((state) => {
+            state.error = err.response.data.message;
+          });
+        }
       },
     }))
   )

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useRequisitionStore } from "../stores/requisitionStore";
+import { SlClose } from "react-icons/sl";
 
 const RequisitionForm = (props) => {
   const { showModal, setShowModal, requisitionDetails } = props;
@@ -134,7 +135,9 @@ const RequisitionForm = (props) => {
                     </div>
                     <div className="flex flex-row mb-2 mt-1 pt-2 pl-5 space-x-[250px] bg-neutral-100 rounded-lg h-10">
                       <div className="font-bold ml-10">Rs. {totalAmount}</div>
-                      <div className="font-semibold">02 Items</div>
+                      <div className="font-semibold">
+                        {requisitionDetails.shopItems.length} Items
+                      </div>
                     </div>
                     {requisitionDetails.shopItems.map((item) => (
                       <div

@@ -91,7 +91,7 @@ const CategoryForm = (props) => {
                     <input
                       type="text"
                       placeholder="Category Name"
-                      className="w-full py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                      className="w-full mb-2 py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                       {...register("name")}
                     />
 

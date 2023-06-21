@@ -92,7 +92,7 @@ const ResetPasswordForm = (props) => {
                               />
                             </div>
                             <label
-                              for="email"
+                              for="userName"
                               className="block font-base -ml-[245px] mb-2 dark:text-white"
                             >
                               UserName
@@ -115,7 +115,7 @@ const ResetPasswordForm = (props) => {
                             </label>
                             <div className="relative">
                               <input
-                                type="text"
+                                type="password"
                                 id="password"
                                 name="password"
                                 className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
@@ -131,9 +131,9 @@ const ResetPasswordForm = (props) => {
                             </label>
                             <div className="relative">
                               <input
-                                type="email"
-                                id="email"
-                                name="email"
+                                type="password"
+                                id="confirmPass"
+                                name="confirmPass"
                                 className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                 required
                                 {...register("confirmPassword")}
@@ -143,7 +143,7 @@ const ResetPasswordForm = (props) => {
                               className="hidden text-xs text-red-600 mt-2"
                               id="email-error"
                             >
-                              Please include a valid email address so we can get
+                              Please include a valid user name so we can get
                               back to you
                             </p>
                           </div>

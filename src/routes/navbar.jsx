@@ -1,9 +1,7 @@
-import { Link, NavLink } from "react-router-dom";
-import { useLoginStore } from "../stores/loginStore";
+import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
-import EditUserForm from "../Forms/EditUserForm";
 const navLinkAdmin = [
   { id: 1, name: "CATEGORIES", pageLink: "/categories", role: "admin" },
   { id: 2, name: "ITEMCLASSES", pageLink: "/itemclasses", role: "admin" },
@@ -66,7 +64,7 @@ export default function NavBar() {
     <>
       {sessionStorage.getItem("token") ? (
         <nav
-          className="flex-1 h-14 w-full items-center justify-between py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4"
+          className="flex-1 h-14 w-full items-center justify-between py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4 "
           data-te-navbar-ref
         >
           <div className="flex w-full flex-wrap items-center justify-between px-3">
@@ -106,11 +104,11 @@ export default function NavBar() {
                   href="#"
                 >
                   <img
-                    src={process.env.PUBLIC_URL + "/images/finalLogo.jpg"}
+                    src={process.env.PUBLIC_URL + "/images/Logo.jpg"}
                     style={{ height: "35px" }}
                     alt=""
                     loading="lazy"
-                    className="pl-12"
+                    className="pl-10"
                   />
                 </a>
               </div>
@@ -275,7 +273,7 @@ export default function NavBar() {
           </div>
         </nav>
       ) : null}
-      <EditUserForm showModal={showModal} setShowModal={setShowModal} />
+      {/* <EditUserForm showModal={showModal} setShowModal={setShowModal} /> */}
     </>
   );
 }

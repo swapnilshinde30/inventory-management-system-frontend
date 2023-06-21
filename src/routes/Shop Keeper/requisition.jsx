@@ -200,7 +200,7 @@ const Requisitions = () => {
                                 : "text-green-500 font-semibold"
                             }
                           >
-                            {requisition.status}
+                            {requisition.status.toUpperCase()}
                           </div>
                         </div>
                       </div>
@@ -255,7 +255,7 @@ const Requisitions = () => {
               Dispatched
             </label>
           </div>
-          <div className="flex flex-col">
+          {/* <div className="flex flex-col">
             <div className="flex w-56 border-r border-b border-slate-200 space-y-2"></div>
             <div>
               {" "}
@@ -310,7 +310,7 @@ const Requisitions = () => {
                 </label>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <RequisitionForm

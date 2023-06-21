@@ -8,12 +8,11 @@ import ItemClassesForm from "../../Forms/ItemClassesForm";
 const ItemClasses = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
-  const navigate = useNavigate();
   const callGetAllItemClasses = useItemClassStore(
     (state) => state.getAllItemClassesAPI
   );
   const itemClasses = useItemClassStore((state) => state.itemClasses);
-  const errorMessage = useItemClassStore((state) => state.error);
+  // const errorMessage = useItemClassStore((state) => state.error);
   const callDeleteItemClassAPI = useItemClassStore(
     (state) => state.deleteItemClassAPI
   );
@@ -89,9 +88,9 @@ const ItemClasses = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            <p className="absolute mr-10 text-center text-red-500">
+            {/* <p className="absolute mr-10 text-center text-red-500">
               {errorMessage}
-            </p>
+            </p> */}
             {filteredItemClasses.map((itemclass) => (
               <div
                 key={itemclass._id}

@@ -34,7 +34,7 @@ const Categories = () => {
     <>
       {/* <NavBar /> */}
       <div className="flex sm:flex-column md:flex-row">
-        <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
+        <div className="flex-none w-32 md:w-56 h-16 border-r border-b border-slate-200">
           {/* 1 */}
         </div>
 
@@ -82,14 +82,14 @@ const Categories = () => {
         </div>
       </div>
       <div className="flex flex-row">
-        <div className="flex-none w-56 h-screen border-r border-slate-200">
+        <div className="flex-none w-32 md:w-56 h-screen border-r border-slate-200">
           {/* 3 */}
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            <p className="absolute mr-10 text-center text-red-500">
+            {/* <p className="absolute mr-10 text-center text-red-500">
               {errorMessage}
-            </p>
+            </p> */}
             {filteredCategories.map((category) => (
               <div
                 key={category._id}

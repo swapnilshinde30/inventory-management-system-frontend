@@ -32,45 +32,42 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route index={true} element={<HomePage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegistrationPage />} />
-            <Route path="login/new" element={<RegisterForm />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/categories/:id" element={<Categories />} />
-            <Route path="users" element={<Users />} />
-            <Route path="users/:id" element={<Users />} />
-            <Route path="shops" element={<Shops />} />
-            <Route path="/shops/:id" element={<Shops />} />
-            <Route path="/itemclasses" element={<ItemClasses />} />
-            <Route path="/itemclasses/:id" element={<ItemClasses />} />
-            <Route path="items" element={<Items />} />
-            <Route path="items/:id" element={<Items />} />
-            <Route path="shopitems" element={<ShopItems />} />
-            <Route path="shopitems/:id" element={<ShopItems />} />
-            <Route path="/shopsForCustomer" element={<ShopsForCustomer />} />
-            <Route
-              path="/shopsForCustomer/:id"
-              element={<ShopsForCustomer />}
-            />
+      {/* <ThemeProvider> */}
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index={true} element={<HomePage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegistrationPage />} />
+          <Route path="login/new" element={<RegisterForm />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/categories/:id" element={<Categories />} />
+          <Route path="users" element={<Users />} />
+          <Route path="users/:id" element={<Users />} />
+          <Route path="shops" element={<Shops />} />
+          <Route path="/shops/:id" element={<Shops />} />
+          <Route path="/itemclasses" element={<ItemClasses />} />
+          <Route path="/itemclasses/:id" element={<ItemClasses />} />
+          <Route path="items" element={<Items />} />
+          <Route path="items/:id" element={<Items />} />
+          <Route path="shopitems" element={<ShopItems />} />
+          <Route path="shopitems/:id" element={<ShopItems />} />
+          <Route path="/shopsForCustomer" element={<ShopsForCustomer />} />
+          <Route path="/shopsForCustomer/:id" element={<ShopsForCustomer />} />
 
-            <Route path="cart" element={<Cart />} />
-            <Route path="orders" element={<Order />} />
-            <Route path="requisitions" element={<Requisitions />} />
-            <Route path="requisitions/:id" element={<Requisitions />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="orders" element={<Order />} />
+          <Route path="requisitions" element={<Requisitions />} />
+          <Route path="requisitions/:id" element={<Requisitions />} />
 
-            {/* <Route path="requisitions/new" element={<RequisitionForm />} /> */}
-            <Route path="home" element={<HomePage />} />
-            <Route path="error/404" element={<Error404 />} />
-            <Route path="error/403" element={<Error403 />} />
-            <Route path="error/401" element={<Error401 />} />
-            <Route path="error/500" element={<Error500 />} />
-          </Route>
-        </Routes>
-      </ThemeProvider>
+          {/* <Route path="requisitions/new" element={<RequisitionForm />} /> */}
+          {/* <Route path="home" element={<HomePage />} /> */}
+          <Route path="error/404" element={<Error404 />} />
+          <Route path="error/403" element={<Error403 />} />
+          <Route path="error/401" element={<Error401 />} />
+          <Route path="error/500" element={<Error500 />} />
+        </Route>
+      </Routes>
+      {/* </ThemeProvider> */}
     </BrowserRouter>
   </React.StrictMode>
 );

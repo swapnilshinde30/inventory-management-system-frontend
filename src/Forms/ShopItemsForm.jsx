@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useShopitemStore } from "../stores/shopitemStore";
 import { useItemStore } from "../stores/itemStore";
 import { useShopStore } from "../stores/shopStore";
+import { SlClose } from "react-icons/sl";
 
 const schema = yup.object().shape({
   quantityAddition: yup.object().shape({

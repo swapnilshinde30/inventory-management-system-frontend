@@ -15,7 +15,7 @@ const Items = () => {
   );
   const itemClasses = useItemClassStore((state) => state.itemClasses);
   const callDeleteItemAPI = useItemStore((state) => state.deleteItemAPI);
-  const errorMessage = useItemStore((state) => state.error);
+  // const errorMessage = useItemStore((state) => state.error);
   useEffect(() => {
     callGetAllItems();
     callGetAllItemClasses();
@@ -51,7 +51,7 @@ const Items = () => {
     <>
       {/* <NavBar /> */}
       <div className="flex sm:flex-column md:flex-row">
-        <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
+        <div className="flex-none w-32 md:w-56 h-16 border-r border-b border-slate-200 ">
           {/* 1 */}
         </div>
 
@@ -99,7 +99,7 @@ const Items = () => {
       </div>
 
       <div className="flex flex-row">
-        <div className="flex-none w-56  border-r border-slate-200">
+        <div className="flex-none w-32 md:w-56  border-r border-slate-200">
           {/* 3 */}
         </div>
         <div>
@@ -121,9 +121,9 @@ const Items = () => {
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-6">
-                    <p className="absolute mr-10 text-center text-red-500">
+                    {/* <p className="absolute mr-10 text-center text-red-500">
                       {errorMessage}
-                    </p>
+                    </p> */}
                     {filteredItems.map((item) => {
                       if (itemClass._id === item.itemClass) {
                         return (

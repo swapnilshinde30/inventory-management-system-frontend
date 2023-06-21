@@ -88,9 +88,9 @@ const Shops = () => {
         </div>
         <div>
           <div className="">
-            <p className="mr-10 text-center text-red-500">
+            {/* <p className="mr-10 text-center text-red-500">
               {errorMessageFromShop}
-            </p>
+            </p> */}
 
             {filteredShops.map((shop) => (
               <div
