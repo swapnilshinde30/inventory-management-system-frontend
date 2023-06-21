@@ -3,6 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForgotPasswordStore } from "../stores/forgotPasswordStore";
 import { useNavigate } from "react-router";
+import { SlClose } from "react-icons/sl";
 
 const schema = yup.object().shape({
   otp: yup.number().required(),
@@ -65,6 +66,14 @@ const ResetPasswordForm = (props) => {
               >
                 <div className="mt-7 bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
                   <div className="p-4 sm:p-7">
+                    <div className="absolute ml-[320px]">
+                      <SlClose
+                        className="w-7 h-7 text-teal-500 cursor-pointer"
+                        onClick={() => {
+                          setResetShowModal(false);
+                        }}
+                      />
+                    </div>
                     <div className="text-center">
                       <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
                         Reset Password

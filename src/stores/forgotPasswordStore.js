@@ -31,5 +31,5 @@ export const useForgotPasswordStore = create(
         return response;
       },
     }))
-  )
+  ) 
 );

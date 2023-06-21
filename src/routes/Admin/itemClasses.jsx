@@ -105,7 +105,7 @@ const ItemClasses = () => {
                     itemclass.name +
                     ".jpg"
                   }
-                  alt="fruits"
+                  alt={itemclass.name}
                   className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
                 <div className="ml-2 mb-1 text-gray-400 ">{itemclass.name}</div>
