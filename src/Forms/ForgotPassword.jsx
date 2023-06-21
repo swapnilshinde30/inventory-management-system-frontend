@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useUserStore } from "../stores/userStore";
 import { useForgotPasswordStore } from "../stores/forgotPasswordStore";
+import { SlClose } from "react-icons/sl";
 
 const schema = yup.object().shape({
   email: yup.string().email().min(8).max(30).required(),
@@ -79,6 +80,14 @@ const SendOTPForm = (props) => {
               >
                 <div className="mt-7 bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
                   <div className="p-4 sm:p-7">
+                    <div className="absolute ml-[320px]">
+                      <SlClose
+                        className="w-7 h-7 text-teal-500 cursor-pointer"
+                        onClick={() => {
+                          setShowModal(false);
+                        }}
+                      />
+                    </div>
                     <div className="text-center">
                       <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
                         Forgot password?

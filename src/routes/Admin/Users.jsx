@@ -104,9 +104,9 @@ const Users = () => {
         </div>
         <div>
           <div className="">
-            <p className="absolute mr-10 text-center text-red-500">
+            {/* <p className="absolute mr-10 text-center text-red-500">
               {errorMessage}
-            </p>
+            </p> */}
             {filteredUsers.map((user) => (
               <div
                 className="flex bg-neutral-100 rounded-lg h-12 mt-6 ml-5"

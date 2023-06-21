@@ -89,9 +89,9 @@ const ItemClasses = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            <p className="absolute mr-10 text-center text-red-500">
+            {/* <p className="absolute mr-10 text-center text-red-500">
               {errorMessage}
-            </p>
+            </p> */}
             {filteredItemClasses.map((itemclass) => (
               <div
                 key={itemclass._id}
@@ -106,7 +106,7 @@ const ItemClasses = () => {
                     itemclass.name +
                     ".jpg"
                   }
-                  alt="fruits"
+                  alt={itemclass.name}
                   className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
                 <div className="ml-2 mb-1 text-gray-400 ">{itemclass.name}</div>

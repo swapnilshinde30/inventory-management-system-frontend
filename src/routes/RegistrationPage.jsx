@@ -8,6 +8,7 @@ import * as yup from "yup";
 import { useUserStore } from "../stores/userStore";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { SlClose } from "react-icons/sl";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("Please enter First Name"),
@@ -40,6 +41,14 @@ const RegistrationForm = () => {
     <div className="bg-gradient-to-r from-emerald-400 to-teal-600  min-h-screen flex flex-col">
       <div className="container my-5 w-[500px] mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+          <div className="absolute ml-[380px]">
+            <SlClose
+              className="w-7 h-7 text-teal-500 cursor-pointer"
+              onClick={() => {
+                navigate(-1);
+              }}
+            />
+          </div>
           <h1 className="text-3xl text-center">Register</h1>
           <form onSubmit={handleSubmit(onsubmitHandler)}>
             <div className="px-3 mb-1">

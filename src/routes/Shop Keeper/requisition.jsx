@@ -200,7 +200,7 @@ const Requisitions = () => {
                                 : "text-green-500 font-semibold"
                             }
                           >
-                            {requisition.status}
+                            {requisition.status.toUpperCase()}
                           </div>
                         </div>
                       </div>

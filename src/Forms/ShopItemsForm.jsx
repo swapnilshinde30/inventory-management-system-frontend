@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useShopitemStore } from "../stores/shopitemStore";
 import { useItemStore } from "../stores/itemStore";
 import { useShopStore } from "../stores/shopStore";
+import { SlClose } from "react-icons/sl";
 
 const schema = yup.object().shape({
   quantityAddition: yup.object().shape({
@@ -91,6 +92,16 @@ const ShopItemsForm = (props) => {
     setValue("availableQuantity.amount", shopitem.availableQuantity["amount"]);
     setValue("availableQuantity.unit", shopitem.availableQuantity["unit"]);
   }, [shopitemId, shopitem._id]);
+  const handleKeyPress = (event) => {
+    const keyCode = event.keyCode || event.which;
+    const key = String.fromCharCode(keyCode);
+    const regex = /^[A-Za-z]+$/;
+
+    if (!regex.test(key)) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <>
       {showModal ? (
@@ -167,7 +178,7 @@ const ShopItemsForm = (props) => {
                     <div className="form-outline mb-1">
                       <input
                         type="number"
-                        placeholder="Ammount"
+                        placeholder="Quantity"
                         className="border rounded-lg w-[100px] h-9 pl-4  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                         {...register("quantityAddition.amount")}
                       />
@@ -175,8 +186,9 @@ const ShopItemsForm = (props) => {
 
                     <div className="form-outline mb-1 ">
                       <input
-                        type="string"
-                        placeholder="Unit"
+                        type="text"
+                        placeholder="Kg"
+                        onKeyPress={handleKeyPress}
                         className="border rounded-lg w-[100px] h-9 pl-8 mr-7 border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                         {...register("quantityAddition.unit")}
                       />
@@ -185,7 +197,7 @@ const ShopItemsForm = (props) => {
                     <div className="form-outline mb-1">
                       <input
                         type="number"
-                        placeholder="Ammount"
+                        placeholder="Quantity"
                         className="border rounded-lg w-[100px] h-9 pl-4  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                         {...register("availableQuantity.amount")}
                       />
@@ -193,8 +205,9 @@ const ShopItemsForm = (props) => {
 
                     <div className="form-outline mb-1 ">
                       <input
-                        type="string"
-                        placeholder="Unit"
+                        type="text"
+                        placeholder="Kg"
+                        onKeyPress={handleKeyPress}
                         className="border rounded-lg w-[100px] h-9 pl-8  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                         {...register("availableQuantity.unit")}
                       />

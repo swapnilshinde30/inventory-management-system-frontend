@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
@@ -10,10 +10,11 @@ const Categories = () => {
     (state) => state.getAllCategoriesAPI
   );
   const categories = useCategoryStore((state) => state.categories);
-  const errorMessage = useCategoryStore((state) => state.error);
+  //const errorMessage = useCategoryStore((state) => state.error);
   const callDeleteCategoryAPI = useCategoryStore(
     (state) => state.deleteCategoryAPI
   );
+  const navigate = useNavigate();
   console.log(categories);
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const Categories = () => {
                   name="search"
                   placeholder="Search"
                 />
+
                 {/* {searchList()}; */}
                 <svg
                   className=" absolute text-slate-300 h-2 w-2  md:h-4 md:w-4 fillCurrent ml-14 "
@@ -87,9 +89,11 @@ const Categories = () => {
         </div>
         <div>
           <div className="grid grid-cols-1 md:grid-cols-6 ">
-            <p className="absolute mr-10 text-center text-red-500">
-              {errorMessage}
-            </p>
+            {/* {errorMessage && (
+              <p className="absolute mr-10 text-center text-red-500">
+                {errorMessage}
+              </p>
+            )} */}
             {filteredCategories.map((category) => (
               <div
                 key={category._id}
@@ -104,7 +108,7 @@ const Categories = () => {
                     category.name +
                     ".jpg"
                   }
-                  alt="fruits"
+                  alt={category.name}
                   className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                 />
                 <div className="ml-2 mb-1 text-gray-400 ">{category.name}</div>
@@ -124,13 +128,16 @@ const Categories = () => {
                     className="badge text-white bg-teal-400 w-52 text-center p-1 hover:bg-teal-600"
                     style={{ marginTop: "-4px" }}
                   >
-                    <Link
-                      to={`/categories/${category._id}`}
+                    <button
+                      // to={`/categories/${category._id}`}
                       className="hover:font-bold"
-                      onClick={() => setShowModal(true)}
+                      onClick={() => {
+                        setShowModal(true);
+                        navigate(`/categories/${category._id}`);
+                      }}
                     >
                       Edit
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>

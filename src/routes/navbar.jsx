@@ -174,7 +174,7 @@ export default function NavBar() {
                         ".jpg"
                       : process.env.PUBLIC_URL +
                         "/images/users/" +
-                        "default" +
+                        "defaultuser" +
                         ".jpg"
                   }
                   className="rounded-full"
@@ -212,7 +212,7 @@ export default function NavBar() {
                                   ".jpg"
                                 : process.env.PUBLIC_URL +
                                   "/images/users/" +
-                                  "default" +
+                                  "defaultuser" +
                                   ".jpg"
                             }
                             className="border-double border-4 border-teal-500 rounded-full mx-auto mt-2"
@@ -275,7 +275,7 @@ export default function NavBar() {
           </div>
         </nav>
       ) : null}
-      <EditUserForm showModal={showModal} setShowModal={setShowModal} />
+      {/* <EditUserForm showModal={showModal} setShowModal={setShowModal} /> */}
     </>
   );
 }

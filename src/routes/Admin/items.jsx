@@ -121,9 +121,9 @@ const Items = () => {
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-6">
-                    <p className="absolute mr-10 text-center text-red-500">
+                    {/* <p className="absolute mr-10 text-center text-red-500">
                       {errorMessage}
-                    </p>
+                    </p> */}
                     {filteredItems.map((item) => {
                       if (itemClass._id === item.itemClass) {
                         return (

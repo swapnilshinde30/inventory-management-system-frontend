@@ -57,7 +57,7 @@ export const useUserStore = create(
         };
         const response = await axios.post(apiEndPoint, payload, config);
 
-          set((state) => {
+          set((state) => { 
             state.users = [...state.users, response.data];
           });
         
