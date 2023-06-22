@@ -12,15 +12,21 @@ const ShopsForCustomer = () => {
   const [showModal, setShowModal] = useState(false);
   const [product, setProduct] = useState({});
   const [searchField, setSearchField] = useState("");
+  const [category, setCategory] = useState("");
+  const [shop, setShop] = useState("");
+
   const callGetAllShopitemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
   const shopitems = useShopitemStore((state) => state.shopitems);
   const handleSelectCategory = (category) => {
+    setCategory(category);
+    console.log(category);
     callGetAllShopsAPI(undefined, category);
   };
 
   const handleSelectShop = (shop) => {
+    setShop(shop);
     callGetAllShopitemsAPI(shop);
   };
 
@@ -114,6 +120,7 @@ const ShopsForCustomer = () => {
             <ListGroup
               items={[...categories]}
               onSelectItem={handleSelectCategory}
+              selectedItem={category}
             />
           </div>
         </div>
@@ -122,7 +129,11 @@ const ShopsForCustomer = () => {
             <h4 className="text-center text-teal-700 mb-3 font-semibold">
               Shops
             </h4>
-            <ListGroup items={[...shops]} onSelectItem={handleSelectShop} />
+            <ListGroup
+              items={[...shops]}
+              onSelectItem={handleSelectShop}
+              selectedItem={shop}
+            />
           </div>
         </div>
         <div>

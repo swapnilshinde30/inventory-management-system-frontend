@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Users = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
+  const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
   const getAllUsers = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
@@ -21,6 +22,7 @@ const Users = () => {
   }, [users.firstName]);
 
   const handleSelect = (role) => {
+    setUserRole(role);
     getAllUsers(role);
   };
   const filteredUsers = users.filter((user) => {
@@ -92,7 +94,9 @@ const Users = () => {
               {userFilter.map((user) => (
                 <li
                   key={user.id + a}
-                  className="rounded-lg  text-left py-2 text-neutral-500 transition duration-500 hover:bg-teal-100 hover:text-neutral-700 focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 dark:focus:bg-neutral-600 dark:focus:text-neutral-200"
+                  className={`rounded-lg  text-left py-2 text-neutral-500 transition duration-500 hover:bg-teal-100 hover:text-neutral-700 focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0 ${
+                    userRole === user.role ? "text-teal-500" : ""
+                  } `}
                   style={{ cursor: "pointer" }}
                   onClick={() => handleSelect(user.role)}
                 >

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const Order = () => {
   const user = JSON.parse(sessionStorage.getItem("user"));
-
+  const [selectedItem, setSelectedItem] = useState(null);
   const callGetRequisitionAPI = useRequisitionStore(
     (state) => state.getAllRequisitionsAPI
   );
@@ -46,6 +46,7 @@ const Order = () => {
         if (sort === -1) return totalPriceB - totalPriceA;
       });
     setGroupedRequisitionsArray(sortedArray);
+    setSelectedItem(sort);
   };
   return (
     <>
@@ -96,7 +97,9 @@ const Order = () => {
             </h4>
             <ul className="list-group ml-10 mt-2 mr-4">
               <li
-                className="rounded-lg  text-left mb-2 text-neutral-500 transition duration-500 hover:bg-teal-100 hover:text-teal-700 focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 dark:focus:bg-neutral-600 dark:focus:text-neutral-200"
+                className={`rounded-lg text-left mb-2 text-neutral-500 transition duration-500 hover:bg-teal-100 hover:text-teal-700 focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 dark:focus:bg-neutral-600 dark:focus:text-neutral-200 ${
+                  selectedItem === 1 ? "text-teal-500 font-semibold" : ""
+                }`}
                 key="1"
                 style={{ cursor: "pointer" }}
                 onClick={() => filterRequisitionPrice(1)}
@@ -104,11 +107,9 @@ const Order = () => {
                 Lowest Price First
               </li>
               <li
-                className="rounded-lg text-left mb-2 text-neutral-500 transition
-                duration-500 hover:bg-teal-100 hover:text-teal-700
-                focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0
-                dark:hover:bg-neutral-600 dark:hover:text-neutral-200
-                dark:focus:bg-neutral-600 dark:focus:text-neutral-200"
+                className={`rounded-lg text-left mb-2 text-neutral-500 transition duration-500 hover:bg-teal-100 hover:text-teal-700 focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 dark:focus:bg-neutral-600 dark:focus:text-neutral-200 ${
+                  selectedItem === -1 ? "text-teal-500 font-semibold" : ""
+                }`}
                 key="-1"
                 style={{ cursor: "pointer" }}
                 onClick={() => filterRequisitionPrice(-1)}

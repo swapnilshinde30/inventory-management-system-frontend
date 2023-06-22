@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useCartStore } from "../stores/cartStore";
 import { useShopitemStore } from "../stores/shopitemStore";
@@ -10,14 +10,17 @@ import { useRequisitionStore } from "../stores/requisitionStore";
 
 const schema = yup.object().shape({
   requiredQuantity: yup.object().shape({
-    amount: yup.number().required(),
-    unit: yup.string().required(),
+    amount: yup.number().required().typeError("Please enter required quantity"),
+    unit: yup.string().required().typeError("Please Enter unit "),
   }),
+  preferedDeliveryDate: yup
+    .date()
+    .required()
+    .typeError("Please Enter preferred delivery date "),
 });
 
 const CartForm = (props) => {
   const { showModal, setShowModal, product } = props;
-
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   const navigate = useNavigate();
@@ -29,7 +32,7 @@ const CartForm = (props) => {
     formState: { errors },
     setValue,
     reset,
-  } = useForm({});
+  } = useForm({ resolver: yupResolver(schema) });
 
   const callAddToCartAPI = useCartStore((state) => state.addToCartAPI);
 
@@ -68,10 +71,11 @@ const CartForm = (props) => {
         cartItems.push(data);
         sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
       }
+      setShowModal(false);
+      navigate("/cart");
     }
+    // navigate("/shopsForCustomer");
     reset();
-    navigate("/shopsForCustomer");
-    setShowModal(false);
   };
 
   useEffect(() => {
@@ -81,6 +85,14 @@ const CartForm = (props) => {
     setValue("shopItem", product._id);
   }, [product.itemName]);
 
+  const handleKeyPress = (event) => {
+    const keyCode = event.keyCode || event.which;
+    const key = String.fromCharCode(keyCode);
+    const regex = /^[A-Za-z]+$/;
+    if (!regex.test(key) && keyCode !== 8) {
+      event.preventDefault();
+    }
+  };
   return (
     <>
       {showModal ? (
@@ -114,10 +126,15 @@ const CartForm = (props) => {
                         <input
                           type="text"
                           id="itemName"
-                          value={product._id}
+                          value={product.itemName}
                           className="w-[220px] py-2 px-3 mb-3 appearance-none shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("itemName")}
                         ></input>
+                        <input
+                          type="hidden"
+                          name="shopItem"
+                          value={product._id}
+                          {...register("shopItem")}
+                        />
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500">
@@ -132,7 +149,7 @@ const CartForm = (props) => {
                         />
 
                         <p className="text-red-500">
-                          {/* {errors.firstName?.message} */}
+                          {errors.preferedDeliveryDate?.message}
                         </p>
                       </div>
                     </div>
@@ -141,25 +158,26 @@ const CartForm = (props) => {
                         <span className="text-gray-500">Amount:</span>
                         <input
                           type="number"
-                          placeholder="Amount"
+                          placeholder="Quantity"
                           className="w-[220px] py-2 px-3  text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("requiredQuantity.amount")}
                         />
 
                         <p className="text-red-500">
-                          {/* {errors.firstName?.message} */}
+                          {errors.requiredQuantity?.amount?.message}
                         </p>
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500"> Unit:</span>
                         <input
                           type="text"
-                          placeholder="Unit"
+                          placeholder="Kg / No / Ltr"
+                          onKeyDown={handleKeyPress}
                           className="w-[220px] py-2 px-3 text-black shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("requiredQuantity.unit")}
                         />
                         <p className="text-red-500">
-                          {/* {errors.lastName?.message} */}
+                          {errors.requiredQuantity?.unit?.message}
                         </p>
                       </div>
                     </div>
@@ -171,6 +189,8 @@ const CartForm = (props) => {
                       className="ml-64 rounded-full text-neutral-500 border border-neutral-500 px-6 pb-1 pt-1"
                       onClick={() => {
                         setShowModal(false);
+                        reset();
+                        navigate("/shopsForCustomer");
                       }}
                     >
                       Cancel

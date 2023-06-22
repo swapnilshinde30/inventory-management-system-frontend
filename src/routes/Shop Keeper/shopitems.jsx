@@ -11,7 +11,7 @@ import { useShopStore } from "../../stores/shopStore";
 const ShopItems = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
-
+  const [shop, setShop] = useState("");
   const callGetAllShopItemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
@@ -61,6 +61,7 @@ const ShopItems = () => {
   });
 
   const handleSelectShop = (name) => {
+    setShop(name);
     callGetAllShopItemsAPI(name);
     console.log(name);
   };
@@ -119,7 +120,11 @@ const ShopItems = () => {
             <h4 className="text-center text-teal-700 mb-3 font-semibold">
               Shops
             </h4>
-            <ListGroup items={[...shops]} onSelectItem={handleSelectShop} />
+            <ListGroup
+              items={[...shops]}
+              onSelectItem={handleSelectShop}
+              selectedItem={shop}
+            />
           </div>
         </div>
         <div>

@@ -107,6 +107,10 @@ const ItemClasses = () => {
                   }
                   alt={itemclass.name}
                   className="mt-2 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
+                  onError={(e) => {
+                    e.target.src =
+                      process.env.PUBLIC_URL + "/images/defaultImage.jpg";
+                  }}
                 />
                 <div className="ml-2 mb-1 text-gray-400 ">{itemclass.name}</div>
                 <div className="flex w-auto">

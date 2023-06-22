@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useRequisitionStore } from "../stores/requisitionStore";
-import { SlClose } from "react-icons/sl";
 
 const RequisitionForm = (props) => {
   const { showModal, setShowModal, requisitionDetails } = props;

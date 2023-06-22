@@ -36,12 +36,20 @@ const RegistrationForm = () => {
     navigate("/login");
     // setShowModal(false);
   };
+  const handleKeyPress = (event) => {
+    const keyCode = event.keyCode || event.which;
+    const key = String.fromCharCode(keyCode);
+    const regex = /^[A-Za-z]+$/;
+    if (!regex.test(key) && keyCode !== 8) {
+      event.preventDefault();
+    }
+  };
   return (
     // <!-- component -->
     <div className="bg-gradient-to-r from-emerald-400 to-teal-600  min-h-screen flex flex-col">
       <div className="container my-5 w-[500px] mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-          <div className="absolute ml-[380px]">
+          <div className="absolute ml-[423px] -mt-6">
             <SlClose
               className="w-7 h-7 text-teal-500 cursor-pointer"
               onClick={() => {
@@ -49,7 +57,7 @@ const RegistrationForm = () => {
               }}
             />
           </div>
-          <h1 className="text-3xl text-center">Register</h1>
+          <h1 className="text-3xl text-center">User Registration</h1>
           <form onSubmit={handleSubmit(onsubmitHandler)}>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
@@ -63,8 +71,10 @@ const RegistrationForm = () => {
                   type="text"
                   className="w-[900px] -ml-8 pl-10  py-1 rounded-lg border-2 border-gray-200 outline-none focus:border-emerald-500"
                   placeholder="First Name"
+                  onKeyDown={handleKeyPress}
                   {...register("firstName")}
                 />
+                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.firstName?.message}</p>
             </div>
@@ -80,8 +90,10 @@ const RegistrationForm = () => {
                   type="text"
                   className="w-[900px] -ml-8 pl-10  py-1 rounded-lg border-2 border-gray-200 outline-none focus:border-emerald-500"
                   placeholder="Last Name"
+                  onKeyDown={handleKeyPress}
                   {...register("lastName")}
                 />
+                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.lastName?.message}</p>
             </div>
@@ -99,6 +111,7 @@ const RegistrationForm = () => {
                   placeholder="Email"
                   {...register("email")}
                 />
+                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.email?.message}</p>
             </div>
@@ -116,6 +129,7 @@ const RegistrationForm = () => {
                   placeholder="Phone"
                   {...register("phone")}
                 />
+                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.phone?.message}</p>
             </div>
@@ -133,6 +147,7 @@ const RegistrationForm = () => {
                   placeholder="User Name"
                   {...register("userName")}
                 />
+                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.userName?.message}</p>
             </div>
@@ -145,19 +160,22 @@ const RegistrationForm = () => {
                   <RiLockPasswordLine className="text-base  text-teal-700" />
                 </div>
                 <input
-                  type="text"
+                  type="password"
                   className="w-[900px] -ml-8 pl-10  py-1 rounded-lg border-2 border-gray-200 outline-none focus:border-emerald-500"
                   placeholder="Password"
                   {...register("password")}
                 />
+                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.password?.message}</p>
             </div>
 
-            <div className="flex justify-center">
-              <label htmlFor="" className="text-base mr-5">
+            <div className="flex ">
+              <label htmlFor="" className="text-base ml-3">
                 Select Role:
               </label>
+              <span className="text-red-500 pl-1 mr-2">*</span>
+
               {/* <!--First radio--> */}
               <div className="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
                 <input

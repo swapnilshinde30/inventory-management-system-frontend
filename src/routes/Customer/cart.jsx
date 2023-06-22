@@ -1,12 +1,13 @@
 import { useCartStore } from "../../stores/cartStore";
 import { useEffect, useState } from "react";
 import { useRequisitionStore } from "../../stores/requisitionStore";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [btnText, setBtnText] = useState("Place Order");
   const [disable, setDisable] = useState(false);
-
+  const navigate = useNavigate();
   const callDeleteCartItemAPI = useCartStore(
     (state) => state.deleteCartItemAPI
   );
@@ -48,6 +49,7 @@ const Cart = () => {
     setDisable(true);
     sessionStorage.removeItem("cartItems");
     setCartItems([]);
+    navigate("/orders");
   };
 
   return (
@@ -96,13 +98,13 @@ const Cart = () => {
                       <div className="col-span-3 pt-1 pl-6 text-black font-light"></div>
                       <div className="col-span-2 pt-1 pl-6 text-neutral-400 ">
                         Quantity:
-                        <span className="text-black font-light">
+                        <span className="text-black font-light pl-1">
                           {cartItem.requiredQuantity.amount}
                         </span>
                       </div>
                       <div className="col-span-2 pt-1 pl-6 text-neutral-400">
                         Price:{" "}
-                        <span className="text-black font-light">
+                        <span className="text-black font-light pl-1">
                           ₹{50 * cartItem.requiredQuantity.amount}{" "}
                         </span>
                       </div>
@@ -128,8 +130,16 @@ const Cart = () => {
                 <hr className="ml-6 mr-8  bg-neutral-500 h-[2px]" />
               </div>
               <div className=" bg-neutral-100 grid grid-cols-12 pt-4 pb-4 ">
-                <div className="col-start-9 col-span-2  bg-neutral-100 ">
-                  <span className="text-neutral-400 text-lg">
+                <div className="col-span-8 ml-5">
+                  <button
+                    className="bg-red-400 px-3 py-2 mt-1 ml-2 rounded-lg  hover:bg-red-600 hover:text-white"
+                    onClick={() => navigate("/shopsForCustomer")}
+                  >
+                    Back
+                  </button>
+                </div>
+                <div className="col-start-9 col-span-2  bg-neutral-100 py-3">
+                  <span className="text-neutral-400 text-lg mt-2">
                     Please Pay{" "}
                     <span className="text-black font-medium">
                       {" "}
@@ -143,7 +153,7 @@ const Cart = () => {
                 <div className="col-span-2">
                   <button
                     id="placeOrder"
-                    className="bg-teal-400 px-3 mt-1 ml-2 rounded-full hover:bg-teal-600 hover:text-white"
+                    className="bg-teal-400 px-3 py-2 mt-1 ml-2 rounded-lg hover:bg-teal-600 hover:text-white"
                     onClick={addRequisition}
                     disabled={disable}
                   >

@@ -92,6 +92,7 @@ const ShopItemsForm = (props) => {
     setValue("availableQuantity.amount", shopitem.availableQuantity["amount"]);
     setValue("availableQuantity.unit", shopitem.availableQuantity["unit"]);
   }, [shopitemId, shopitem._id]);
+
   const handleKeyPress = (event) => {
     const keyCode = event.keyCode || event.which;
     const key = String.fromCharCode(keyCode);
@@ -187,9 +188,9 @@ const ShopItemsForm = (props) => {
                     <div className="form-outline mb-1 ">
                       <input
                         type="text"
-                        placeholder="Kg"
-                        onKeyPress={handleKeyPress}
-                        className="border rounded-lg w-[100px] h-9 pl-8 mr-7 border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
+                        placeholder="Kg / No / Ltr"
+                        onKeyDown={handleKeyPress}
+                        className="border rounded-lg w-[100px] h-9 pl-2 mr-7 border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                         {...register("quantityAddition.unit")}
                       />
                     </div>
@@ -206,9 +207,9 @@ const ShopItemsForm = (props) => {
                     <div className="form-outline mb-1 ">
                       <input
                         type="text"
-                        placeholder="Kg"
-                        onKeyPress={handleKeyPress}
-                        className="border rounded-lg w-[100px] h-9 pl-8  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
+                        placeholder="Kg / No / Ltr"
+                        onKeyDown={handleKeyPress}
+                        className="border rounded-lg w-[100px] h-9 pl-2  border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500"
                         {...register("availableQuantity.unit")}
                       />
                     </div>

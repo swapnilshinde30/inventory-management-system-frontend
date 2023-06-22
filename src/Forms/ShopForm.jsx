@@ -75,6 +75,14 @@ const ShopForm = (props) => {
     navigate("/shops");
     reset();
   };
+  const handleKeyPress = (event) => {
+    const keyCode = event.keyCode || event.which;
+    const key = String.fromCharCode(keyCode);
+    const regex = /^[A-Za-z\s]+$/;
+    if (!regex.test(key) && keyCode !== 8) {
+      event.preventDefault();
+    }
+  };
   useEffect(() => {
     callgetAllCategoriesAPI();
     callgetAllUsersAPI();
@@ -125,42 +133,56 @@ const ShopForm = (props) => {
                 </div>
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                   <div className="mx-7 space-y-2 my-5">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col w-full items-start">
                       <span className="text-gray-500 text-base">Name:</span>
-                      <input
-                        type="text"
-                        placeholder="Name"
-                        className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                        {...register("name")}
-                      />
+                      <div className="flex items-center">
+                        <input
+                          type="text"
+                          placeholder="Name"
+                          onKeyDown={handleKeyPress}
+                          className="w-[455px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                          {...register("name")}
+                        />
+                        <span id="compulsory" className="text-red-500 ml-1">
+                          *
+                        </span>
+                      </div>
                       <p className="text-red-500">{errors.name?.message}</p>
                     </div>
 
-                    <div className="flex space-x-2 my-5">
-                      <div className="flex flex-col">
+                    <div className="flex w-full space-x-2 my-5">
+                      <div className="flex flex-col w-1/2 items-start">
                         <span className="text-gray-500 text-base">
                           Address Line 1:
                         </span>
-                        <input
-                          type="text"
-                          placeholder="Address Line 1"
-                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("addressLine1")}
-                        />
+                        <div className="flex items-center">
+                          <input
+                            type="text"
+                            placeholder="Address Line 1"
+                            className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            {...register("addressLine1")}
+                          />
+                          <span id="compulsory" className="text-red-500 ml-1">
+                            *
+                          </span>
+                        </div>
                         <p className="text-red-500">
                           {errors.addressLine1?.message}
                         </p>
                       </div>
-                      <div className="flex flex-col">
+                      <div className="flex w-1/2 flex-col">
                         <span className="text-gray-500 text-base">
                           Address Line 2:
                         </span>
-                        <input
-                          type="text"
-                          placeholder="Address Line 2"
-                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("addressLine2")}
-                        />
+                        <div className="flex items-center">
+                          <input
+                            type="text"
+                            placeholder="Address Line 2"
+                            className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            {...register("addressLine2")}
+                          />
+                          <span className="text-red-500 ml-1">*</span>
+                        </div>
                         <p className="text-red-500">
                           {errors.addressLine2?.message}
                         </p>
@@ -169,46 +191,59 @@ const ShopForm = (props) => {
                     <div className="flex space-x-2 my-5">
                       <div className="flex flex-col">
                         <span className="text-gray-500 text-base">Area:</span>
-                        <input
-                          type="text"
-                          placeholder="Area"
-                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("area")}
-                        />
+                        <div className="flex items-center">
+                          <input
+                            type="text"
+                            placeholder="Area"
+                            className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            {...register("area")}
+                          />
+                          <span className="text-red-500 ml-1">*</span>
+                        </div>
                         <p className="text-red-500">{errors.area?.message}</p>
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500 text-base">City:</span>
-                        <input
-                          type="text"
-                          placeholder="City"
-                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("city")}
-                        />
+                        <div className="flex items-center">
+                          <input
+                            type="text"
+                            placeholder="City"
+                            className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            {...register("city")}
+                          />
+                          <span className="text-red-500 ml-1">*</span>
+                        </div>
                         <p className="text-red-500">{errors.city?.message}</p>
                       </div>
                     </div>
                     <div className="flex space-x-2 my-5">
                       <div className="flex flex-col">
                         <span className="text-gray-500 text-base">State:</span>
-                        <input
-                          type="text"
-                          placeholder="State"
-                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("state")}
-                        />
+                        <div className="flex items-center">
+                          <input
+                            type="text"
+                            placeholder="State"
+                            onKeyDown={handleKeyPress}
+                            className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            {...register("state")}
+                          />
+                          <span className="text-red-500 ml-1">*</span>
+                        </div>
                         <p className="text-red-500">{errors.state?.message}</p>
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500 text-base">
                           Zipcode:
                         </span>
-                        <input
-                          type="text"
-                          placeholder="ZipCode"
-                          className="w-[224px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("zipcode")}
-                        />
+                        <div className="flex items-center">
+                          <input
+                            type="text"
+                            placeholder="ZipCode"
+                            className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            {...register("zipcode")}
+                          />
+                          <span className="text-red-500 ml-1">*</span>
+                        </div>
                         <p className="text-red-500">
                           {errors.zipcode?.message}
                         </p>
@@ -216,25 +251,31 @@ const ShopForm = (props) => {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-gray-500 text-base">Category:</span>
-                      <select
-                        id="Category"
-                        className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md appearance-none"
-                        {...register("category")}
-                      >
-                        {" "}
-                        <option className="" value={""} hidden>
-                          Select Category
-                        </option>
-                        {categories.map((category) => (
-                          <option
-                            className="text-gray-500 text-base"
-                            key={category._id}
-                            value={category._id}
+                      <div className="flex items-center">
+                        <div>
+                          <select
+                            id="Category"
+                            className="w-[455px]  py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md appearance-none"
+                            {...register("category")}
                           >
-                            {category.name}
-                          </option>
-                        ))}
-                      </select>
+                            {" "}
+                            <option className="" value={""} hidden>
+                              Select Category
+                            </option>
+                            {categories.map((category) => (
+                              <option
+                                className="text-gray-500 text-base"
+                                key={category._id}
+                                value={category._id}
+                              >
+                                {category.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <span className="text-red-500 ml-1">*</span>
+                      </div>
+
                       <p className="text-red-500">{errors.category?.message}</p>
                     </div>
 
@@ -243,19 +284,24 @@ const ShopForm = (props) => {
                         Contact Person:
                       </span>
                       <div className="flex space-x-2">
-                        <input
-                          type="text"
-                          placeholder="Name"
-                          className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("contactPerson.name")}
-                        />
+                        <div className="flex items-center">
+                          <input
+                            type="text"
+                            placeholder="Name"
+                            className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            onKeyDown={handleKeyPress}
+                            {...register("contactPerson.name")}
+                          />
+                          <span className="text-red-500 ml-1">*</span>
 
-                        <input
-                          type="text"
-                          placeholder="Phone"
-                          className="w-full py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
-                          {...register("contactPerson.phone")}
-                        />
+                          <input
+                            type="text"
+                            placeholder="Phone"
+                            className="w-[218px] ml-2 py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                            {...register("contactPerson.phone")}
+                          />
+                          <span className="text-red-500 ml-1">*</span>
+                        </div>
                       </div>
                     </div>
                   </div>
