@@ -4,10 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useItemClassStore } from "../../stores/itemClasseStore";
 import { Link, useNavigate } from "react-router-dom";
 import ItemClassesForm from "../../Forms/ItemClassesForm";
+import ConfirmDeleteRecord from "../../Forms/ConfirmDeleteRecord";
 
 const ItemClasses = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
+  const [showModalCDR, setShowModalCDR] = useState(false);
+  const [id, setId] = useState(null);
   const callGetAllItemClasses = useItemClassStore(
     (state) => state.getAllItemClassesAPI
   );
@@ -20,6 +23,10 @@ const ItemClasses = () => {
   useEffect(() => {
     callGetAllItemClasses();
   }, []);
+  const handleDelete = (id) => {
+    setId(id);
+    setShowModalCDR(true);
+  };
 
   const filteredItemClasses = itemClasses.filter((itemclass) => {
     if (searchField === "") {
@@ -120,7 +127,8 @@ const ItemClasses = () => {
                   >
                     <button
                       className="hover:font-bold "
-                      onClick={() => callDeleteItemClassAPI(itemclass._id)}
+                      // onClick={() => callDeleteItemClassAPI(itemclass._id)}
+                      onClick={() => handleDelete(itemclass._id)}
                     >
                       Delete
                     </button>
@@ -144,6 +152,12 @@ const ItemClasses = () => {
         </div>
       </div>
       <ItemClassesForm showModal={showModal} setShowModal={setShowModal} />
+      <ConfirmDeleteRecord
+        showModalCDR={showModalCDR}
+        setShowModalCDR={setShowModalCDR}
+        id={id}
+        callDeleteAPI={callDeleteItemClassAPI}
+      />
     </>
   );
 };

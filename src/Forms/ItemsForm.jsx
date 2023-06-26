@@ -55,6 +55,9 @@ const ItemsForm = (props) => {
     reset();
   };
   useEffect(() => {
+    setValue("name", "");
+    setValue("itemClass", "");
+    setValue("description", "");
     if (!itemId) return;
     callGetAllItemClassesAPI();
     callGetItemAPI(itemId);
@@ -95,7 +98,12 @@ const ItemsForm = (props) => {
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                   <div className="flex mx-7 space-x-2 my-5">
                     <div className="flex flex-col">
-                      <span className="text-gray-500">Name:</span>
+                      <span className="text-gray-500">
+                        Name:{" "}
+                        <span id="compulsory" className="text-red-500">
+                          *
+                        </span>
+                      </span>
                       <input
                         type="text"
                         placeholder="Name"
@@ -105,12 +113,18 @@ const ItemsForm = (props) => {
                       <p className="text-red-500">{errors.name?.message}</p>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-gray-500">Item Class:</span>
+                      <span className="text-gray-500">
+                        Item Class:{" "}
+                        <span id="compulsory" className="text-red-500">
+                          *
+                        </span>
+                      </span>
                       <select
                         id="itemClasses"
                         className="w-[220px] py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md appearance-none"
                         {...register("itemClass")}
                       >
+                        {" "}
                         <option value={""} hidden>
                           Item Class
                         </option>
@@ -127,7 +141,12 @@ const ItemsForm = (props) => {
                   </div>
                   <div className="mx-5 space-x-2 my-2">
                     {" "}
-                    <span className="ml-2 text-gray-500">Description:</span>
+                    <span className="ml-2 text-gray-500">
+                      Description:{" "}
+                      <span id="compulsory" className="text-red-500">
+                        *
+                      </span>
+                    </span>
                     <input
                       type="text"
                       placeholder="Description"

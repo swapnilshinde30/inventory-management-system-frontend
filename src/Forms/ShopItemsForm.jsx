@@ -14,6 +14,9 @@ import { useState } from "react";
 
 const schema = yup.object().shape({
   shop: yup.string().required("Shop is required"),
+  category: yup.string().required("Category is required"),
+  itemClass: yup.string().required("ItemClass is required"),
+  item: yup.string().required("Item is required"),
 
   quantityAddition: yup.object().shape({
     amount: yup.number().required(),
@@ -183,9 +186,12 @@ const ShopItemsForm = (props) => {
                 </div>
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                   <div className="my-5 mx-7">
+                    <span className="text-gray-500 text-base">
+                      Shop:<span className="text-red-500">*</span>
+                    </span>
                     <select
                       id="shops"
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
+                      className="w-full py-2 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
                       {...register("shop")}
                     >
                       {" "}
@@ -202,10 +208,13 @@ const ShopItemsForm = (props) => {
                   </div>
 
                   <div className="my-2 mx-7">
+                    <span className="text-gray-500 text-base">
+                      Category:<span className="text-red-500">*</span>
+                    </span>
                     <select
                       id="category"
                       {...register("category")}
-                      className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
+                      className="w-full py-2 px-3 mb-1 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     >
                       {" "}
@@ -218,13 +227,19 @@ const ShopItemsForm = (props) => {
                         </option>
                       ))}
                     </select>
+                    <p className="text-red-500 mb-3">
+                      {errors.category?.message}
+                    </p>
                   </div>
 
                   <div className="my-2 mx-7">
+                    <span className="text-gray-500 text-base">
+                      ItemClass:<span className="text-red-500">*</span>
+                    </span>
                     <select
                       id="itemClass"
                       {...register("itemClass")}
-                      className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
+                      className="w-full py-2 px-3 mb-1 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
                       onChange={(e) => setSelectedItemClass(e.target.value)}
                     >
                       {" "}
@@ -241,12 +256,18 @@ const ShopItemsForm = (props) => {
                           </option>
                         ))}
                     </select>
+                    <p className="text-red-500 mb-3">
+                      {errors.itemClass?.message}
+                    </p>
                   </div>
 
                   <div className="my-2 mx-7">
+                    <span className="text-gray-500 text-base">
+                      Item:<span className="text-red-500">*</span>
+                    </span>
                     <select
                       id="item"
-                      className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
+                      className="w-full py-2 px-3 mb-1 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
                       {...register("item")}
                     >
                       {" "}
@@ -266,16 +287,19 @@ const ShopItemsForm = (props) => {
                           </option>
                         ))}
                     </select>
+                    <p className="text-red-500 mb-3">{errors.item?.message}</p>
                   </div>
                   <div className="flex flex-row">
                     <div className="ml-[50px]">
                       <p className="text-xl font-semibold text-emerald-500">
                         Quantity Addition
+                        <span className="text-red-500">*</span>
                       </p>
                     </div>
                     <div className="ml-[70px]">
                       <p className="text-xl font-semibold text-emerald-500">
                         Available Quantity
+                        <span className="text-red-500">*</span>
                       </p>
                     </div>
                   </div>

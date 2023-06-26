@@ -3,8 +3,12 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
 import CategoryForm from "../../Forms/CategoryForm";
+import ConfirmDeleteRecord from "../../Forms/ConfirmDeleteRecord";
 const Categories = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalCDR, setShowModalCDR] = useState(false);
+  const [id, setId] = useState(null);
+  // const [deleteMethod, setDeleteMethod] = useState("");
   const [searchField, setSearchField] = useState("");
   const getAllCategories = useCategoryStore(
     (state) => state.getAllCategoriesAPI
@@ -20,6 +24,10 @@ const Categories = () => {
   useEffect(() => {
     getAllCategories();
   }, []);
+  const handleDelete = (id) => {
+    setId(id);
+    setShowModalCDR(true);
+  };
 
   const filteredCategories = categories.filter((categorie) => {
     if (searchField === "") {
@@ -123,7 +131,8 @@ const Categories = () => {
                   >
                     <button
                       className="hover:font-bold "
-                      onClick={() => callDeleteCategoryAPI(category._id)}
+                      // onClick={() => callDeleteCategoryAPI(category._id)}
+                      onClick={() => handleDelete(category._id)}
                     >
                       Delete
                     </button>
@@ -151,6 +160,12 @@ const Categories = () => {
         </div>
       </div>
       <CategoryForm showModal={showModal} setShowModal={setShowModal} />
+      <ConfirmDeleteRecord
+        showModalCDR={showModalCDR}
+        setShowModalCDR={setShowModalCDR}
+        id={id}
+        callDeleteAPI={callDeleteCategoryAPI}
+      />
     </>
   );
 };

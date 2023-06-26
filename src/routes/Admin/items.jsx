@@ -4,10 +4,13 @@ import { useItemStore } from "../../stores/itemStore";
 import { useItemClassStore } from "../../stores/itemClasseStore";
 import ItemsForm from "../../Forms/ItemsForm";
 import { Link } from "react-router-dom";
+import ConfirmDeleteRecord from "../../Forms/ConfirmDeleteRecord";
 
 const Items = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
+  const [showModalCDR, setShowModalCDR] = useState(false);
+  const [id, setId] = useState(null);
   const callGetAllItems = useItemStore((state) => state.getAllItemsAPI);
   const items = useItemStore((state) => state.items);
   const callGetAllItemClasses = useItemClassStore(
@@ -32,6 +35,10 @@ const Items = () => {
       return itemclass;
     }
   });
+  const handleDelete = (id) => {
+    setId(id);
+    setShowModalCDR(true);
+  };
 
   let count = 0;
 
@@ -160,7 +167,8 @@ const Items = () => {
                                     <button
                                       className="hover:font-bold "
                                       onClick={() =>
-                                        callDeleteItemAPI(item._id)
+                                        // callDeleteItemAPI(item._id)
+                                        handleDelete(item._id)
                                       }
                                     >
                                       Delete
@@ -193,6 +201,12 @@ const Items = () => {
         </div>
       </div>
       <ItemsForm showModal={showModal} setShowModal={setShowModal} />
+      <ConfirmDeleteRecord
+        showModalCDR={showModalCDR}
+        setShowModalCDR={setShowModalCDR}
+        id={id}
+        callDeleteAPI={callDeleteItemAPI}
+      />
     </>
   );
 };

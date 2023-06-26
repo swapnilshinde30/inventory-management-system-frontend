@@ -6,9 +6,14 @@ import { useEffect, useState } from "react";
 import EditUserForm from "../../Forms/EditUserForm";
 import { useUserStore } from "../../stores/userStore";
 import { useNavigate } from "react-router-dom";
+import ConfirmDelete from "../../Forms/ConfirmDelete";
 
 const Users = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalCD, setShowModalCD] = useState(false);
+  const [id, setId] = useState(null);
+  const [status, setStatus] = useState("");
+
   const [searchField, setSearchField] = useState("");
   const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
@@ -41,7 +46,12 @@ const Users = () => {
     { id: 3, name: "Customer", role: "customer" },
   ];
   let a = Math.random();
-  let data = {};
+
+  const handleModal = (id, activeStatus) => {
+    setShowModalCD(true);
+    setId(id);
+    setStatus(activeStatus);
+  };
   return (
     <>
       {/* <NavBar /> */}
@@ -155,11 +165,13 @@ const Users = () => {
                   <button
                     type="button"
                     className="mt-2 w-8 bg-white rounded-full h-8 hover:bg-teal-500"
-                    onClick={() => (
-                      (data._id = user._id),
-                      (data.isActive = user.isActive),
-                      callEditUserAPI(data)
-                    )}
+                    onClick={
+                      () => handleModal(user._id, user.isActive)
+                      // setShowModalCD(true)
+                      // (data._id = user._id),
+                      // (data.isActive = user.isActive),
+                      // callEditUserAPI(data)
+                    }
                   >
                     <AiOutlineDelete className="ml-[6px] h-5 w-5 text-teal-500 hover:scale-110 transition-all hover:text-white" />
                   </button>
@@ -170,6 +182,12 @@ const Users = () => {
         </div>
       </div>
       <EditUserForm showModal={showModal} setShowModal={setShowModal} />
+      <ConfirmDelete
+        showModalCD={showModalCD}
+        setShowModalCD={setShowModalCD}
+        id={id}
+        status={status}
+      />
     </>
   );
 };

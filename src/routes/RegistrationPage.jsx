@@ -61,7 +61,7 @@ const RegistrationForm = () => {
           <form onSubmit={handleSubmit(onsubmitHandler)}>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
-                First name
+                First name: <span className="text-red-500">*</span>
               </label>
               <div className="flex">
                 <div className="z-10 pl-3 text-center pointer-events-none flex items-center justify-center">
@@ -74,13 +74,12 @@ const RegistrationForm = () => {
                   onKeyDown={handleKeyPress}
                   {...register("firstName")}
                 />
-                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.firstName?.message}</p>
             </div>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
-                Last name
+                Last name: <span className="text-red-500">*</span>
               </label>
               <div className="flex">
                 <div className="z-10 pl-3 text-center pointer-events-none flex items-center justify-center">
@@ -93,13 +92,12 @@ const RegistrationForm = () => {
                   onKeyDown={handleKeyPress}
                   {...register("lastName")}
                 />
-                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.lastName?.message}</p>
             </div>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
-                Email
+                Email: <span className="text-red-500">*</span>
               </label>
               <div className="flex">
                 <div className="z-10 pl-3 text-center pointer-events-none flex items-center justify-center">
@@ -111,13 +109,12 @@ const RegistrationForm = () => {
                   placeholder="Email"
                   {...register("email")}
                 />
-                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.email?.message}</p>
             </div>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
-                Phone
+                Phone: <span className="text-red-500">*</span>
               </label>
               <div className="flex">
                 <div className="z-10 pl-3 text-center pointer-events-none flex items-center justify-center">
@@ -129,13 +126,12 @@ const RegistrationForm = () => {
                   placeholder="Phone"
                   {...register("phone")}
                 />
-                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.phone?.message}</p>
             </div>
             <div className="px-3 mb-1">
               <label htmlFor="" className="text-base">
-                User name
+                User name: <span className="text-red-500">*</span>
               </label>
               <div className="flex">
                 <div className="z-10 pl-3 text-center pointer-events-none flex items-center justify-center">
@@ -147,13 +143,12 @@ const RegistrationForm = () => {
                   placeholder="User Name"
                   {...register("userName")}
                 />
-                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.userName?.message}</p>
             </div>
             <div className="px-3 mb-5">
               <label htmlFor="" className="text-base">
-                Password
+                Password: <span className="text-red-500">*</span>
               </label>
               <div className="flex">
                 <div className="z-10 pl-3 text-center pointer-events-none flex items-center justify-center">
@@ -165,19 +160,17 @@ const RegistrationForm = () => {
                   placeholder="Password"
                   {...register("password")}
                 />
-                <span className="text-red-500 pl-1">*</span>
               </div>
               <p className="text-red-500">{errors.password?.message}</p>
             </div>
 
             <div className="flex ">
               <label htmlFor="" className="text-base ml-3">
-                Select Role:
+                Select Role: <span className="text-red-500">*</span>
               </label>
-              <span className="text-red-500 pl-1 mr-2">*</span>
 
               {/* <!--First radio--> */}
-              <div className="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
+              <div className="ml-5 mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
                 <input
                   className="relative float-left -ml-[1.5rem] mr-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-neutral-300 before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-primary checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-primary checked:after:bg-primary checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-primary checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:border-neutral-600 dark:checked:border-primary dark:checked:after:border-primary dark:checked:after:bg-primary dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:border-primary dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
                   type="radio"

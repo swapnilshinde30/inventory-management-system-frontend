@@ -56,6 +56,8 @@ const ItemClassesForm = (props) => {
     reset();
   };
   useEffect(() => {
+    setValue("name", "");
+    setValue("category", "");
     if (!itemClassId) return;
     callgetAllCategoriesAPI();
     callGetItemClassAPI(itemClassId);
@@ -95,7 +97,12 @@ const ItemClassesForm = (props) => {
                 </div>
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                   <div className="mx-7 my-5">
-                    <span className="text-gray-500">Item Class Name:</span>
+                    <span className="text-gray-500">
+                      Item Class Name:{" "}
+                      <span id="compulsory" className="text-red-500">
+                        *
+                      </span>
+                    </span>
                     <input
                       type="text"
                       placeholder="Name"
@@ -103,10 +110,15 @@ const ItemClassesForm = (props) => {
                       {...register("name")}
                     />
                     <p className="text-red-500 mb-3">{errors.name?.message}</p>
-                    <span className="text-gray-500">Category:</span>
+                    <span className="text-gray-500">
+                      Category:{" "}
+                      <span id="compulsory" className="text-red-500">
+                        *
+                      </span>
+                    </span>
                     <select
                       id="itemClasses"
-                      className="w-full py-2 px-3 mb-3 appearance-none shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
+                      className="w-full py-2 px-3 mb-1 appearance-none shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                       {...register("category")}
                     >
                       {" "}

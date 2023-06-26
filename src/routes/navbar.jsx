@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
+import EditUserForm from "../Forms/EditUserForm";
 const navLinkAdmin = [
   { id: 1, name: "CATEGORIES", pageLink: "/categories", role: "admin" },
   { id: 2, name: "ITEMCLASSES", pageLink: "/itemclasses", role: "admin" },
@@ -30,7 +31,7 @@ const NavLinksShopkeeper = [
 ];
 
 export default function NavBar() {
-  const [showModal, setShowModal] = useState(false);
+  const [showModalUser, setShowModalUser] = useState(false);
   const [showModalp, setShowModalp] = useState(false);
   const [navLinkNames, setNavLinkNames] = useState([]);
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -221,9 +222,10 @@ export default function NavBar() {
                           <NavLink to={`/users/${user._id}`}>
                             <FiEdit
                               className="absolute right-5 top-5 text-lg cursor-pointer"
-                              onClick={() => (
-                                setShowModalp(false), setShowModal(true)
-                              )}
+                              onClick={() => {
+                                setShowModalp(false);
+                                setShowModalUser(true);
+                              }}
                             />
                           </NavLink>
                         </div>
@@ -273,7 +275,11 @@ export default function NavBar() {
           </div>
         </nav>
       ) : null}
-      {/* <EditUserForm showModal={showModal} setShowModal={setShowModal} /> */}
+      <EditUserForm
+        userId={user._id}
+        showModal={showModalUser}
+        setShowModal={setShowModalUser}
+      />
     </>
   );
 }

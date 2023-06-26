@@ -8,9 +8,11 @@ import { useItemClassStore } from "../../stores/itemClasseStore";
 import { useItemStore } from "../../stores/itemStore";
 import { useShopStore } from "../../stores/shopStore";
 
+
 const ShopItems1 = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
+
   const [shop, setShop] = useState("");
   const callGetAllShopItemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
@@ -170,6 +172,7 @@ const ShopItems1 = () => {
                     <button
                       className="hover:font-bold "
                       onClick={() => callDeleteAshopitemAPI(item._id)}
+                
                     >
                       Delete
                     </button>
@@ -202,6 +205,7 @@ const ShopItems1 = () => {
         </div>
       </div>
       <ShopItemsForm showModal={showModal} setShowModal={setShowModal} />
+   
     </>
   );
 };

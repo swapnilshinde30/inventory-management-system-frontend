@@ -7,10 +7,13 @@ import ShopItemsForm from "../../Forms/ShopItemsForm";
 import { useItemClassStore } from "../../stores/itemClasseStore";
 import { useItemStore } from "../../stores/itemStore";
 import { useShopStore } from "../../stores/shopStore";
+import ConfirmDeleteRecord from "../../Forms/ConfirmDeleteRecord";
 
 const ShopItems = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
+  const [showModalCDR, setShowModalCDR] = useState(false);
+  const [id, setId] = useState(null);
   const [shop, setShop] = useState("");
   const callGetAllShopItemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
@@ -31,6 +34,11 @@ const ShopItems = () => {
   const callDeleteAshopitemAPI = useShopitemStore(
     (state) => state.deleteShopitemAPI
   );
+
+  const handleDelete = (id) => {
+    setId(id);
+    setShowModalCDR(true);
+  };
 
   const filteredShopItems = shopitems.filter((shopitem) => {
     if (searchField === "") {
@@ -158,7 +166,8 @@ const ShopItems = () => {
                   >
                     <button
                       className="hover:font-bold "
-                      onClick={() => callDeleteAshopitemAPI(item._id)}
+                      // onClick={() => callDeleteAshopitemAPI(item._id)}
+                      onClick={() => handleDelete(item._id)}
                     >
                       Delete
                     </button>
@@ -191,6 +200,12 @@ const ShopItems = () => {
         </div>
       </div>
       <ShopItemsForm showModal={showModal} setShowModal={setShowModal} />
+      <ConfirmDeleteRecord
+        showModalCDR={showModalCDR}
+        setShowModalCDR={setShowModalCDR}
+        id={id}
+        callDeleteAPI={callDeleteAshopitemAPI}
+      />
     </>
   );
 };

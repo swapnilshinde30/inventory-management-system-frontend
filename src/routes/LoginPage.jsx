@@ -42,6 +42,10 @@ function LoginPage() {
     data.strategy = "local";
     try {
       const searchUser = users.find((u) => u.userName === data.userName);
+      if (!searchUser) {
+        toast.error("User is not present !");
+        return;
+      }
       if (searchUser.isActive === false) {
         toast.error("USer is inactive!");
       } else {
@@ -49,7 +53,9 @@ function LoginPage() {
         toast.success("Login successful!");
       }
     } catch (err) {
-      toast.error("Invalid Login, Please Try Again");
+      console.error(err);
+      // toast.error("Invalid Login, Please Try Again");
+      toast.error(err.response.data.message);
     }
   };
   useEffect(() => {

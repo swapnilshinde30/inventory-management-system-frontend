@@ -134,7 +134,12 @@ const ShopForm = (props) => {
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                   <div className="mx-7 space-y-2 my-5">
                     <div className="flex flex-col w-full items-start">
-                      <span className="text-gray-500 text-base">Name:</span>
+                      <span className="text-gray-500 text-base">
+                        Name:{" "}
+                        <span id="compulsory" className="text-red-500">
+                          *
+                        </span>
+                      </span>
                       <div className="flex items-center">
                         <input
                           type="text"
@@ -143,9 +148,6 @@ const ShopForm = (props) => {
                           className="w-[455px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                           {...register("name")}
                         />
-                        <span id="compulsory" className="text-red-500 ml-1">
-                          *
-                        </span>
                       </div>
                       <p className="text-red-500">{errors.name?.message}</p>
                     </div>
@@ -153,7 +155,10 @@ const ShopForm = (props) => {
                     <div className="flex w-full space-x-2 my-5">
                       <div className="flex flex-col w-1/2 items-start">
                         <span className="text-gray-500 text-base">
-                          Address Line 1:
+                          Address Line 1:{" "}
+                          <span id="compulsory" className="text-red-500">
+                            *
+                          </span>
                         </span>
                         <div className="flex items-center">
                           <input
@@ -162,9 +167,6 @@ const ShopForm = (props) => {
                             className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             {...register("addressLine1")}
                           />
-                          <span id="compulsory" className="text-red-500 ml-1">
-                            *
-                          </span>
                         </div>
                         <p className="text-red-500">
                           {errors.addressLine1?.message}
@@ -172,7 +174,8 @@ const ShopForm = (props) => {
                       </div>
                       <div className="flex w-1/2 flex-col">
                         <span className="text-gray-500 text-base">
-                          Address Line 2:
+                          Address Line 2:{" "}
+                          <span className="text-red-500">*</span>
                         </span>
                         <div className="flex items-center">
                           <input
@@ -181,7 +184,6 @@ const ShopForm = (props) => {
                             className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             {...register("addressLine2")}
                           />
-                          <span className="text-red-500 ml-1">*</span>
                         </div>
                         <p className="text-red-500">
                           {errors.addressLine2?.message}
@@ -190,7 +192,9 @@ const ShopForm = (props) => {
                     </div>
                     <div className="flex space-x-2 my-5">
                       <div className="flex flex-col">
-                        <span className="text-gray-500 text-base">Area:</span>
+                        <span className="text-gray-500 text-base">
+                          Area: <span className="text-red-500">*</span>
+                        </span>
                         <div className="flex items-center">
                           <input
                             type="text"
@@ -198,12 +202,13 @@ const ShopForm = (props) => {
                             className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             {...register("area")}
                           />
-                          <span className="text-red-500 ml-1">*</span>
                         </div>
                         <p className="text-red-500">{errors.area?.message}</p>
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-gray-500 text-base">City:</span>
+                        <span className="text-gray-500 text-base">
+                          City: <span className="text-red-500">*</span>
+                        </span>
                         <div className="flex items-center">
                           <input
                             type="text"
@@ -211,14 +216,15 @@ const ShopForm = (props) => {
                             className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             {...register("city")}
                           />
-                          <span className="text-red-500 ml-1">*</span>
                         </div>
                         <p className="text-red-500">{errors.city?.message}</p>
                       </div>
                     </div>
                     <div className="flex space-x-2 my-5">
                       <div className="flex flex-col">
-                        <span className="text-gray-500 text-base">State:</span>
+                        <span className="text-gray-500 text-base">
+                          State: <span className="text-red-500">*</span>
+                        </span>
                         <div className="flex items-center">
                           <input
                             type="text"
@@ -227,13 +233,12 @@ const ShopForm = (props) => {
                             className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             {...register("state")}
                           />
-                          <span className="text-red-500 ml-1">*</span>
                         </div>
                         <p className="text-red-500">{errors.state?.message}</p>
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500 text-base">
-                          Zipcode:
+                          Zipcode: <span className="text-red-500">*</span>
                         </span>
                         <div className="flex items-center">
                           <input
@@ -242,7 +247,6 @@ const ShopForm = (props) => {
                             className="w-[218px] py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             {...register("zipcode")}
                           />
-                          <span className="text-red-500 ml-1">*</span>
                         </div>
                         <p className="text-red-500">
                           {errors.zipcode?.message}
@@ -250,7 +254,9 @@ const ShopForm = (props) => {
                       </div>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-gray-500 text-base">Category:</span>
+                      <span className="text-gray-500 text-base">
+                        Category: <span className="text-red-500">*</span>
+                      </span>
                       <div className="flex items-center">
                         <div>
                           <select
@@ -273,7 +279,6 @@ const ShopForm = (props) => {
                             ))}
                           </select>
                         </div>
-                        <span className="text-red-500 ml-1">*</span>
                       </div>
 
                       <p className="text-red-500">{errors.category?.message}</p>
@@ -281,7 +286,7 @@ const ShopForm = (props) => {
 
                     <div className="">
                       <span className="text-gray-500 text-base">
-                        Contact Person:
+                        Contact Person: <span className="text-red-500">*</span>
                       </span>
                       <div className="flex space-x-2">
                         <div className="flex items-center">
@@ -292,7 +297,6 @@ const ShopForm = (props) => {
                             onKeyDown={handleKeyPress}
                             {...register("contactPerson.name")}
                           />
-                          <span className="text-red-500 ml-1">*</span>
 
                           <input
                             type="text"
@@ -300,7 +304,6 @@ const ShopForm = (props) => {
                             className="w-[218px] ml-2 py-1 px-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-md"
                             {...register("contactPerson.phone")}
                           />
-                          <span className="text-red-500 ml-1">*</span>
                         </div>
                       </div>
                     </div>

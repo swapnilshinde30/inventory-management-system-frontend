@@ -49,6 +49,7 @@ const CategoryForm = (props) => {
     reset();
   };
   useEffect(() => {
+    setValue("name", "");
     console.log(categoryId);
     if (!categoryId) return;
     callGetCategoryAPI(categoryId);
@@ -87,7 +88,12 @@ const CategoryForm = (props) => {
                 </div>
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                   <div className="mx-7 my-5">
-                    <span className="text-gray-500">Category Name:</span>
+                    <span className="text-gray-500">
+                      Category Name:{" "}
+                      <span id="compulsory" className="text-red-500">
+                        *
+                      </span>
+                    </span>
                     <input
                       type="text"
                       placeholder="Category Name"

@@ -7,10 +7,13 @@ import React from "react";
 import { useShopStore } from "../../stores/shopStore";
 import ShopForm from "../../Forms/ShopForm";
 import { useUserStore } from "../../stores/userStore";
+import ConfirmDeleteRecord from "../../Forms/ConfirmDeleteRecord";
 
 const Shops = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
+  const [showModalCDR, setShowModalCDR] = useState(false);
+  const [id, setId] = useState(null);
   const navigate = useNavigate();
   const callgetAllShops = useShopStore((state) => state.getAllShopsAPI);
   const shops = useShopStore((state) => state.shops);
@@ -24,6 +27,10 @@ const Shops = () => {
     callgetAllShops(user._id);
   }, []);
 
+  const handleDelete = (id) => {
+    setId(id);
+    setShowModalCDR(true);
+  };
   const filteredShops = shops.filter((shop) => {
     if (searchField === "") {
       return shop;
@@ -127,7 +134,8 @@ const Shops = () => {
                   <button
                     type="button"
                     className="mt-2 w-8 mr-2  bg-white rounded-full h-8  hover:bg-teal-500"
-                    onClick={() => callDeleteShopAPI(shop._id)}
+                    // onClick={() => callDeleteShopAPI(shop._id)}
+                    onClick={() => handleDelete(shop._id)}
                   >
                     <AiOutlineDelete className="ml-[6px] h-5 w-5 text-teal-500  hover:text-white" />
                   </button>
@@ -138,6 +146,12 @@ const Shops = () => {
         </div>
       </div>
       <ShopForm showModal={showModal} setShowModal={setShowModal} />
+      <ConfirmDeleteRecord
+        showModalCDR={showModalCDR}
+        setShowModalCDR={setShowModalCDR}
+        id={id}
+        callDeleteAPI={callDeleteShopAPI}
+      />
     </>
   );
 };
