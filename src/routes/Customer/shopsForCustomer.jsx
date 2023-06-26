@@ -60,7 +60,7 @@ const ShopsForCustomer = () => {
     //  }
   };
 
-  const filteredShopFCust = shopitems.filter((item) => {
+  const filteredShopForCustomer = shopitems.filter((item) => {
     if (searchField === "") {
       return item;
     } else if (
@@ -147,7 +147,7 @@ const ShopsForCustomer = () => {
           ) : null}
 
           <div className="grid grid-cols-1 md:grid-cols-4 ">
-            {filteredShopFCust.map((item) => (
+            {filteredShopForCustomer.map((item) => (
               <>
                 <div
                   key={item._id}

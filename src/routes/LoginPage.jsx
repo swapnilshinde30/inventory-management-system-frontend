@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import SendOTPForm from "../Forms/ForgotPassword";
 import { toast } from "react-toastify";
+import { useUserStore } from "../../src/stores/userStore";
 
 const schema = yup.object().shape({
   userName: yup.string().required(),
@@ -35,17 +36,25 @@ function LoginPage() {
   const token = sessionStorage.getItem("token");
   const errorMessage = useLoginStore((state) => state.error);
 
+  const callGetAllUsersAPI = useUserStore((state) => state.getAllUsersAPI);
+  const users = useUserStore((state) => state.users);
   const onSubmitHandler = async (data) => {
     data.strategy = "local";
     try {
-      await callloginUserAPI(data);
-      toast.success("Login successful!");
+      const searchUser = users.find((u) => u.userName === data.userName);
+      if (searchUser.isActive === false) {
+        toast.error("USer is inactive!");
+      } else {
+        await callloginUserAPI(data);
+        toast.success("Login successful!");
+      }
     } catch (err) {
       toast.error("Invalid Login, Please Try Again");
     }
   };
   useEffect(() => {
     console.log(user);
+    callGetAllUsersAPI();
     if (user === {}) return;
     if (user === null) {
       return;

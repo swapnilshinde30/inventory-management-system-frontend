@@ -37,11 +37,11 @@ export const useCategoryStore = create(
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           };
-          // const response = await axios.get(`${apiEndPoint}/${id}`, config);
-          const response = await axios.get(
-            "http://localhost:3030/categories/" + id,
-            config
-          );
+          const response = await axios.get(`${apiEndPoint}/${id}`, config);
+          // const response = await axios.get(
+          //   "http://localhost:3030/categories/" + id,
+          //   config
+          // );
           console.log(response.data);
           set((state) => {
             state.error = "";
