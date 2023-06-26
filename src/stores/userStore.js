@@ -10,11 +10,22 @@ export const useUserStore = create(
       users: [],
       currentUser: {},
       error: "",
+      totalUsers: 0,
 
-      getAllUsersAPI: async (role) => {
+      getAllUsersAPI: async (data) => {
+        let skip = 0;
+        let pageSize = 10000;
+        let role;
+        if (data && data?.currentPage) {
+          skip = (data.currentPage - 1) * data.pageSize;
+          pageSize = data.pageSize;
+        }
+        if (data && data?.userRole) {
+          role = data.userRole;
+        }
         try {
           const response = await axios.get(apiEndPoint, {
-            params: { role },
+            params: { $limit: pageSize, $skip: skip, role },
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
@@ -48,6 +59,24 @@ export const useUserStore = create(
           });
         }
       },
+
+      getTotalUsersAPI: async (data) => {
+        let role;
+        if (data && data?.userRole) {
+          role = data.userRole;
+        }
+        const config = {
+          params: { role },
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        };
+        const response = await axios.get(apiEndPoint, config);
+        set((state) => {
+          state.totalUsers = response.data.total;
+        });
+      },
+
       addUserAPI: async (payload) => {
         console.log(payload);
         const config = {
@@ -57,10 +86,9 @@ export const useUserStore = create(
         };
         const response = await axios.post(apiEndPoint, payload, config);
 
-          set((state) => { 
-            state.users = [...state.users, response.data];
-          });
-        
+        set((state) => {
+          state.users = [...state.users, response.data];
+        });
       },
 
       deleteUserAPI: async (id) => {

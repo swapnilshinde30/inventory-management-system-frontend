@@ -42,11 +42,45 @@ const ShopItems = () => {
     }
   });
   const user = JSON.parse(sessionStorage.getItem("user"));
+
+  // useEffect(() => {
+  //   callGetAllItemClassesAPI();
+  //   console.log(user);
+  //   if (user._id) {
+  //     callGetAllShopsAPI({ owner: user._id });
+  //   }
+  //   console.log(shops);
+  //   if (shop === "" && shops.length > 0) {
+  //     console.log("here");
+  //     setShop(shops[0]?._id);
+  //   }
+  //   if (shop !== "") callGetAllShopItemsAPI(shop);
+  // }, [callGetAllShopItemsAPI, shopitems.length, shops.length]);
+
   useEffect(() => {
-    callGetAllShopItemsAPI();
     callGetAllItemClassesAPI();
-    callGetAllShopsAPI(user._id);
-  }, [callGetAllShopItemsAPI, shopitems._id]);
+    console.log(user);
+
+    const fetchData = async () => {
+      if (user._id) {
+        await callGetAllShopsAPI({ owner: user._id });
+      }
+
+      if (shops.length > 0) {
+        console.log("here");
+        setShop(shops[0]._id);
+        callGetAllShopItemsAPI(shops[0]._id);
+      }
+    };
+
+    fetchData();
+  }, [
+    callGetAllShopItemsAPI,
+    callGetAllItemClassesAPI,
+    callGetAllShopsAPI,
+    shops.length,
+    user._id,
+  ]);
 
   let count = 0;
 

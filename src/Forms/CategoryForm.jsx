@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useCategoryStore } from "../stores/categoryStore";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   name: yup.string().required("please enter Category"),
@@ -35,9 +36,13 @@ const CategoryForm = (props) => {
   const onSubmitHandler = async (data) => {
     console.log(data);
     if (data._id) {
-      callPatchCategoryAPI(data);
+      callPatchCategoryAPI(data)
+        .then(() => toast.success("Category updated successfully!"))
+        .catch(() => toast.error("Something went wrong!"));
     } else {
-      callAddCategoryAPI(data);
+      callAddCategoryAPI(data)
+        .then(() => toast.success("New Category added successfully!"))
+        .catch(() => toast.error("Something went wrong!"));
     }
     navigate("/categories");
     setShowModal(false);

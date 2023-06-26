@@ -11,11 +11,41 @@ export const useShopStore = create(
       error: "",
       currentShop: {},
 
-      getAllShopsAPI: async (owner, category) => {
-        const data = { owner, category };
+      // getAllShopsAPI: async (owner, category) => {
+      //   const data = { owner, category };
+      //   try {
+      //     const response = await axios.get(apiEndPoint, {
+      //       params: data,
+      //       headers: {
+      //         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      //       },
+      //     });
+      //     console.log(data);
+      //     set((state) => {
+      //       state.error = "";
+      //       state.shops = response.data.data;
+      //     });
+      //   } catch (err) {
+      //     set((state) => {
+      //       state.error = err.response.data.message;
+      //       console.log(err.response.data.message);
+      //     });
+      //   }
+      // },
+
+      getAllShopsAPI: async (data) => {
+        let owner;
+        let category;
+        console.log(data);
+        if (data && data?.owner) {
+          owner = data.owner;
+        }
+        if (data && data?.category) {
+          category = data.category;
+        }
         try {
           const response = await axios.get(apiEndPoint, {
-            params: data,
+            params: { owner, category },
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },

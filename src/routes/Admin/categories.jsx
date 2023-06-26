@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
 import CategoryForm from "../../Forms/CategoryForm";
+import { toast } from "react-toastify";
+
 const Categories = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
@@ -123,7 +125,13 @@ const Categories = () => {
                   >
                     <button
                       className="hover:font-bold "
-                      onClick={() => callDeleteCategoryAPI(category._id)}
+                      onClick={() =>
+                        callDeleteCategoryAPI(category._id)
+                          .then(() =>
+                            toast.warn("Category deleted successfully!")
+                          )
+                          .catch(() => toast.error("Something went wrong!"))
+                      }
                     >
                       Delete
                     </button>
