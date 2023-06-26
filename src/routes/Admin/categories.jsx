@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { useCategoryStore } from "../../stores/categoryStore";
 import CategoryForm from "../../Forms/CategoryForm";
 import ConfirmDeleteRecord from "../../Forms/ConfirmDeleteRecord";
+import { toast } from "react-toastify";
+
 const Categories = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalCDR, setShowModalCDR] = useState(false);

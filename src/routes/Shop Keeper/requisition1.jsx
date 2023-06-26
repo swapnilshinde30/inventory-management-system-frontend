@@ -34,7 +34,7 @@ const Requisitions1 = () => {
   useEffect(() => {
     const fetchData = async () => {
       await getAllRequisitions();
-      await callGetAllShopsAPI(user._id);
+      await callGetAllShopsAPI({ owner: user._id });
     };
 
     fetchData();
@@ -70,7 +70,7 @@ const Requisitions1 = () => {
     }
   }, [requisitions, shops]);
   useEffect(() => {
-    callGetAllShopsAPI(user._id);
+    callGetAllShopsAPI({ owner: user._id });
     console.log(shops);
   }, []);
 

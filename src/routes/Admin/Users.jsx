@@ -7,6 +7,7 @@ import EditUserForm from "../../Forms/EditUserForm";
 import { useUserStore } from "../../stores/userStore";
 import { useNavigate } from "react-router-dom";
 import ConfirmDelete from "../../Forms/ConfirmDelete";
+import Pagination from "../common/pagination";
 
 const Users = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,19 +17,33 @@ const Users = () => {
 
   const [searchField, setSearchField] = useState("");
   const [userRole, setUserRole] = useState("");
+  //for pagination
+  const [pageSize, setPageSize] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const navigate = useNavigate();
   const getAllUsers = useUserStore((state) => state.getAllUsersAPI);
   const users = useUserStore((state) => state.users);
   const calldeleteUserAPI = useUserStore((state) => state.deleteUserAPI);
   const callEditUserAPI = useUserStore((state) => state.editUserAPI);
   const errorMessage = useUserStore((state) => state.error);
+  // for pagination
+  const callGetTotalUsersAPI = useUserStore((state) => state.getTotalUsersAPI);
+  const totalUsers = useUserStore((state) => state.totalUsers);
+
   useEffect(() => {
-    getAllUsers();
-  }, [users.firstName]);
+    if (userRole !== "") {
+      getAllUsers({ currentPage, pageSize, userRole });
+      callGetTotalUsersAPI({ userRole });
+    } else {
+      getAllUsers({ currentPage, pageSize });
+      callGetTotalUsersAPI();
+    }
+    console.log(totalUsers);
+  }, [users.length, currentPage, totalUsers, userRole]);
 
   const handleSelect = (role) => {
     setUserRole(role);
-    getAllUsers(role);
   };
   const filteredUsers = users.filter((user) => {
     if (searchField === "") {
@@ -52,6 +67,17 @@ const Users = () => {
     setId(id);
     setStatus(activeStatus);
   };
+  let data = {};
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+
+    getAllUsers({ currentPage, pageSize });
+  };
+
+  const startIndex = (currentPage - 1) * pageSize + 1;
+  const endIndex = Math.min(startIndex + pageSize - 1, totalUsers);
+
   return (
     <>
       {/* <NavBar /> */}
@@ -178,6 +204,15 @@ const Users = () => {
                 </div>
               </div>
             ))}
+            <div className="absolute bottom-10 right-10">
+              
+              <Pagination
+                totalCount={totalUsers}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
         </div>
       </div>

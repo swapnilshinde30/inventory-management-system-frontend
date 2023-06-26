@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SlClose } from "react-icons/sl";
 import { useRequisitionStore } from "../stores/requisitionStore";
+import { toast } from "react-toastify";
 
 const RequisitionForm = (props) => {
   const { showModal, setShowModal, requisitionDetails } = props;
@@ -49,6 +50,7 @@ const RequisitionForm = (props) => {
 
     try {
       console.log(updatedRequisitions);
+
       updatedRequisitions.map((requisition) => {
         console.log("in map");
         console.log(requisition);
@@ -56,6 +58,7 @@ const RequisitionForm = (props) => {
       });
     } catch (error) {
       console.log(error);
+      toast.error("Something wents wrong!");
     }
 
     const updatedStatus = status === "created" ? "accepted" : "dispatched";
@@ -68,6 +71,11 @@ const RequisitionForm = (props) => {
     } else if (updatedStatus === "dispatched") {
       setTextAccept("Dispatched");
     }
+    console.log(requisitionDetails);
+    if (requisitionDetails.status === "accepted")
+      toast.success("Order is accepted !");
+    else if (requisitionDetails.status === "dispatched")
+      toast.success("Order is dispatched !!");
     setShowModal(false);
   };
 
@@ -94,7 +102,8 @@ const RequisitionForm = (props) => {
     requisitionDetails.status = updatedStatus;
 
     setTextReject("Cancelled");
-
+    if (requisitionDetails.status === "cancelled")
+      toast.error("Order is cancelled!");
     setShowModal(false);
   };
 

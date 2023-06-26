@@ -124,7 +124,9 @@ const CartForm = (props) => {
                   <div className="mx-7 my-5">
                     <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                        <span className="text-gray-500">Shop Item:</span>
+                        <span className="text-gray-500">
+                          Shop Item :<span className="text-red-500">*</span>
+                        </span>
                         <input
                           type="text"
                           id="itemName"
@@ -140,7 +142,8 @@ const CartForm = (props) => {
                       </div>
                       <div className="flex flex-col">
                         <span className="text-gray-500">
-                          Prefered Delivery Date:
+                          Prefered Delivery Date :
+                          <span className="text-red-500">*</span>
                         </span>
                         <input
                           type="date"
@@ -157,7 +160,9 @@ const CartForm = (props) => {
                     </div>
                     <div className="flex mx-2 space-x-2 my-5">
                       <div className="flex flex-col">
-                        <span className="text-gray-500">Amount:</span>
+                        <span className="text-gray-500">
+                          Quantity :<span className="text-red-500">*</span>
+                        </span>
                         <input
                           type="number"
                           placeholder="Quantity"
@@ -170,7 +175,10 @@ const CartForm = (props) => {
                         </p>
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-gray-500"> Unit:</span>
+                        <span className="text-gray-500">
+                          {" "}
+                          Unit:<span className="text-red-500">*</span>
+                        </span>
                         <input
                           type="text"
                           placeholder="Kg / No / Ltr"
