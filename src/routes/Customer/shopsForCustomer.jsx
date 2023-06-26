@@ -160,7 +160,7 @@ const ShopsForCustomer = () => {
                       item.itemName +
                       ".jpg"
                     }
-                    alt="fruits"
+                    alt={item.itemName}
                     className="mt-6 w-32 h-16 hover:scale-110 transition-all duration-500 cursor-pointer"
                   />
 

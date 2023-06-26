@@ -16,13 +16,21 @@ const RequisitionForm = (props) => {
   useEffect(() => {
     if (requisitionDetails && requisitionDetails.status === "created") {
       setTextAccept("Accept");
+      setTextReject("cancel");
     } else if (requisitionDetails && requisitionDetails.status === "accepted") {
       setTextAccept("Accepted");
-    } else if (requisitionDetails && requisitionDetails.status === "dispatched")
-      if (requisitionDetails && requisitionDetails.status === "cancelled") {
-        setTextAccept("Accept");
-        setTextReject("Cancelled");
-      }
+      setTextReject("cancel");
+    } else if (
+      requisitionDetails &&
+      requisitionDetails.status === "dispatched"
+    ) {
+      setTextAccept("Dispatched");
+      setTextReject("cancel");
+    }
+    if (requisitionDetails && requisitionDetails.status === "cancelled") {
+      setTextAccept("Accept");
+      setTextReject("Cancelled");
+    }
   }, [requisitionDetails]);
 
   const handleAcceptRequisition = (data, status, shopitems) => {
@@ -56,7 +64,7 @@ const RequisitionForm = (props) => {
     if (updatedStatus === "created") {
       setTextAccept("Accept");
     } else if (updatedStatus === "accepted") {
-      setTextAccept("Accepted");
+      setTextAccept("Dispatched");
     } else if (updatedStatus === "dispatched") {
       setTextAccept("Dispatched");
     }
@@ -179,41 +187,41 @@ const RequisitionForm = (props) => {
                       </div>
 
                       <div className="flex space-x-[180px]">
-                        {requisitionDetails.status === "created" && (
-                          <button
-                            type="button"
-                            className="ml-10 rounded-full text-black border border-neutral-500 bg-transperent px-6 pb-1 pt-1"
-                            disabled={requisitionDetails.status != "created"}
-                            onClick={() =>
-                              handleRejectRequisition(
-                                requisitionDetails.requisitionIds
-                              )
-                            }
-                          >
-                            {textReject}
-                          </button>
-                        )}
+                        {/* {requisitionDetails.status === "created" && ( */}
+                        <button
+                          type="button"
+                          className="ml-10 rounded-full text-black border border-neutral-500 bg-transperent px-6 pb-1 pt-1"
+                          disabled={requisitionDetails.status != "created"}
+                          onClick={() =>
+                            handleRejectRequisition(
+                              requisitionDetails.requisitionIds
+                            )
+                          }
+                        >
+                          {textReject}
+                        </button>
+                        {/* )} */}
 
-                        {requisitionDetails.status !== "dispatched" &&
-                          requisitionDetails.status !== "cancelled" && (
-                            <button
-                              type="button"
-                              className="ml rounded-full text-white border border-neutral-500 bg-teal-600 px-6 pb-1 pt-1"
-                              disabled={
-                                requisitionDetails.status === "cancelled" ||
-                                requisitionDetails.status === "dispatched"
-                              }
-                              onClick={() =>
-                                handleAcceptRequisition(
-                                  requisitionDetails.requisitionIds,
-                                  requisitionDetails.status,
-                                  requisitionDetails.shopItems
-                                )
-                              }
-                            >
-                              {textAccept}
-                            </button>
-                          )}
+                        {/* {requisitionDetails.status !== "dispatched" &&
+                          requisitionDetails.status !== "cancelled" && ( */}
+                        <button
+                          type="button"
+                          className="ml rounded-full text-white border border-neutral-500 bg-teal-600 px-6 pb-1 pt-1"
+                          disabled={
+                            requisitionDetails.status === "cancelled" ||
+                            requisitionDetails.status === "dispatched"
+                          }
+                          onClick={() =>
+                            handleAcceptRequisition(
+                              requisitionDetails.requisitionIds,
+                              requisitionDetails.status,
+                              requisitionDetails.shopItems
+                            )
+                          }
+                        >
+                          {textAccept}
+                        </button>
+                        {/* )} */}
                       </div>
                       {requisitionDetails.status === "dispatched" && (
                         <p className="text-green-500">Order is dispatched...</p>

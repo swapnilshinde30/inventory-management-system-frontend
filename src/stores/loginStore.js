@@ -10,20 +10,14 @@ export const useLoginStore = create(
       token: "",
       error: ``,
       loginUserAPI: async (payload) => {
-        try {
-          const response = await axios.post(apiEndPoint, payload);
-          sessionStorage.setItem("token", response.data.accessToken);
-          sessionStorage.setItem("user", JSON.stringify(response.data.user));
-          set((state) => {
-            state.error = "";
-            state.user = response.data.user;
-            state.token = response.data.accessToken;
-          });
-        } catch (error) {
-          set((state) => {
-            state.error = error.response.data.message;
-          });
-        }
+        const response = await axios.post(apiEndPoint, payload);
+        sessionStorage.setItem("token", response.data.accessToken);
+        sessionStorage.setItem("user", JSON.stringify(response.data.user));
+        set((state) => {
+          state.error = "";
+          state.user = response.data.user;
+          state.token = response.data.accessToken;
+        });
       },
     }))
   )

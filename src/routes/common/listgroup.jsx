@@ -1,5 +1,6 @@
 const ListGroup = (props) => {
   const { items, onSelectItem, selectedItem } = props;
+
   console.log(selectedItem);
   return (
     <ul className="list-group ml-10 mt-2 mr-4">

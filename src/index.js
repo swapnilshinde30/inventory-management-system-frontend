@@ -27,12 +27,16 @@ import Error500 from "./routes/errorPage/500";
 
 import RegisterForm from "./Forms/RegisterForm";
 import RegistrationPage from "./routes/RegistrationPage";
+import Requisitions1 from "./routes/Shop Keeper/requisition1";
+import { ToastContainer } from "react-toastify";
+import ShopItems1 from "./routes/Shop Keeper/shopitems1";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       {/* <ThemeProvider> */}
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<App />}>
           <Route index={true} element={<HomePage />} />
@@ -56,7 +60,7 @@ root.render(
 
           <Route path="cart" element={<Cart />} />
           <Route path="orders" element={<Order />} />
-          <Route path="requisitions" element={<Requisitions />} />
+          <Route path="requisitions" element={<Requisitions1 />} />
           <Route path="requisitions/:id" element={<Requisitions />} />
 
           {/* <Route path="requisitions/new" element={<RequisitionForm />} /> */}

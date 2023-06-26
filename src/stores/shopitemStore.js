@@ -9,37 +9,43 @@ export const useShopitemStore = create(
       shopitems: [],
       currentShopitem: {},
       getAllShopitemsAPI: async (shop) => {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        };
-        const shopItems = await axios.get(`${apiEndPoint}/shopitems`, {
-          params: { shop },
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        });
-        const shops = await axios.get(`${apiEndPoint}/shops`, config);
-        const items = await axios.get(`${apiEndPoint}/items`, config);
-        console.log(shopItems);
-        const shopItemDetails = shopItems.data.data.map((si) => {
-          let shop = shops.data.data.find((s) => s._id === si.shop);
-          let item = items.data.data.find((i) => i._id === si.item);
-          if (!shop) return;
-          if (!item) return;
-          si.shopName = shop.name;
-          si.shopId = shop.shopId;
-          si.itemName = item.name;
-          return si;
-        });
-        const user = JSON.parse(sessionStorage.getItem("user"));
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const shopItems = await axios.get(`${apiEndPoint}/shopitems`, {
+            params: { shop },
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          });
+          const shops = await axios.get(`${apiEndPoint}/shops`, config);
+          const items = await axios.get(`${apiEndPoint}/items`, config);
+          console.log(shopItems);
+          const shopItemDetails = shopItems.data.data.map((si) => {
+            let shop = shops.data.data.find((s) => s._id === si.shop);
+            let item = items.data.data.find((i) => i._id === si.item);
+            if (!shop) return;
+            if (!item) return;
+            si.shopName = shop.name;
+            si.shopId = shop.shopId;
+            si.itemName = item.name;
+            return si;
+          });
+          const user = JSON.parse(sessionStorage.getItem("user"));
 
-        set((state) => {
-          if (shop === undefined && user.role === "shopkeeper") return;
-          state.shopitems = shopItemDetails;
-          console.log(state.shopitems);
-        });
+          set((state) => {
+            if (shop === undefined && user.role === "shopkeeper") return;
+            state.shopitems = shopItemDetails;
+            console.log(state.shopitems);
+          });
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       getShopitemAPI: async (id) => {

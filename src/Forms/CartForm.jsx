@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useCartStore } from "../stores/cartStore";
 import { useShopitemStore } from "../stores/shopitemStore";
 import { useRequisitionStore } from "../stores/requisitionStore";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   requiredQuantity: yup.object().shape({
@@ -61,7 +62,8 @@ const CartForm = (props) => {
 
     console.log(data);
     if (product.availableQuantity.amount < data.requiredQuantity.amount) {
-      alert("Not Sufficient Quantity!");
+      toast.error("No sufficient quantity available !");
+      // alert("Not Sufficient Quantity!");
     } else {
       let cartItems = JSON.parse(sessionStorage.getItem("cartItems"));
       if (cartItems === null) {

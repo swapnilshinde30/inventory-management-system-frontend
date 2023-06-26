@@ -190,8 +190,14 @@ const Order = () => {
                     <span
                       className={
                         requisitionGroup[0].status === "dispatched"
-                          ? "text-green-600 text-lg font-bold"
-                          : "text-teal-400 text-lg font-bold"
+                          ? "text-teal-500 font-semibold"
+                          : requisitionGroup[0].status === "cancelled"
+                          ? "text-red-500 font-semibold"
+                          : requisitionGroup[0].status === "accepted"
+                          ? "text-purple-700 font-semibold"
+                          : requisitionGroup[0].status === "created"
+                          ? "text-green-500 font-semibold"
+                          : ""
                       }
                     >
                       {requisitionGroup[0].status.toUpperCase()}

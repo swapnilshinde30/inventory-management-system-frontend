@@ -2,6 +2,7 @@ import { useCartStore } from "../../stores/cartStore";
 import { useEffect, useState } from "react";
 import { useRequisitionStore } from "../../stores/requisitionStore";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -46,6 +47,7 @@ const Cart = () => {
     });
 
     setBtnText("Order Placed");
+    toast.success("Order Placed Successfully!");
     setDisable(true);
     sessionStorage.removeItem("cartItems");
     setCartItems([]);
@@ -175,6 +177,7 @@ const Cart = () => {
 
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
+                    
                   }}
                 ></div>
               </section>

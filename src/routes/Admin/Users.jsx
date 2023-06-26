@@ -95,7 +95,7 @@ const Users = () => {
                 <li
                   key={user.id + a}
                   className={`rounded-lg  text-left py-2 text-neutral-500 transition duration-500 hover:bg-teal-100 hover:text-neutral-700 focus:bg-neutral-100 focus:text-neutral-500 focus:ring-0 ${
-                    userRole === user.role ? "text-teal-500" : ""
+                    userRole === user.role ? "text-teal-600 font-semibold" : ""
                   } `}
                   style={{ cursor: "pointer" }}
                   onClick={() => handleSelect(user.role)}

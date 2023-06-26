@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import SendOTPForm from "../Forms/ForgotPassword";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   userName: yup.string().required(),
@@ -36,8 +37,12 @@ function LoginPage() {
 
   const onSubmitHandler = async (data) => {
     data.strategy = "local";
-    console.log(user);
-    await callloginUserAPI(data);
+    try {
+      await callloginUserAPI(data);
+      toast.success("Login successful!");
+    } catch (err) {
+      toast.error("Invalid Login, Please Try Again");
+    }
   };
   useEffect(() => {
     console.log(user);

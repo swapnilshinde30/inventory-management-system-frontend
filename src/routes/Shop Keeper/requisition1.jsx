@@ -4,11 +4,22 @@ import { useRequisitionStore } from "../../stores/requisitionStore";
 import RequisitionForm from "../../Forms/RequisitionForm";
 import { useShopStore } from "../../stores/shopStore";
 import { useUserStore } from "../../stores/userStore";
-const Requisitions = () => {
+import { isEqual } from "lodash";
+
+const Requisitions1 = () => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedShop, setSelectedShop] = useState("");
+  // const [selectedShop, setSelectedShop] = useState("");
   const [usersData, setUsersData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedShop, setSelectedShop] = useState(null);
+  const [shopRequisitionCounts, setShopRequisitionCounts] = useState({});
+  //Applying filters
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const [selectedStatuses, setSelectedStatuses] = useState([]);
+
+  const [previousShopRequisitionCounts, setPreviousShopRequisitionCounts] =
+    useState({});
+
   const getAllRequisitions = useRequisitionStore(
     (state) => state.getAllRequisitionsAPI
   );
@@ -21,6 +32,44 @@ const Requisitions = () => {
   const users = useUserStore((state) => state.users);
 
   useEffect(() => {
+    const fetchData = async () => {
+      await getAllRequisitions();
+      await callGetAllShopsAPI(user._id);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const updatedShopRequisitionCounts = {};
+
+    shops.forEach((shop) => {
+      const uniqueRequisitionNumbers = new Set();
+
+      const newRequisitions = requisitions.filter(
+        (requisition) =>
+          requisition.shopName === shop?.name &&
+          requisition.status === "created" &&
+          !uniqueRequisitionNumbers.has(requisition.requisitionNumber)
+      );
+
+      if (newRequisitions.length > 0) {
+        newRequisitions.forEach((requisition) => {
+          uniqueRequisitionNumbers.add(requisition.requisitionNumber);
+        });
+
+        const count = uniqueRequisitionNumbers.size;
+        updatedShopRequisitionCounts[shop.name] = count;
+      }
+    });
+
+    // Compare previous and current shopRequisitionCounts
+    if (!isEqual(updatedShopRequisitionCounts, previousShopRequisitionCounts)) {
+      setShopRequisitionCounts(updatedShopRequisitionCounts);
+      setPreviousShopRequisitionCounts(updatedShopRequisitionCounts);
+    }
+  }, [requisitions, shops]);
+  useEffect(() => {
     callGetAllShopsAPI(user._id);
     console.log(shops);
   }, []);
@@ -29,9 +78,13 @@ const Requisitions = () => {
     getAllRequisitions();
     callGetAllUsersAPI();
   }, []);
+  useEffect(() => {
+    console.log(selectedStatuses);
+  }, [selectedStatuses]);
 
   const handleSelectShop = (shopName) => {
     setSelectedShop(shopName);
+    setSelectedStatus(null);
     let selectedRequisitions = [];
     if (requisitions) {
       selectedRequisitions = requisitions.filter(
@@ -84,6 +137,17 @@ const Requisitions = () => {
     console.log(requisition);
     setShowModal(true);
   };
+
+  const handleFilterStatus = (status) => {
+    console.log(status);
+    if (selectedStatuses.includes(status)) {
+      setSelectedStatuses(selectedStatuses.filter((s) => s !== status));
+    } else {
+      setSelectedStatuses([...selectedStatuses, status]);
+    }
+    console.log(selectedStatuses);
+  };
+
   return (
     <>
       {/* <NavBar /> */}
@@ -91,7 +155,7 @@ const Requisitions = () => {
         <div className="flex-none w-56 h-16 border-r border-b border-slate-200">
           <p className="mx-12 my-5 font-semibold">Filter</p>
         </div>
-        <div className="flex-1 h-16 border-b border-slate-200">
+        <div className="flex-1 h-16 border-b border-slate-200 w-[900px]">
           {/* Search box */}
           <div className="flex flex-row content-between">
             <div className="flex-1">
@@ -121,21 +185,32 @@ const Requisitions = () => {
             </div>
           </div>
           <div className="flex flex-row">
-            <div className="pr-10 w-[650px]">
+            <div className="pr-10 w-[1100px]">
               <div className="mt-5 w-auto">
                 <div className="flex flex-row space-x-2 pl-5 pt-2">
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     {shops.map((shop) => (
-                      <div
-                        id={shop._id}
-                        key={shop._id}
-                        className="border rounded-lg w-28 h-20 px-2 py-2  hover:border-teal-400 focus:outline-none cursor-pointer"
-                        onClick={() => handleSelectShop(shop.name)}
-                      >
-                        <a href="#">
-                          <div>{shop.name}</div>
-                        </a>
-                      </div>
+                      <>
+                        <div
+                          id={shop._id}
+                          key={shop._id}
+                          className={`relative border rounded-lg w-28 h-20 px-2 py-2 hover:border-teal-400 focus:outline-none cursor-pointer ${
+                            selectedShop === shop.name
+                              ? "text-teal-500 font-semibold border-teal-600"
+                              : ""
+                          }`}
+                          onClick={() => handleSelectShop(shop.name)}
+                        >
+                          <a href="#">
+                            <div>{shop.name}</div>
+                          </a>
+                          {shopRequisitionCounts[shop.name] > 0 && (
+                            <span className="badge bg-teal-400 text-neutral-800 rounded-full px-2  absolute top-0 right-0 -mt-2 -mr-2">
+                              {shopRequisitionCounts[shop.name]}
+                            </span>
+                          )}
+                        </div>
+                      </>
                     ))}
                   </div>
                 </div>
@@ -144,75 +219,97 @@ const Requisitions = () => {
                 {/* <p>
                   You Have new Order in{" "}
                   <span className="font-semibold">{`${selectedShop}`}</span>
-                </p> */}
+                </p>  */}
               </div>
               <div>
                 <div className="flex flex-col pl-5 pt-2 space-y-2 w-auto">
-                  {usersData.map((requisition) => (
-                    <div
-                      //id={user._id}
-                      key={requisition.user._id + Math.random()}
-                      className="border rounded-lg h-20 px-2 py-2
-                 hover:border-teal-400 focus:outline-none cursor-pointer"
-                      onClick={() => handleUserClick(requisition)}
-                    >
-                      <div className="flex flex-row space-x-5  pt-2">
-                        <div>
-                          {" "}
-                          <img
-                            src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
-                            className="rounded-full"
-                            style={{ height: "40px", width: "40px" }}
-                            alt=""
-                            loading="lazy"
-                          />
-                        </div>
-                        <div>
-                          <p className=" text-gray-400 dark:text-gray-500">
-                            Name
-                          </p>
-                          <div>
-                            {requisition.user.firstName +
-                              " " +
-                              requisition.user.lastName}
-                          </div>
-                        </div>
-                        <div>
-                          <p className=" text-gray-400 dark:text-gray-500">
-                            Mobile
-                          </p>
-                          <div>{requisition.user.phone}</div>
-                        </div>
-                        <div>
-                          <p className=" text-gray-400 dark:text-gray-500">
-                            Date
-                          </p>
-                          <div>{requisition.orderDate}</div>
-                        </div>
+                  {usersData
+                    .filter((requisition) => {
+                      if (selectedStatuses.length === 0) {
+                        return true;
+                      } else {
+                        return selectedStatuses.includes(requisition.status);
+                      }
+                    })
+                    .map((requisition) => (
+                      <>
+                        <div
+                          //id={user._id}
+                          key={requisition.user._id + Math.random()}
+                          className="relative border rounded-lg h-20 px-2 py-2
+                 hover:border-teal-400 focus:outline-none cursor-pointer bg-neutral-100"
+                          onClick={() => handleUserClick(requisition)}
+                        >
+                          <div className="flex flex-row space-x-5  pt-2 ">
+                            <div className="pl-8">
+                              {" "}
+                              <img
+                                src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
+                                className="rounded-full"
+                                style={{ height: "40px", width: "40px" }}
+                                alt=""
+                                loading="lazy"
+                              />
+                            </div>
+                            <div>
+                              <p className=" text-gray-400 dark:text-gray-500">
+                                Name
+                              </p>
+                              <div>
+                                {requisition.user.firstName +
+                                  " " +
+                                  requisition.user.lastName}
+                              </div>
+                            </div>
+                            <div className="pl-32">
+                              <p className=" text-gray-400 dark:text-gray-500">
+                                Mobile
+                              </p>
+                              <div>{requisition.user.phone}</div>
+                            </div>
+                            <div className="pl-32">
+                              <p className=" text-gray-400 dark:text-gray-500">
+                                Date
+                              </p>
+                              <div>{requisition.orderDate}</div>
+                            </div>
 
-                        <div>
-                          <p className=" text-gray-400 dark:text-gray-500">
-                            Status
-                          </p>
-                          <div
-                            className={
-                              user.Status === "PLACED"
-                                ? "text-teal-500 font-semibold"
-                                : "text-green-500 font-semibold"
-                            }
-                          >
-                            {requisition.status.toUpperCase()}
+                            <div className="pl-32">
+                              <p className=" text-gray-400 dark:text-gray-500">
+                                Status
+                              </p>
+                              <div
+                                className={
+                                  requisition.status === "dispatched"
+                                    ? "text-teal-500 font-semibold"
+                                    : requisition.status === "cancelled"
+                                    ? "text-red-500 font-semibold"
+                                    : requisition.status === "accepted"
+                                    ? "text-purple-700 font-semibold"
+                                    : requisition.status === "created"
+                                    ? "text-green-500 font-semibold"
+                                    : ""
+                                }
+                              >
+                                {requisition.status.toUpperCase()}
+                              </div>
+                            </div>
                           </div>
+                          {requisition.status === "created" && (
+                            <span className="badge bg-green-400 text-neutral-600 rounded-full px-2 absolute top-0 right-0 mt-7 mr-5">
+                              New
+                            </span>
+                          )}
                         </div>
-                      </div>
-                    </div>
-                  ))}
+                      </>
+                    ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       {/* </div> */}
 
       <div className="flex flex-col">
@@ -222,6 +319,8 @@ const Requisitions = () => {
               type="checkbox"
               value=""
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              checked={selectedStatuses.length === 0}
+              onChange={() => setSelectedStatuses([])}
             />
             <label
               for="disabled-checked-checkbox"
@@ -233,8 +332,9 @@ const Requisitions = () => {
           <div className="flex items-center ml-5">
             <input
               type="checkbox"
-              value=""
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              checked={selectedStatuses.includes("created")}
+              onChange={() => handleFilterStatus("created")}
             />
             <label
               for="disabled-checked-checkbox"
@@ -246,14 +346,45 @@ const Requisitions = () => {
           <div className="flex items-center ml-5">
             <input
               type="checkbox"
-              value=""
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              checked={selectedStatuses.includes("accepted")}
+              onChange={() => handleFilterStatus("accepted")}
+            />
+            <label
+              for="disabled-checked-checkbox"
+              className="ml-2 font-base text-gray-400 dark:text-gray-500"
+            >
+              Accepted
+            </label>
+          </div>
+
+          <div className="flex items-center ml-5">
+            <input
+              type="checkbox"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              checked={selectedStatuses.includes("dispatched")}
+              onChange={() => handleFilterStatus("dispatched")}
             />
             <label
               for="disabled-checked-checkbox"
               className="ml-2 font-base text-gray-400 dark:text-gray-500"
             >
               Dispatched
+            </label>
+          </div>
+          <div className="flex items-center ml-5">
+            <input
+              type="checkbox"
+              value=""
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              checked={selectedStatuses.includes("cancelled")}
+              onChange={() => handleFilterStatus("cancelled")}
+            />
+            <label
+              for="disabled-checked-checkbox"
+              className="ml-2 font-base text-gray-400 dark:text-gray-500"
+            >
+              Cancelled
             </label>
           </div>
           {/* <div className="flex flex-col">
@@ -323,4 +454,4 @@ const Requisitions = () => {
   );
 };
 
-export default Requisitions;
+export default Requisitions1;

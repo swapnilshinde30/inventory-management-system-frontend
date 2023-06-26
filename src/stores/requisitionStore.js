@@ -8,37 +8,42 @@ export const useRequisitionStore = create(
     immer((set) => ({
       requisitions: [],
       getAllRequisitionsAPI: async (user) => {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        };
-        const requisitions = await axios.get(`${apiEndPoint}/requisitions`, {
-          params: { user },
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-          },
-        });
-        const shops = await axios.get(`${apiEndPoint}/shops`, config);
-        const shopItems = await axios.get(`${apiEndPoint}/shopitems`, config);
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const requisitions = await axios.get(`${apiEndPoint}/requisitions`, {
+            params: { user },
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          });
+          const shops = await axios.get(`${apiEndPoint}/shops`, config);
+          const shopItems = await axios.get(`${apiEndPoint}/shopitems`, config);
+          console.log(requisitions.data.data);
+          const requisitionsDetails = requisitions.data.data.map(
+            (requisition) => {
+              let shopItem = shopItems.data.data.find(
+                (shopItem) => shopItem._id === requisition.shopItem
+              );
 
-        const requisitionsDetails = requisitions.data.data.map(
-          (requisition) => {
-            let shopItem = shopItems.data.data.find(
-              (shopItem) => shopItem._id === requisition.shopItem
-            );
-            let shop = shops.data.data.find(
-              (shop) => shop._id === shopItem.shop
-            );
-            requisition.shopName = shop.name;
+              let shop = shops.data.data.find(
+                (shop) => shop._id === shopItem.shop
+              );
+              requisition.shopName = shop.name;
 
-            console.log(shop.name);
-            console.log(requisition.shopName);
-            return requisition;
-          }
-        );
+              return requisition;
+            }
+          );
 
-        set(() => ({ requisitions: requisitionsDetails }));
+          set(() => ({ requisitions: requisitionsDetails }));
+        } catch (error) {
+          set((state) => {
+            state.error = error.response.data.message;
+          });
+        }
       },
 
       addRequisitionsAPI: async (payload) => {

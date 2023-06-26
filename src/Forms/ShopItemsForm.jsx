@@ -8,8 +8,13 @@ import { useShopitemStore } from "../stores/shopitemStore";
 import { useItemStore } from "../stores/itemStore";
 import { useShopStore } from "../stores/shopStore";
 import { SlClose } from "react-icons/sl";
+import { useCategoryStore } from "../stores/categoryStore";
+import { useItemClassStore } from "../stores/itemClasseStore";
+import { useState } from "react";
 
 const schema = yup.object().shape({
+  shop: yup.string().required("Shop is required"),
+
   quantityAddition: yup.object().shape({
     amount: yup.number().required(),
     unit: yup.string().required(),
@@ -24,14 +29,33 @@ const ShopItemsForm = (props) => {
   const { showModal, setShowModal } = props;
   const params = useParams();
   const shopitemId = params.id;
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedItemClass, setSelectedItemClass] = useState("");
   const callAddShopItemAPI = useShopitemStore((state) => state.addShopitemAPI);
+  const callGetItemAPI = useItemStore((state) => state.getItemAPI);
   const callGetAllItemsAAPI = useItemStore((state) => state.getAllItemsAPI);
   const items = useItemStore((state) => state.items);
+  const item = useItemStore((state) => state.currentItem);
   const callGetAllShopsAPI = useShopStore((state) => state.getAllShopsAPI);
   const shops = useShopStore((state) => state.shops);
   const callGetAllShopItemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
+  const categories = useCategoryStore((state) => state.categories);
+  const callgetAllCategoriesAPI = useCategoryStore(
+    (state) => state.getAllCategoriesAPI
+  );
+  const category = useCategoryStore((state) => state.currentCategory);
+  const callgetCategoryAPI = useCategoryStore((state) => state.getCategoryAPI);
+  const callGetAllItemClassesAPI = useItemClassStore(
+    (state) => state.getAllItemClassesAPI
+  );
+  const callGetItemClassAPI = useItemClassStore(
+    (state) => state.getItemClassAPI
+  );
+  const itemClasses = useItemClassStore((state) => state.itemClasses);
+  const itemClass = useItemClassStore((state) => state.currentItemclass);
+
   //Edit shopitem
   const callGetShopItemAPI = useShopitemStore((state) => state.getShopitemAPI);
   const shopitem = useShopitemStore((state) => state.currentShopitem);
@@ -42,7 +66,6 @@ const ShopItemsForm = (props) => {
   const callGetShopitemsAPI = useShopitemStore(
     (state) => state.getAllShopitemsAPI
   );
-
   const navigate = useNavigate();
 
   const {
@@ -57,6 +80,8 @@ const ShopItemsForm = (props) => {
 
   const onSubmitHandler = (data) => {
     // reset();
+    delete data?.itemClass;
+    delete data?.category;
     console.log(data);
     if (data._id) {
       data.quantityAddition.addedBy = user._id;
@@ -75,7 +100,32 @@ const ShopItemsForm = (props) => {
     callGetAllShopsAPI();
     callGetAllItemsAAPI();
     callGetAllShopItemsAPI();
+    callgetAllCategoriesAPI();
+    callGetAllItemClassesAPI();
   }, []);
+
+  useEffect(() => {
+    console.log(shopitem);
+    if (shopitem?._id) {
+      callGetItemAPI(shopitem?.item);
+      console.log(item);
+      if (item?._id) {
+        setSelectedItemClass(item?.itemClass);
+        console.log(selectedItemClass);
+        callGetItemClassAPI(item?.itemClass);
+
+        console.log(itemClass);
+      }
+      if (itemClass?._id) {
+        setSelectedCategory(itemClass?.category);
+        callgetCategoryAPI(itemClass?.category);
+        console.log(selectedCategory);
+      }
+    }
+    setValue("itemClass", selectedItemClass);
+    setValue("category", selectedCategory);
+    setValue("item", shopitem?.item);
+  }, [shopitem?.item, item?._id, itemClass?._id, category._id]);
 
   useEffect(() => {
     if (!shopitemId) return;
@@ -91,7 +141,7 @@ const ShopItemsForm = (props) => {
     setValue("quantityAddition.unit", shopitem.quantityAddition["unit"]);
     setValue("availableQuantity.amount", shopitem.availableQuantity["amount"]);
     setValue("availableQuantity.unit", shopitem.availableQuantity["unit"]);
-  }, [shopitemId, shopitem._id]);
+  }, [shopitemId, shopitem.item]);
 
   const handleKeyPress = (event) => {
     const keyCode = event.keyCode || event.which;
@@ -135,14 +185,36 @@ const ShopItemsForm = (props) => {
                   <div className="my-5 mx-7">
                     <select
                       id="shops"
-                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg"
+                      className="w-full py-2 px-3 mb-3 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
                       {...register("shop")}
                     >
                       {" "}
-                      <option>Select Shop</option>
+                      <option value="" hidden>
+                        Select Shop
+                      </option>
                       {shops.map((shop) => (
                         <option key={shop._id} value={shop._id}>
                           {shop.name}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-red-500 mb-3">{errors.shop?.message}</p>
+                  </div>
+
+                  <div className="my-2 mx-7">
+                    <select
+                      id="category"
+                      {...register("category")}
+                      className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                      {" "}
+                      <option value="" hidden>
+                        Select category
+                      </option>
+                      {categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                          {category.name}
                         </option>
                       ))}
                     </select>
@@ -150,17 +222,49 @@ const ShopItemsForm = (props) => {
 
                   <div className="my-2 mx-7">
                     <select
+                      id="itemClass"
+                      {...register("itemClass")}
+                      className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
+                      onChange={(e) => setSelectedItemClass(e.target.value)}
+                    >
+                      {" "}
+                      <option value="" hidden>
+                        Select Itemclass
+                      </option>
+                      {itemClasses
+                        .filter(
+                          (itemClass) => itemClass.category === selectedCategory
+                        )
+                        .map((itemClass) => (
+                          <option key={itemClass._id} value={itemClass._id}>
+                            {itemClass.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div className="my-2 mx-7">
+                    <select
                       id="item"
-                      className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg"
+                      className="w-full py-2 px-3 mb-2 shadow-sm border border-teal-300 focus:ring-teal-500 focus:outline-none focus:border-teal-500 rounded-lg appearance-none"
                       {...register("item")}
                     >
                       {" "}
-                      <option>Select Items</option>
-                      {items.map((item) => (
+                      <option value="" hidden>
+                        Select Items
+                      </option>
+                      {/* {items.map((item) => (
                         <option key={item._id} value={item._id}>
                           {item.name}
                         </option>
-                      ))}
+                      ))} */}
+                      {items
+                        .filter((item) => item.itemClass === selectedItemClass)
+                        .map((item) => (
+                          <option key={item._id} value={item._id}>
+                            {item.name}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div className="flex flex-row">

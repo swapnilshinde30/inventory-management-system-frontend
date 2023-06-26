@@ -8,7 +8,7 @@ import { useItemClassStore } from "../../stores/itemClasseStore";
 import { useItemStore } from "../../stores/itemStore";
 import { useShopStore } from "../../stores/shopStore";
 
-const ShopItems = () => {
+const ShopItems1 = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchField, setSearchField] = useState("");
   const [shop, setShop] = useState("");
@@ -32,6 +32,10 @@ const ShopItems = () => {
     (state) => state.deleteShopitemAPI
   );
 
+  useEffect(() => {
+    callGetAllShopItemsAPI(shop); // Pass the selected shop to the API call
+  }, [callGetAllShopItemsAPI, shop]);
+
   const filteredShopItems = shopitems.filter((shopitem) => {
     if (searchField === "") {
       return shopitem;
@@ -41,12 +45,13 @@ const ShopItems = () => {
       return shopitem;
     }
   });
+
+  console.log(filteredShopItems);
   const user = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
-    callGetAllShopItemsAPI();
     callGetAllItemClassesAPI();
     callGetAllShopsAPI(user._id);
-  }, [callGetAllShopItemsAPI, shopitems._id]);
+  }, []);
 
   let count = 0;
 
@@ -62,10 +67,16 @@ const ShopItems = () => {
 
   const handleSelectShop = (name) => {
     setShop(name);
-    callGetAllShopItemsAPI(name);
+    //  callGetAllShopItemsAPI(name);
+    console.log(shopitems);
     console.log(name);
+    console.log(shop);
   };
 
+  useEffect(() => {
+    callGetAllShopItemsAPI();
+    console.log(shopitems);
+  }, [shop]);
   return (
     <>
       <div className="flex sm:flex-column md:flex-row">
@@ -195,4 +206,4 @@ const ShopItems = () => {
   );
 };
 
-export default ShopItems;
+export default ShopItems1;
